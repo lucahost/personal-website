@@ -1,23 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
+import luca from './luca.png';
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={luca} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Hi <span role="img" aria-label="wave">👋</span> I'm <b>Luca Hostettler</b> <span role="img" aria-label="rocket">🚀</span>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+        <ul>
+          <li>
+            <a className="App-link"
+              href="https://blog.lucahost.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Blog
         </a>
+          </li>
+          <li>
+            <a
+              className="App-link"
+              href="https://github.com/lucahost"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Github
+        </a>
+          </li>
+          <li>
+            <a
+              className="App-link"
+              href="https://work.lucahost.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Projects
+        </a>
+          </li>
+        </ul>
       </header>
     </div>
   );
