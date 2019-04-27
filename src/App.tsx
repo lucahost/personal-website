@@ -10,6 +10,13 @@ const App: React.FC = () => {
         <p>
           Hi <span role="img" aria-label="wave">👋</span> I'm <b>Luca Hostettler</b> <span role="img" aria-label="rocket">🚀</span>
         </p>
+        <p>
+          Coding is my profession & hobby
+        </p>
+        <p>
+          <span>></span>
+          <span className="App-cmd">_</span>
+        </p>
         <ul>
           <li>
             <a className="App-link"
@@ -42,6 +49,9 @@ const App: React.FC = () => {
           </li>
         </ul>
       </header>
+      <footer className="App-footer">
+        Made with <span role="img" aria-label="heart">❤️</span> in <b>Zurich</b>
+      </footer>
     </div>
   );
 }
