@@ -2,23 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 10vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
+.App-index,
+.App-projects {
   min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Courier New',
-    Courier,
-    monospace;
-  color: white;
-  font-size: calc(10px + 2vmin);
 }
 
 .App-footer {
@@ -43,6 +29,10 @@ ul {
   text-align: left;
 }
 
+ul>li {
+  margin-top: .8em;
+}
+
 @keyframes blink-animation {
   to {
     visibility: hidden;
@@ -56,7 +46,9 @@ ul {
 }
 
 @media only screen and (min-width: 768px) {
-  .App-header {
+
+  .App-index,
+  .App-projects {
     min-height: 95vh;
   }
 
