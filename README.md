@@ -1,4 +1,4 @@
-# My personal website
+# my personal website
 
 [lucahost.dev](https://lucahost.dev)
 
