@@ -41,8 +41,6 @@ export const Index: React.FC = () => {
           <Link
             className="App-link"
             to="/projects"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             Projects
         </Link>
