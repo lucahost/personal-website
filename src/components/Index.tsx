@@ -19,13 +19,12 @@ export const Index: React.FC = () => {
       </p>
       <ul>
         <li>
-          <a className="App-link"
-            href="https://blog.lucahost.dev"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            className="App-link"
+            to="/projects"
           >
-            Blog
-        </a>
+            Projects
+        </Link>
         </li>
         <li>
           <a
@@ -38,12 +37,13 @@ export const Index: React.FC = () => {
         </a>
         </li>
         <li>
-          <Link
-            className="App-link"
-            to="/projects"
+          <a className="App-link"
+            href="https://blog.lucahost.dev"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Projects
-        </Link>
+            Blog
+        </a>
         </li>
       </ul>
     </div>
