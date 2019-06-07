@@ -20,11 +20,8 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: CopyFiles@2
+- task: Npm@1
   inputs:
-    contents: 'build\**'
-    targetFolder: $(Build.ArtifactStagingDirectory)
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(System.ArtifactStagingDirectory)'
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: artifact-feed
