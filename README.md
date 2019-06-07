@@ -10,7 +10,7 @@
 
 ```sh
 yarn install
-yarn run dev
+yarn start
 ```
 
 ## Deploy
