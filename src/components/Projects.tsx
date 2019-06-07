@@ -41,7 +41,7 @@ export const Projects: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary="muuvy" />
             </ListItemLink>
-            <ListItemLink href="https://github.com/boooza/swe2-uno">
+            <ListItemLink href="https://github.com/booooza/swe2-uno">
               <ListItemIcon>
                 <img src={uno} className="Projects-avatar" alt="UNO" />
               </ListItemIcon>
