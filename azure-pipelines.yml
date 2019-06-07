@@ -20,8 +20,8 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: DownloadBuildArtifacts@0
+- task: PublishBuildArtifacts@1
   inputs:
-    buildType: 'current'
-    downloadType: 'single'
-    downloadPath: '$(System.ArtifactsDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
