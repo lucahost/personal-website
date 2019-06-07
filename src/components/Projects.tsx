@@ -1,9 +1,9 @@
 import React from 'react';
 import './Projects.css'
 import biergit from './../biergit.png';
-import { Card, CardContent, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import ComputerIcon from '@material-ui/icons/Computer';
-import RssFeedIcon from '@material-ui/icons/RssFeed';
+import uno from './../uno.png';
+import muuvy from './../muuvy.png';
+import { Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
 
 function ListItemLink(props: any) {
   return <ListItem button component="a" {...props} />;
@@ -19,21 +19,33 @@ export const Projects: React.FC = () => {
           <List component="nav">
             <ListItemLink href="/">
               <ListItemIcon>
-                <ComputerIcon />
+                <Icon>computer</Icon>
               </ListItemIcon>
               <ListItemText primary="Website" />
             </ListItemLink>
             <ListItemLink href="https://blog.lucahost.dev">
               <ListItemIcon>
-                <RssFeedIcon />
+                <Icon>rss_feed</Icon>
               </ListItemIcon>
               <ListItemText primary="Blog" />
             </ListItemLink>
             <ListItemLink href="https://biergit.ch">
               <ListItemIcon>
-                <img src={biergit} className="Projects-avatar" alt="biergit"/>
+                <img src={biergit} className="Projects-avatar" alt="biergit" />
               </ListItemIcon>
-              <ListItemText primary="biergit.ch" />
+              <ListItemText primary="biergit" />
+            </ListItemLink>
+            <ListItemLink href="https://github.com/muuvy">
+              <ListItemIcon>
+                <img src={muuvy} className="Projects-avatar" alt="muuvy" />
+              </ListItemIcon>
+              <ListItemText primary="muuvy" />
+            </ListItemLink>
+            <ListItemLink href="https://github.com/boooza/swe2-uno">
+              <ListItemIcon>
+                <img src={uno} className="Projects-avatar" alt="UNO" />
+              </ListItemIcon>
+              <ListItemText primary="UNO" />
             </ListItemLink>
           </List>
         </CardContent>
