@@ -1,8 +1,8 @@
 import React from 'react';
 import './Projects.css'
-import biergit from './../biergit.png';
-import uno from './../uno.png';
-import muuvy from './../muuvy.png';
+import biergit from './../img/biergit.png';
+import uno from './../img/uno.png';
+import muuvy from './../img/muuvy.png';
 import { Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
 
 function ListItemLink(props: any) {
@@ -13,7 +13,6 @@ export const Projects: React.FC = () => {
   return (
     <div className="App-projects">
       <p>My Projects</p>
-
       <Card>
         <CardContent>
           <List component="nav">

@@ -1,0 +1,10 @@
+.Navigation {
+    background-color: #282c34;
+    min-height: 15vh;
+}
+
+@media only screen and (min-width: 768px) {
+    .Navigation {
+        min-height: 5vh;
+    }
+}

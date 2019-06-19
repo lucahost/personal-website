@@ -1,58 +1,52 @@
 .App {
-  text-align: center;
+    text-align: center;
+    display: flex;
 }
 
 .App-index,
 .App-projects {
-  min-height: 85vh;
+    max-height: 70vh;
 }
 
 .App-footer {
-  background-color: #282c34;
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-  min-height: 15vh;
+    background-color: #282c34;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    min-height: 5vh;
 }
 
 .App-link {
-  color: #61dafb;
-}
-
-.App-cmd {
-  animation: blink-animation 1s steps(2, start) infinite;
-  -webKit-animation: blink-animation 1s steps(2, start) infinite;
+    color: #61dafb;
 }
 
 ul {
-  display: inline-block;
-  text-align: left;
+    display: inline-block;
+    text-align: left;
 }
 
 ul>li {
-  margin-top: .8em;
+    margin-top: .8em;
 }
 
 @keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
+    to {
+        visibility: hidden;
+    }
 }
 
 @-webkit-keyframes blink-animation {
-  to {
-    visibility: hidden;
-  }
+    to {
+        visibility: hidden;
+    }
 }
 
 @media only screen and (min-width: 768px) {
-
-  .App-index,
-  .App-projects {
-    min-height: 95vh;
-  }
-
-  .App-footer {
-    min-height: 5vh;
-  }
+    .App-index,
+    .App-projects {
+        min-height: 90vh;
+    }
+    .App-footer {
+        min-height: 5vh;
+    }
 }
