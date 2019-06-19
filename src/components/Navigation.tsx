@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import clsx from 'clsx';
 
 import { Drawer, MenuItem } from '@material-ui/core';
@@ -12,8 +12,9 @@ import { Index } from './Index';
 import { Projects } from './Projects';
 
 import './Navigation.css';
+import { ProjectsList } from './ProjectList';
 
-const drawerWidth = 800;
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,11 +60,7 @@ export default function Navigation() {
         className={classes.drawer} classes={{
           paper: classes.drawerPaper,
         }}>
-        <MenuItem>
-          <Link to="/projects">Projects</Link>
-        </MenuItem>
-        <MenuItem>Projects</MenuItem>
-        <MenuItem>Blog</MenuItem>
+        <ProjectsList />
       </Drawer>
       <Grid item xs={12}>
         <IconButton

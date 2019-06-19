@@ -1,13 +1,8 @@
 import React from 'react';
 import './Projects.css'
-import biergit from './../img/biergit.png';
-import uno from './../img/uno.png';
-import muuvy from './../img/muuvy.png';
-import { Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Icon } from '@material-ui/core';
 
-function ListItemLink(props: any) {
-  return <ListItem button component="a" {...props} />;
-}
+import { Card, CardContent } from '@material-ui/core';
+import { ProjectsList } from './ProjectList';
 
 export const Projects: React.FC = () => {
   return (
@@ -15,38 +10,7 @@ export const Projects: React.FC = () => {
       <p>My Projects</p>
       <Card>
         <CardContent>
-          <List component="nav">
-            <ListItemLink href="/">
-              <ListItemIcon>
-                <Icon>computer</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Website" />
-            </ListItemLink>
-            <ListItemLink href="https://blog.lucahost.dev">
-              <ListItemIcon>
-                <Icon>rss_feed</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Blog" />
-            </ListItemLink>
-            <ListItemLink href="https://biergit.ch">
-              <ListItemIcon>
-                <img src={biergit} className="Projects-avatar" alt="biergit" />
-              </ListItemIcon>
-              <ListItemText primary="biergit" />
-            </ListItemLink>
-            <ListItemLink href="https://github.com/muuvy">
-              <ListItemIcon>
-                <img src={muuvy} className="Projects-avatar" alt="muuvy" />
-              </ListItemIcon>
-              <ListItemText primary="muuvy" />
-            </ListItemLink>
-            <ListItemLink href="https://github.com/booooza/swe2-uno">
-              <ListItemIcon>
-                <img src={uno} className="Projects-avatar" alt="UNO" />
-              </ListItemIcon>
-              <ListItemText primary="UNO" />
-            </ListItemLink>
-          </List>
+          <ProjectsList />
         </CardContent>
       </Card>
     </div>
