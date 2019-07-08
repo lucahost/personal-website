@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom'
 import clsx from 'clsx';
 
-import { Drawer, MenuItem } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
