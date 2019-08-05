@@ -34,16 +34,6 @@ export const Index: React.FC = () => {
             Github
         </a>
         </li>
-        <li>
-          {'{'}2{'} '}
-          <a className="App-link"
-            href="https://blog.lucahost.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Blog
-        </a>
-        </li>
       </ul>
       <p>
         <span>fsociety~# </span>
