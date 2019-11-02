@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       listStyleType: 'none',
     },
     link: {
-      color: '#61dafb',
+      'color': '#61dafb'
     },
   }),
 );
