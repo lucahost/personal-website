@@ -3,6 +3,7 @@ import luca from './../../common/img/luca.png';
 import './Index.css';
 import { Link } from 'react-router-dom';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,49 +11,57 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '10vmin',
       pointerEvents: 'none',
     },
-    appContainer: {
+    homeContainer: {
+      color: 'white',
       backgroundColor: '#282c34',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: 'Courier New, Courier, monospace, color: white',
+      fontFamily: 'Courier New,Courier,monospace',
       fontSize: 'calc(10px + 2vmin)',
       p: {
         margin: '.3em',
       },
     },
     cmd: {
-      animation: 'blink - animation 1s steps(2, start) infinite',
-      '-webKitAnimation': 'blink - animation 1s steps(2, start) infinite',
+      animation: 'blink-animation 1s steps(2, start) infinite',
+      '-webKitAnimation': 'blink-animation 1s steps(2, start) infinite',
     },
     noBull: {
       listStyleType: 'none',
     },
     link: {
-      color: '#61dafb',
+      'color': '#61dafb'
     },
+    courier: {
+      fontSize: 'calc(10px + 2vmin)',
+      color: 'white',
+      fontFamily: [
+        'Courier New'
+      ].join(','),
+    }
   }),
 );
 
 export const Home: React.FC = () => {
   const classes = useStyles();
   return (
-    <div className={classes.appContainer}>
+    <div className={classes.homeContainer}>
       <img src={luca} className={classes.logo} alt="logo" />
-      <p>
+      <Typography className={classes.courier}>
         Hi{' '}
         <span role="img" aria-label="wave">
           👋
         </span>{' '}
         I&apos;m <b>Luca Hostettler</b>
-      </p>
-      <p>
+      </Typography>
+      <Typography className={classes.courier}>
         Coding is my passion{' '}
         <span role="img" aria-label="rocket">
           🚀
         </span>
-      </p>
+      </Typography>
       <ul className="No-bull">
         <li>
           {'{'}0{'} '}
@@ -72,10 +81,10 @@ export const Home: React.FC = () => {
           </a>
         </li>
       </ul>
-      <p>
+      <Typography className={classes.courier}>
         <span>fsociety~# </span>
         <span className={classes.cmd}>_</span>
-      </p>
+      </Typography>
     </div>
   );
 };
