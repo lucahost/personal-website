@@ -55,8 +55,13 @@ export const Home: React.FC = () => {
           👋
         </span>{' '}
         I&apos;m <b>Luca Hostettler</b>
+<<<<<<< HEAD
       </Typography>
       <Typography className={classes.courier}>
+=======
+      </p>
+      <p>
+>>>>>>> 26e7e79b05a9baf28c46e20a56ee2e7139f9c373
         Coding is my passion{' '}
         <span role="img" aria-label="rocket">
           🚀
