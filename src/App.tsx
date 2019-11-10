@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       flexDirection: 'column',
       display: 'flex',
-      minHeight: '100vh',
+      minHeight: '-webkit-fill-available',
     },
     main: {
       marginTop: theme.spacing(4),

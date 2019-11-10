@@ -38,9 +38,9 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setBlink(!blink)
+      setBlink(!blink);
     }, 350);
-  })
+  });
 
   return (
     <Grid
