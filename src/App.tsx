@@ -1,25 +1,27 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Navigation from './common/Navigation';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Container } from '@material-ui/core';
+import Routes from './Routes';
+import NavigationDrawer from './common/NavigationDrawer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    appContainer: {
+    root: {
+      flexGrow: 1,
+      flexDirection: 'column',
       display: 'flex',
+      minHeight: '100vh',
     },
-    contentContainer: {
-      minHeight: '90vh',
+    main: {
+      marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(2),
+      height: '100%',
     },
     footer: {
-      backgroundColor: '#282c34',
-      fontFamily: 'Roboto',
+      padding: theme.spacing(4),
+      marginTop: 'auto',
       textAlign: 'center',
-      verticalAlign: 'middle',
-      color: 'white',
-      minHeight: '10vh',
     },
   }),
 );
@@ -27,24 +29,23 @@ const useStyles = makeStyles((theme: Theme) =>
 const App: React.FC = () => {
   const classes = useStyles();
   return (
-    <div className={classes.appContainer}>
+    <div className={classes.root}>
       <Router>
-        <Grid container spacing={0}>
-          <Grid item xs={12} className={classes.contentContainer}>
-            <Navigation />
-          </Grid>
-          <Grid item xs={12}>
-            <footer className={classes.footer}>
-              <Typography>
-                Made with{' '}
-                <span role="img" aria-label="heart">
-                  ❤️
+        <Container component="main" maxWidth="xl" className={classes.main}>
+          <NavigationDrawer />
+          <Routes />
+        </Container>
+        <footer className={classes.footer}>
+          <Container maxWidth="sm">
+            <Typography>
+              Made with{' '}
+              <span role="img" aria-label="heart">
+                ❤️
               </span>{' '}
-                in <b>Zurich</b>
-              </Typography>
-            </footer>
-          </Grid>
-        </Grid>
+              in <b>Zurich</b>
+            </Typography>
+          </Container>
+        </footer>
       </Router>
     </div>
   );

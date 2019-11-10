@@ -15,6 +15,9 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    projectContainer: {
+      color: 'black',
+    },
     projectAvatar: {
       width: '25px',
       height: '25px',
@@ -27,7 +30,7 @@ function ListItemLink(props: any) {
 export const ProjectsList: React.FC = () => {
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.projectContainer}>
       <List component="nav">
         <ListItemLink href="/">
           <ListItemIcon>

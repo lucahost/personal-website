@@ -1,30 +1,21 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 
 import { Drawer } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import { Home } from '../components/home/Home';
-import { Projects } from '../components/project/Projects';
-
-import './Navigation.css';
 import { ProjectsList } from '../components/project/ProjectList';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    navigationContainer: {
-      backgroundColor: '#282c34',
-      minHeight: '15vh',
-    },
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
+      color: 'black',
     },
     drawerPaper: {
       width: drawerWidth,
@@ -39,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function Navigation() {
+const NavigationDrawer: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -57,7 +48,7 @@ export default function Navigation() {
   };
 
   return (
-    <div className={classes.navigationContainer}>
+    <Fragment>
       <Drawer
         open={open}
         onClose={toggleDrawer(false)}
@@ -68,19 +59,15 @@ export default function Navigation() {
       >
         <ProjectsList />
       </Drawer>
-      <Grid item xs={12}>
-        <IconButton
-          aria-label="Open drawer"
-          onClick={toggleDrawer(true)}
-          className={clsx(classes.menuButton, open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Grid>
-      <Grid item xs={12}>
-        <Route path="/" exact component={Home} />
-        <Route path="/projects" component={Projects} />
-      </Grid>
-    </div>
+      <IconButton
+        aria-label="Open drawer"
+        onClick={toggleDrawer(true)}
+        className={clsx(classes.menuButton, open && classes.hide)}
+      >
+        <MenuIcon />
+      </IconButton>
+    </Fragment>
   );
-}
+};
+
+export default NavigationDrawer;

@@ -16,7 +16,11 @@ const theme = createMuiTheme({
     background: {
       default: '#282c34',
     },
+    text: {
+      primary: 'white',
+    },
   },
+  spacing: 8,
 });
 
 export default theme;

@@ -1,20 +1,20 @@
 import React from 'react';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Typography, Container } from '@material-ui/core';
 import { ProjectsList } from './ProjectList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    project: {
-      backgroundColor: '#282c3',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'Courier New',
-      color: 'white',
-      fontSize: 'calc(10p + 2vmin)',
+    projectContainer: {
+      marginTop: theme.spacing(20),
+    },
+    projectCard: {
+      marginTop: theme.spacing(4),
+    },
+    courier: {
+      fontFamily: ['Courier New'].join(','),
+      textAlign: 'center',
     },
   }),
 );
@@ -22,13 +22,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Projects: React.FC = () => {
   const classes = useStyles();
   return (
-    <div className={classes.project}>
-      <p>My Projects</p>
-      <Card>
+    <Container maxWidth="xs" className={classes.projectContainer}>
+      <Typography className={classes.courier} variant="h4">
+        My Projects
+      </Typography>
+      <Card className={classes.projectCard}>
         <CardContent>
           <ProjectsList />
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 };
