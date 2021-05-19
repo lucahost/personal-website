@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Luca Hostettler",
+  "name": "Lucas personal website",
   "icons": [
     {
       "src": "https://hostettler.io/favicon.ico",
@@ -15,5 +15,6 @@
   "url": "https://hostettler.io",
   "manifestUrl": "https://hostettler.io/manifest.json",
   "lang": "",
-  "screenshots": []
+  "screenshots": [],
+  "description": "The personal website of Luca Hostettler"
 }
