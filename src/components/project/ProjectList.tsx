@@ -4,7 +4,7 @@ import biergit from './../../common/img/biergit.png';
 import uno from './../../common/img/uno.png';
 import muuvy from './../../common/img/muuvy.png';
 
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import {
   List,
   ListItemIcon,
@@ -13,7 +13,7 @@ import {
   ListItem,
 } from '@material-ui/core';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     projectContainer: {
       color: 'black',
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-function ListItemLink(props: any) {
+function ListItemLink({ ...props }) {
   return <ListItem button component="a" {...props} />;
 }
 export const ProjectsList: React.FC = () => {
