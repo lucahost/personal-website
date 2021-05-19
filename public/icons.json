@@ -1,6 +1,4 @@
 {
-  "short_name": "Luca Hostettler",
-  "name": "Lucas personal website",
   "icons": [
     {
       "src": "windows/windows-smallsquare-24-24.png",
@@ -114,14 +112,5 @@
       "src": "msteams/msteams-silhouette-32-32.png",
       "sizes": "32x32"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "url": "https://hostettler.io",
-  "manifestUrl": "https://hostettler.io/manifest.json",
-  "lang": "",
-  "screenshots": [],
-  "description": "The personal website of Luca Hostettler"
+  ]
 }
