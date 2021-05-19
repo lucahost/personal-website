@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// import './serviceWorker.js';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
@@ -15,4 +16,4 @@ ReactDOM.render(
   </ThemeProvider>,
   document.getElementById('root'),
 );
-serviceWorker.unregister();
+serviceWorker.register();
