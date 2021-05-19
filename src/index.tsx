@@ -13,7 +13,7 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <App />
-    <pwa-install>Download</pwa-install>
+    <pwa-install></pwa-install>
   </ThemeProvider>,
   document.getElementById('root'),
 );
