@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import luca from './../../common/img/luca.png';
-import { Link } from 'react-router-dom';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Typography, Grid, Container, Fade } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import luca from "./../../common/img/luca.png";
+import { Link } from "react-router-dom";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Typography, Grid, Container, Fade } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,26 +10,26 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(20),
     },
     logo: {
-      height: '10vmin',
-      pointerEvents: 'none',
+      height: "10vmin",
+      pointerEvents: "none",
     },
     textAlignLeft: {
-      textAlign: 'left',
+      textAlign: "left",
     },
     noListStyle: {
-      listStyleType: 'none',
+      listStyleType: "none",
       marginLeft: theme.spacing(4),
     },
     link: {
-      color: '#61dafb',
+      color: "#61dafb",
     },
     courier: {
-      fontSize: 'calc(10px + 2vmin)',
-      color: 'white',
-      textAlign: 'center',
-      fontFamily: ['Courier New'].join(','),
+      fontSize: "calc(10px + 2vmin)",
+      color: "white",
+      textAlign: "center",
+      fontFamily: ["Courier New"].join(","),
     },
-  }),
+  })
 );
 
 export const Home: React.FC = () => {
@@ -53,16 +53,16 @@ export const Home: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography className={classes.courier}>
-          Hi{' '}
+          Hi{" "}
           <span role="img" aria-label="wave">
             👋
-          </span>{' '}
+          </span>{" "}
           I&apos;m <b>Luca Hostettler</b>
         </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography className={classes.courier}>
-          Coding is my passion{' '}
+          Coding is my passion{" "}
           <span role="img" aria-label="rocket">
             🚀
           </span>
@@ -72,13 +72,13 @@ export const Home: React.FC = () => {
         <Container maxWidth="xs">
           <ul className={classes.noListStyle}>
             <li>
-              {'{'}0{'} '}
+              {"{"}0{"} "}
               <Link className={classes.link} to="/projects">
                 Projects
               </Link>
             </li>
             <li>
-              {'{'}1{'} '}
+              {"{"}1{"} "}
               <a
                 className={classes.link}
                 href="https://github.com/lucahost"

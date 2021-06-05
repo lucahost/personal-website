@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import clsx from 'clsx';
+import React, { Fragment } from "react";
+import clsx from "clsx";
 
-import { Drawer } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Drawer } from "@material-ui/core";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 
-import { ProjectsList } from '../components/project/ProjectList';
+import { ProjectsList } from "../components/project/ProjectList";
 
 const drawerWidth = 240;
 
@@ -15,19 +15,19 @@ const useStyles = makeStyles(() =>
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
-      color: 'black',
+      color: "black",
     },
     drawerPaper: {
       width: drawerWidth,
       opacity: 0.7,
     },
     menuButton: {
-      color: '#e1f5fe',
+      color: "#e1f5fe",
     },
     hide: {
       opacity: 0,
     },
-  }),
+  })
 );
 
 const NavigationDrawer: React.FC = () => {
@@ -37,9 +37,9 @@ const NavigationDrawer: React.FC = () => {
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
       ) {
         return;
       }

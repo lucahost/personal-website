@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import { Route } from 'react-router';
-import { Home } from './components/home/Home';
-import { Projects } from './components/project/Projects';
+import React, { Fragment } from "react";
+import { Route } from "react-router";
+import { Home } from "./components/home/Home";
+import { Projects } from "./components/project/Projects";
 
 const Routes: React.FC = () => {
   return (

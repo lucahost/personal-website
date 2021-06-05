@@ -1,21 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
-import { CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
-import theme from './theme';
-import '@pwabuilder/pwainstall';
+import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "./theme";
+import "@pwabuilder/pwainstall";
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <App />
-    <pwa-install></pwa-install>
   </ThemeProvider>,
-  document.getElementById('root'),
+  document.getElementById("root")
 );
 
 serviceWorkerRegistration.register();

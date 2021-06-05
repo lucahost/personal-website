@@ -1,28 +1,28 @@
-import React from 'react';
+import React from "react";
 
-import biergit from './../../common/img/biergit.png';
-import uno from './../../common/img/uno.png';
-import muuvy from './../../common/img/muuvy.png';
+import biergit from "./../../common/img/biergit.png";
+import uno from "./../../common/img/uno.png";
+import muuvy from "./../../common/img/muuvy.png";
 
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import {
   List,
   ListItemIcon,
   ListItemText,
   Icon,
   ListItem,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
   createStyles({
     projectContainer: {
-      color: 'black',
+      color: "black",
     },
     projectAvatar: {
-      width: '25px',
-      height: '25px',
+      width: "25px",
+      height: "25px",
     },
-  }),
+  })
 );
 function ListItemLink({ ...props }) {
   return <ListItem button component="a" {...props} />;
