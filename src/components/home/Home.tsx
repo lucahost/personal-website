@@ -3,6 +3,7 @@ import luca from "./../../common/img/luca.png";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Typography, Grid, Container, Fade } from "@material-ui/core";
+import { Computer, GitHub, LinkedIn, Twitter } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,20 +73,50 @@ export const Home: React.FC = () => {
         <Container maxWidth="xs">
           <ul className={classes.noListStyle}>
             <li>
-              {"{"}0{"} "}
+              {"{"}
+              <Computer />
+              {"} "}
               <Link className={classes.link} to="/projects">
                 Projects
               </Link>
             </li>
             <li>
-              {"{"}1{"} "}
+              {"{"}
+              <GitHub />
+              {"} "}
               <a
                 className={classes.link}
                 href="https://github.com/lucahost"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Github
+                GitHub
+              </a>
+            </li>
+            <li>
+              {"{"}
+              <LinkedIn />
+              {"} "}
+              <a
+                className={classes.link}
+                href="https://www.linkedin.com/in/lucahostettler/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              {"{"}
+              <Twitter />
+              {"} "}
+              <a
+                className={classes.link}
+                href="https://twitter.com/luca_host"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Twitter
               </a>
             </li>
           </ul>

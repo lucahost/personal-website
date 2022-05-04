@@ -32,7 +32,7 @@ const App: React.FC = () => {
   return (
     <div className={classes.root}>
       <Router>
-        <Container component="main" maxWidth="xl" className={classes.main}>
+        <Container component="main" maxWidth={false} className={classes.main}>
           <NavigationDrawer />
           <HomeRoutes />
         </Container>
