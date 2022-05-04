@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import luca from "./../../common/img/luca.png";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Typography, Grid, Container, Fade } from "@material-ui/core";
+import { Typography, Grid, Container, Fade, Input } from "@material-ui/core";
 import { Computer, GitHub, LinkedIn, Twitter } from "@material-ui/icons";
+import {
+  ReactPlugin,
+  useAppInsightsContext,
+  useTrackMetric,
+} from "@microsoft/applicationinsights-react-js";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,11 +42,30 @@ export const Home: React.FC = () => {
   const classes = useStyles();
   const [blink, setBlink] = useState(true);
 
+  const appInsightsContext = useAppInsightsContext();
+  useTrackMetric(appInsightsContext, "Home");
+
   useEffect(() => {
     setTimeout(() => {
       setBlink(!blink);
     }, 350);
   });
+
+  const inputKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+    appInsights: ReactPlugin
+  ) => {
+    if (event.code === "Enter" || event.code === "NumpadEnter") {
+      console.log(`Enter key was pressed. ${event.currentTarget.value}.`);
+      event.preventDefault();
+      appInsights.trackEvent({
+        name: "Home Enter Key",
+        properties: {
+          text: event.currentTarget.value,
+        },
+      });
+    }
+  };
 
   return (
     <Grid
@@ -123,12 +147,24 @@ export const Home: React.FC = () => {
         </Container>
       </Grid>
       <Grid item xs={12}>
-        <Typography className={classes.courier}>
-          <span>fsociety~# </span>
-          <Fade in={blink}>
-            <span>_</span>
-          </Fade>
-        </Typography>
+        <Grid container alignItems="center" justifyContent="center">
+          <Typography className={classes.courier}>
+            <span>fsociety~# </span>
+            <Fade in={blink}>
+              <span>_</span>
+            </Fade>
+          </Typography>
+          <Input
+            type="text"
+            onKeyDown={(event) => inputKeyDown(event, appInsightsContext)}
+            disableUnderline
+            style={{
+              width: "10%",
+              fontSize: "calc(10px + 2vmin)",
+              fontFamily: "Courier New",
+            }}
+          />
+        </Grid>
       </Grid>
     </Grid>
   );

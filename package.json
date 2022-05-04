@@ -5,6 +5,8 @@
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@microsoft/applicationinsights-react-js": "^3.3.2",
+    "@microsoft/applicationinsights-web": "^2.8.2",
     "@pwabuilder/pwainstall": "^1.6.7",
     "@pwabuilder/pwaupdate": "^0.2.1",
     "@types/jest": "27.5.0",
