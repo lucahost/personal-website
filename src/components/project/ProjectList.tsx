@@ -44,7 +44,7 @@ export const ProjectsList: React.FC = () => {
           </ListItemIcon>
           <ListItemText primary="Blog" />
         </ListItemLink>
-        <ListItemLink href="https://biergit.ch">
+        <ListItemLink href="https://github.com/biergit-ch">
           <ListItemIcon>
             <img
               src={biergit}

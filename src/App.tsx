@@ -2,13 +2,14 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Typography, Container } from "@material-ui/core";
-import Routes from "./Routes";
 import NavigationDrawer from "./common/NavigationDrawer";
+import HomeRoutes from "./HomeRoutes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      height: "100vh",
       flexDirection: "column",
       display: "flex",
       minHeight: "-webkit-fill-available",
@@ -33,7 +34,7 @@ const App: React.FC = () => {
       <Router>
         <Container component="main" maxWidth="xl" className={classes.main}>
           <NavigationDrawer />
-          <Routes />
+          <HomeRoutes />
         </Container>
         <footer className={classes.footer}>
           <Container maxWidth="sm">

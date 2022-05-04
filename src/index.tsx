@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
@@ -9,12 +9,14 @@ import { ThemeProvider } from "@material-ui/styles";
 import theme from "./theme";
 import "@pwabuilder/pwainstall";
 
-ReactDOM.render(
+const container = document.getElementById("root");
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <App />
-  </ThemeProvider>,
-  document.getElementById("root")
+  </ThemeProvider>
 );
 
 serviceWorkerRegistration.register();
