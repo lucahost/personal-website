@@ -16,11 +16,10 @@ steps:
   - script: yarn build
     displayName: "yarn build"
 
-  - task: Bash@3
-    inputs:
-      targetType: "inline"
-      script: "scp -vvv -i $CERT_PATH -o StrictHostKeyChecking=no -r build/* luca@159.65.126.196:/var/www/personal-website"
-      workingDirectory: "$(System.DefaultWorkingDirectory)"
+  - script: |
+      chmod 400 $CERT_PATH
+      scp -vvv -i $CERT_PATH -o StrictHostKeyChecking=no -r build/* luca@159.65.126.196:/var/www/personal-website
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
     env:
       CERT_PATH: $(sshCert.secureFilePath)
 
