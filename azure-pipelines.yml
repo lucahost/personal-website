@@ -29,3 +29,12 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'ssh-do-luca'
+    sourceFolder: '$(System.ArtifactStagingDirectory)/_lucahost.personal-website/drop/build'
+    contents: '**'
+    targetFolder: '/var/www/personal-website'
+    readyTimeout: '20000'
+    failOnEmptySource: true
