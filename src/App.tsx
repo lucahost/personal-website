@@ -1,65 +1,62 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
+
 import { BrowserRouter as Router } from "react-router-dom";
-import { createStyles, makeStyles } from "@mui/styles";
 import { Typography, Container } from "@mui/material";
 import NavigationDrawer from "./common/NavigationDrawer";
 import HomeRoutes from "./HomeRoutes";
-
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import theme from "./theme";
-import { AppInsightsContext, ReactPlugin } from "@microsoft/applicationinsights-react-js";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import {
+  AppInsightsContext,
+  ReactPlugin,
+} from "@microsoft/applicationinsights-react-js";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      height: "100vh",
-      flexDirection: "column",
-      display: "flex",
-      minHeight: "-webkit-fill-available",
-    },
-    main: {
-      marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(2),
-      height: "100%",
-    },
-    footer: {
-      padding: theme.spacing(4),
-      marginTop: "auto",
-      textAlign: "center",
-    },
-  })
-);
+import theme from "./theme";
 
 const reactPlugin = new ReactPlugin();
 const appInsights = new ApplicationInsights({
   config: {
     instrumentationKey: "00e2b360-d361-4bf6-90d1-1245dd60fa93",
     extensions: [reactPlugin],
-    enableAutoRouteTracking: true
+    enableAutoRouteTracking: true,
   },
 });
 appInsights.loadAppInsights();
 
 export default function App() {
-  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppInsightsContext.Provider value={reactPlugin}>
-        <div className={classes.root}>
+        <div
+          style={{
+            flexGrow: 1,
+            height: "100vh",
+            flexDirection: "column",
+            display: "flex",
+            minHeight: "-webkit-fill-available",
+          }}
+        >
           <Router>
             <Container
               component="main"
               maxWidth={false}
-              className={classes.main}
+              sx={{
+                mt: theme.spacing(4),
+                mb: theme.spacing(2),
+                height: "100%",
+              }}
             >
               <NavigationDrawer />
               <HomeRoutes />
             </Container>
-            <footer className={classes.footer}>
+            <footer
+              style={{
+                padding: theme.spacing(2),
+                marginTop: "auto",
+                textAlign: "center",
+              }}
+            >
               <Container maxWidth="sm">
                 <Typography>
                   Made with{" "}
@@ -75,4 +72,4 @@ export default function App() {
       </AppInsightsContext.Provider>
     </ThemeProvider>
   );
-};
+}

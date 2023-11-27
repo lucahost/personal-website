@@ -1,7 +1,7 @@
 // This is the "Offline page" service worker
 
 importScripts(
-  "https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js"
+  "https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js",
 );
 
 const CACHE = "pwabuilder-page";
@@ -17,7 +17,7 @@ self.addEventListener("message", (event) => {
 
 self.addEventListener("install", async (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage))
+    caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage)),
   );
 });
 
@@ -43,7 +43,7 @@ self.addEventListener("fetch", (event) => {
           const cachedResp = await cache.match(offlineFallbackPage);
           return cachedResp;
         }
-      })()
+      })(),
     );
   }
 });

@@ -1,21 +1,34 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-// it could be your App.tsx file or theme file that is included in your tsconfig.json
-import { Theme } from '@mui/material/styles';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface (remove this line if you don't have the rule enabled)
-  interface DefaultTheme extends Theme { }
-}
 
 // A custom theme for this app
 const theme = createTheme({
+  components: {
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontSize: "0.9rem",
+        },
+        secondary: {
+          fontSize: "0.8rem",
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          width: "25px",
+          height: "25px",
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: "#0288d1",
     },
     secondary: {
-      main: "#ff4081",
+      main: "#ffffff",
     },
     error: {
       main: red.A400,
@@ -27,7 +40,7 @@ const theme = createTheme({
       primary: "white",
     },
   },
-  spacing: 8,
+  spacing: 14,
 });
 
 export default theme;

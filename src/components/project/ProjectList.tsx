@@ -1,33 +1,21 @@
 import React from "react";
 
-import { createStyles, makeStyles } from "@mui/styles";
 import {
   List,
   ListItemIcon,
   ListItemText,
   Icon,
-  ListItem,
+  colors,
+  ListItemButton,
 } from "@mui/material";
 import { GitHub, LinkedIn } from "@mui/icons-material";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    projectContainer: {
-      color: "black",
-    },
-    projectAvatar: {
-      width: "25px",
-      height: "25px",
-    },
-  })
-);
 function ListItemLink({ ...props }) {
-  return <ListItem button component="a" {...props} />;
+  return <ListItemButton component="a" {...props} />;
 }
 export const ProjectsList: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.projectContainer}>
+    <div style={{ color: colors.blueGrey[300] }}>
       <List component="nav">
         <ListItemLink href="/">
           <ListItemIcon>
