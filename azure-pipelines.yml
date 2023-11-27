@@ -18,8 +18,9 @@ steps:
 
   - script: |
       chmod 400 $CERT_PATH
-      scp -vvv -i $CERT_PATH -o StrictHostKeyChecking=no -r build/* luca@159.65.126.196:/var/www/personal-website
+      scp -i $CERT_PATH -o StrictHostKeyChecking=no -r build/* luca@159.65.126.196:/var/www/personal-website
     workingDirectory: "$(System.DefaultWorkingDirectory)"
+    displayName: "copy files over ssh to digitalocean droplet"
     env:
       CERT_PATH: $(sshCert.secureFilePath)
 
