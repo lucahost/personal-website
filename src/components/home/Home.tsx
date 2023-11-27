@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import luca from "./../../common/img/luca.png";
 import { Link } from "react-router-dom";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Typography, Grid, Container, Fade, Input } from "@material-ui/core";
-import { Computer, GitHub, LinkedIn, Twitter } from "@material-ui/icons";
+import { createStyles, makeStyles } from "@mui/styles";
+import { Typography, Grid, Container, Fade, Input } from "@mui/material";
+import { Computer, GitHub, LinkedIn, Twitter } from "@mui/icons-material";
 import {
   ReactPlugin,
   useAppInsightsContext,
   useTrackMetric,
 } from "@microsoft/applicationinsights-react-js";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     homeContainer: {
       marginTop: theme.spacing(20),
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Home: React.FC = () => {
+export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
   const classes = useStyles();
   const [blink, setBlink] = useState(true);
 

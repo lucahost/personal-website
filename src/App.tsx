@@ -1,14 +1,17 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Typography, Container } from "@material-ui/core";
+import { createStyles, makeStyles } from "@mui/styles";
+import { Typography, Container } from "@mui/material";
 import NavigationDrawer from "./common/NavigationDrawer";
 import HomeRoutes from "./HomeRoutes";
+
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import theme from "./theme";
 import { AppInsightsContext, ReactPlugin } from "@microsoft/applicationinsights-react-js";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -40,31 +43,36 @@ const appInsights = new ApplicationInsights({
 });
 appInsights.loadAppInsights();
 
-const App: React.FC = () => {
+export default function App() {
   const classes = useStyles();
   return (
-    <AppInsightsContext.Provider value={reactPlugin}>
-      <div className={classes.root}>
-        <Router>
-          <Container component="main" maxWidth={false} className={classes.main}>
-            <NavigationDrawer />
-            <HomeRoutes />
-          </Container>
-          <footer className={classes.footer}>
-            <Container maxWidth="sm">
-              <Typography>
-                Made with{" "}
-                <span role="img" aria-label="heart">
-                  ❤️
-                </span>{" "}
-                in <b>Zurich</b>
-              </Typography>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppInsightsContext.Provider value={reactPlugin}>
+        <div className={classes.root}>
+          <Router>
+            <Container
+              component="main"
+              maxWidth={false}
+              className={classes.main}
+            >
+              <NavigationDrawer />
+              <HomeRoutes />
             </Container>
-          </footer>
-        </Router>
-      </div>
-    </AppInsightsContext.Provider>
+            <footer className={classes.footer}>
+              <Container maxWidth="sm">
+                <Typography>
+                  Made with{" "}
+                  <span role="img" aria-label="heart">
+                    ❤️
+                  </span>{" "}
+                  in <b>Zurich</b>
+                </Typography>
+              </Container>
+            </footer>
+          </Router>
+        </div>
+      </AppInsightsContext.Provider>
+    </ThemeProvider>
   );
 };
-
-export default App;

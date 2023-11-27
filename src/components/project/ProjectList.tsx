@@ -1,14 +1,14 @@
 import React from "react";
 
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@mui/styles";
 import {
   List,
   ListItemIcon,
   ListItemText,
   Icon,
   ListItem,
-} from "@material-ui/core";
-import { GitHub, LinkedIn } from "@material-ui/icons";
+} from "@mui/material";
+import { GitHub, LinkedIn } from "@mui/icons-material";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() =>
 function ListItemLink({ ...props }) {
   return <ListItem button component="a" {...props} />;
 }
-export const ProjectsList: React.FC = () => {
+export const ProjectsList: React.FC<React.PropsWithChildren<unknown>> = () => {
   const classes = useStyles();
   return (
     <div className={classes.projectContainer}>

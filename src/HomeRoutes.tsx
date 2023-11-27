@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router";
 import { Home } from "./components/home/Home";
 import { Projects } from "./components/project/Projects";
 
-const HomeRoutes: React.FC = () => {
+const HomeRoutes: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />

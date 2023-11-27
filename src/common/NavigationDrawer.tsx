@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import clsx from "clsx";
 
-import { Drawer } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import { Drawer } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import { ProjectsList } from "../components/project/ProjectList";
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const NavigationDrawer: React.FC = () => {
+const NavigationDrawer: React.FC<React.PropsWithChildren<unknown>> = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

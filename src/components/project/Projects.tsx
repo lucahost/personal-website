@@ -1,9 +1,7 @@
 import React from "react";
 
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import {
   List,
-  ListItem,
   ListItemText,
   ListItemIcon,
   Card,
@@ -12,7 +10,9 @@ import {
   Container,
   ListItemSecondaryAction,
   IconButton,
-} from "@material-ui/core";
+  ListItemButton,
+} from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 
 import biergit from "./../../common/img/biergit.png";
 import uno from "./../../common/img/uno.png";
@@ -22,9 +22,9 @@ import portal from "./../../common/img/portal.png";
 import drugstore from "./../../common/img/drugstore.png";
 import network from "./../../common/img/network.png";
 import smartContracts from "./../../common/img/smartContracts.png";
-import { Computer, PictureAsPdf } from "@material-ui/icons";
+import { Computer, PictureAsPdf } from "@mui/icons-material";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     projectContainer: {
       marginTop: theme.spacing(9),
@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 function ListItemLink({ ...props }) {
-  return <ListItem button component="a" {...props} />;
+  return <ListItemButton component="a" {...props} />;
 }
 
-export const Projects: React.FC = () => {
+export const Projects: React.FC<React.PropsWithChildren<unknown>> = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="xs" className={classes.projectContainer}>
+    <Container maxWidth="sm" className={classes.projectContainer}>
       <Typography className={classes.courier} variant="h4">
         My Projects
       </Typography>
@@ -63,6 +63,31 @@ export const Projects: React.FC = () => {
                 <Computer />
               </ListItemIcon>
               <ListItemText primary="Website" secondary="React" />
+            </ListItemLink>
+            <ListItemLink
+              href="https://github.com/lucahost/bachelor-thesis"
+              target="_blank"
+            >
+              <ListItemIcon>
+                <img
+                  src={smartContracts}
+                  className={classes.projectAvatar}
+                  alt="Bachelor Thesis"
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary="Quantitative Analysis of Graph Metrics (2023)"
+                secondary="Network-Analysis / Data-Science / Paper"
+              />
+              <ListItemSecondaryAction>
+                <IconButton
+                  aria-label="s-c-file-open"
+                  href="https://hostettler.io/static/media/thesis-hostettler.pdf"
+                  target="_blank"
+                >
+                  <PictureAsPdf />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItemLink>
             <ListItemLink
               href="https://github.com/lucahost/eth-smart-contracts"

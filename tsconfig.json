@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,7 +15,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./node_modules/@types/", "./src/global.d.ts"]
+    "typeRoots": ["./node_modules/@types/", "./src/global.d.ts"],
+    "paths": {
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+    }
   },
-  "include": ["src", "public/pwabuilder-sw-register.js"]
+  "include": ["src", "public/pwabuilder-sw-register.js"],
 }
