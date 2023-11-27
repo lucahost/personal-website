@@ -19,8 +19,7 @@ steps:
   - task: Bash@3
     inputs:
       targetType: "inline"
-      script: "scp -i $CERT_PATH -o StrictHostKeyChecking=no -q -r build/* luca@159.65.126.196:/var/www/personal-website"
-      failOnStderr: true
+      script: "scp -vvv -i $CERT_PATH -o StrictHostKeyChecking=no -r build/* luca@159.65.126.196:/var/www/personal-website"
       workingDirectory: "$(System.DefaultWorkingDirectory)"
     env:
       CERT_PATH: $(sshCert.secureFilePath)
