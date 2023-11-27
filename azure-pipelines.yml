@@ -19,11 +19,11 @@ steps:
   - task: Bash@3
     inputs:
       targetType: "inline"
-      script: "scp -i $(PEM_PATH) -r build/* luca@159.65.126.196:/var/www/personal-website"
+      script: "scp -i $CERT_PATH -r build/* luca@159.65.126.196:/var/www/personal-website"
       failOnStderr: true
       workingDirectory: "$(System.DefaultWorkingDirectory)"
     env:
-      PEM_PATH: $(sshCert.secureFilePath)
+      CERT_PATH: $(sshCert.secureFilePath)
 
   - task: CopyFiles@2
     inputs:
