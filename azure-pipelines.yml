@@ -33,7 +33,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'ssh-do-luca'
-    sourceFolder: '$(System.ArtifactStagingDirectory)/drop/build'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)/drop/build'
     contents: '**'
     targetFolder: '/var/www/personal-website'
     readyTimeout: '20000'
