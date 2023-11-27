@@ -61,6 +61,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/plugin-syntax-flow": "^7.23.3",
+    "@babel/plugin-transform-private-property-in-object": "^7.23.4",
     "@babel/plugin-transform-react-jsx": "^7.23.4",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.32",
