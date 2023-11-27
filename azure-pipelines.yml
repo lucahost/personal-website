@@ -11,11 +11,21 @@ pool:
 
 steps:
 
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'id_devops_to_do'
+
 - script: yarn
   displayName: 'yarn install'
 
 - script: yarn build
   displayName: 'yarn build'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'scp -i $(id_devops_to_do.secureFilePath) -r $(System.DefaultWorkingDirectory)/build/* luca@159.65.126.196:/var/www/personal-website'
+    failOnStderr: true
 
 - task: CopyFiles@2
   inputs:
@@ -23,15 +33,6 @@ steps:
     Contents: |
       build/**
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: CopyFilesOverSSH@0
-  inputs:
-    sshEndpoint: 'ssh-do-luca'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)'
-    contents: '**'
-    targetFolder: '/var/www/personal-website'
-    readyTimeout: '20000'
-    failOnEmptySource: true
 
 - task: PublishBuildArtifacts@1
   inputs:
