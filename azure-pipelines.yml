@@ -23,18 +23,18 @@ steps:
     Contents: |
       build/**
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'ssh-do-luca'
+    sourceFolder: '$(Build.ArtifactStagingDirectory)'
+    contents: '**'
+    targetFolder: '/var/www/personal-website'
+    readyTimeout: '20000'
+    failOnEmptySource: true
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-- task: CopyFilesOverSSH@0
-  inputs:
-    sshEndpoint: 'ssh-do-luca'
-    sourceFolder: '$(Build.ArtifactStagingDirectory)/drop/build'
-    contents: '**'
-    targetFolder: '/var/www/personal-website'
-    readyTimeout: '20000'
-    failOnEmptySource: true
