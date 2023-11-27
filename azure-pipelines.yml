@@ -1,41 +1,39 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
+  - task: DownloadSecureFile@1
+    name: sshCert
+    inputs:
+      secureFile: "id_devops_to_do"
 
-- task: DownloadSecureFile@1
-  inputs:
-    secureFile: 'id_devops_to_do'
+  - script: yarn
+    displayName: "yarn install"
 
-- script: yarn
-  displayName: 'yarn install'
+  - script: yarn build
+    displayName: "yarn build"
 
-- script: yarn build
-  displayName: 'yarn build'
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: "scp -i $(PEM_PATH) -r build/* luca@159.65.126.196:/var/www/personal-website"
+      failOnStderr: true
+      workingDirectory: "$(System.DefaultWorkingDirectory)"
+    env:
+      PEM_PATH: $(sshCert.secureFilePath)
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'scp -i $(id_devops_to_do.secureFilePath) -r $(System.DefaultWorkingDirectory)/build/* luca@159.65.126.196:/var/www/personal-website'
-    failOnStderr: true
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(System.DefaultWorkingDirectory)"
+      Contents: |
+        build/**
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: |
-      build/**
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "drop"
+      publishLocation: "Container"
