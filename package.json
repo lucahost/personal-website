@@ -2,49 +2,13 @@
   "name": "personal-website",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "license": "MIT",
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@microsoft/applicationinsights-react-js": "^17.0.2",
-    "@microsoft/applicationinsights-web": "^3.0.5",
-    "@mui/icons-material": "^5.14.18",
-    "@mui/material": "^5.14.18",
-    "@pwabuilder/pwainstall": "^1.6.7",
-    "@pwabuilder/pwaupdate": "^0.2.1",
-    "@types/jest": "29.5.10",
-    "@types/node": "20.10.0",
-    "@types/react": "18.2.38",
-    "@types/react-dom": "18.2.17",
-    "punycode": "^2.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^5.3.2",
-    "web-vitals": "^3.5.0",
-    "workbox-background-sync": "^7.0.0",
-    "workbox-broadcast-update": "^7.0.0",
-    "workbox-cacheable-response": "^7.0.0",
-    "workbox-core": "^7.0.0",
-    "workbox-expiration": "^7.0.0",
-    "workbox-google-analytics": "^7.0.0",
-    "workbox-navigation-preload": "^7.0.0",
-    "workbox-precaching": "^7.0.0",
-    "workbox-range-requests": "^7.0.0",
-    "workbox-routing": "^7.0.0",
-    "workbox-strategies": "^7.0.0",
-    "workbox-streams": "^7.0.0"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "lint": "tsc --noEmit && eslint \"**/*.{js,ts,tsx}\" --quiet --fix",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
@@ -58,25 +22,38 @@
       "last 1 safari version"
     ]
   },
+  "resolutions": {
+   "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
+  "dependencies": {
+    "@microsoft/applicationinsights-react-js": "^17.0.2",
+    "@microsoft/applicationinsights-web": "^3.0.5",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.15.12",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
+    "@vitejs/plugin-react": "^4.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
+    "styled-components": "^6.1.8",
+    "vite": "^5.1.5",
+    "vite-tsconfig-paths": "^4.3.1"
+  },
   "devDependencies": {
-    "@babel/core": "^7.23.3",
-    "@babel/plugin-syntax-flow": "^7.23.3",
-    "@babel/plugin-transform-private-property-in-object": "^7.23.4",
-    "@babel/plugin-transform-react-jsx": "^7.23.4",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "20.11.24",
+    "@types/react": "18.2.63",
+    "@types/react-dom": "18.2.20",
     "@types/react-router-dom": "^5.3.3",
-    "@types/styled-components": "^5.1.32",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.54.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "5.0.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "history": "^5.3.0",
-    "prettier": "^3.1.0",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.1.1"
   }
 }
