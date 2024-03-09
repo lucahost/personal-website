@@ -2,6 +2,7 @@
   "name": "personal-website",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.11.1",
