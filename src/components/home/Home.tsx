@@ -5,7 +5,6 @@ import {
   Container,
   Fade,
   Input,
-  useTheme,
   colors,
   Link,
   List,
@@ -23,7 +22,6 @@ import { CodeTypography } from "../../common/CodeTypography";
 import twitterX from "./../../common/img/twitterX.png";
 
 export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const theme = useTheme();
   const [blink, setBlink] = useState(true);
 
   const appInsightsContext = useAppInsightsContext();
@@ -56,7 +54,6 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
       container
       spacing={2}
       sx={{
-        mt: theme.spacing(8),
         fontSize: "calc(10px + 2vmin)",
         color: colors.grey[200],
         textAlign: "center",
