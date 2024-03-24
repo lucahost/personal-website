@@ -114,7 +114,7 @@ export const Projects = () => {
               />
             </ListItemLink>
             <ListItemLink
-              href="https://github.com/lucahost/network-analysis"
+              href="https://github.com/lucahost/ffhs-na"
               target="_blank"
             >
               <ListItemIcon>
