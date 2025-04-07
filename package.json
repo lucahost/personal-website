@@ -23,7 +23,7 @@
     ]
   },
   "resolutions": {
-   "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "dependencies": {
     "@microsoft/applicationinsights-react-js": "^17.0.2",
