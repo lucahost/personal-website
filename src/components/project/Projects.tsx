@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   List,
   ListItemText,
@@ -28,7 +26,7 @@ import { Computer, PictureAsPdf } from "@mui/icons-material";
 function ListItemLink({ ...props }) {
   return <ListItemButton component="a" {...props} />;
 }
-export const Projects: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const Projects = () => {
   const theme = useTheme();
 
   return (
@@ -54,7 +52,7 @@ export const Projects: React.FC<React.PropsWithChildren<unknown>> = () => {
         }}
       >
         <CardContent>
-          <List component="nav" style={{ maxHeight: 750, overflow: "auto" }}>
+          <List component="nav" style={{ maxHeight: "600px", overflow: "scroll" }}>
             <ListItemLink href="/">
               <ListItemIcon>
                 <Computer />
@@ -116,7 +114,7 @@ export const Projects: React.FC<React.PropsWithChildren<unknown>> = () => {
               />
             </ListItemLink>
             <ListItemLink
-              href="https://github.com/lucahost/network-analysis"
+              href="https://github.com/lucahost/ffhs-na"
               target="_blank"
             >
               <ListItemIcon>

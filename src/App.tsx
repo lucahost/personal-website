@@ -1,8 +1,5 @@
-import React from "react";
-
 import { BrowserRouter as Router } from "react-router-dom";
-import { Typography, Container } from "@mui/material";
-import NavigationDrawer from "./common/NavigationDrawer";
+import { Typography } from "@mui/material";
 import HomeRoutes from "./HomeRoutes";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
@@ -23,52 +20,27 @@ const appInsights = new ApplicationInsights({
 });
 appInsights.loadAppInsights();
 
-export default function App() {
+export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppInsightsContext.Provider value={reactPlugin}>
-        <div
-          style={{
-            flexGrow: 1,
-            height: "100vh",
-            flexDirection: "column",
-            display: "flex",
-            minHeight: "-webkit-fill-available",
-          }}
-        >
-          <Router>
-            <Container
-              component="main"
-              maxWidth={false}
-              sx={{
-                mt: theme.spacing(4),
-                mb: theme.spacing(2),
-                height: "100%",
-              }}
-            >
-              <NavigationDrawer />
-              <HomeRoutes />
-            </Container>
-            <footer
-              style={{
-                padding: theme.spacing(2),
-                marginTop: "auto",
-                textAlign: "center",
-              }}
-            >
-              <Container maxWidth="sm">
-                <Typography>
-                  Made with{" "}
-                  <span role="img" aria-label="heart">
-                    ❤️
-                  </span>{" "}
-                  in <b>Zurich</b>
-                </Typography>
-              </Container>
-            </footer>
-          </Router>
-        </div>
+        <Router>
+          <main style={{
+            marginTop: theme.spacing(8),
+          }}>
+            <HomeRoutes />
+          </main>
+          <footer style={{ position: "fixed", bottom: theme.spacing(2), width: "100%", textAlign: "center" }}>
+            <Typography>
+              Made with{" "}
+              <span role="img" aria-label="heart">
+                ❤️
+              </span>{" "}
+              in <b>Zurich</b>
+            </Typography>
+          </footer>
+        </Router>
       </AppInsightsContext.Provider>
     </ThemeProvider>
   );
