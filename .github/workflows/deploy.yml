@@ -1,53 +1,68 @@
-name: Build and Deploy
+name: Deploy
 
 on:
   push:
     branches: [ master ]
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  NODE_ENV: production
+  DEPLOY_PATH: /var/www/personal-website
+
 jobs:
   build:
+    name: Build Application
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [20.x]
+    timeout-minutes: 10
     
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
-      
-    - name: Setup Node.js ${{ matrix.node-version }}
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --prefer-offline --no-audit
       
-    - name: Run linting
-      run: npm run lint
-      
-    - name: Build application
+    - name: Quality checks
+      run: |
+        npx tsc --noEmit
+        npm run lint
+        
+    - name: Build for production
       run: npm run build
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-files
+        name: production-build-${{ github.sha }}
         path: dist/
-        retention-days: 7
+        retention-days: 30
+        compression-level: 9
 
   deploy:
+    name: Deploy to Production
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    timeout-minutes: 5
+    environment:
+      name: production
+      url: https://hostettler.io
     
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
-        name: build-files
+        name: production-build-${{ github.sha }}
         path: dist/
         
     - name: Setup SSH
@@ -55,15 +70,32 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         
-    - name: Add server to known hosts
+    - name: Configure SSH
       run: |
         mkdir -p ~/.ssh
-        ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan -t rsa,ed25519 ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'mkdir -p ${{ env.DEPLOY_PATH }}.tmp'
         
     - name: Deploy to server
       run: |
-        rsync -avz --delete dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/personal-website/
+        echo "🚀 Deploying to production..."
+        rsync -avz --delete --progress dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ env.DEPLOY_PATH }}.tmp/
+        
+        echo "🔄 Switching to new version..."
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
+          if [ -d ${{ env.DEPLOY_PATH }} ]; then
+            mv ${{ env.DEPLOY_PATH }} ${{ env.DEPLOY_PATH }}.backup
+          fi
+          mv ${{ env.DEPLOY_PATH }}.tmp ${{ env.DEPLOY_PATH }}
+          rm -rf ${{ env.DEPLOY_PATH }}.backup
+        '
         
     - name: Verify deployment
       run: |
-        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "ls -la /var/www/personal-website/"
+        echo "✅ Verifying deployment..."
+        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
+          ls -la ${{ env.DEPLOY_PATH }}/
+          echo "Files deployed: $(find ${{ env.DEPLOY_PATH }} -type f | wc -l)"
+          echo "Total size: $(du -sh ${{ env.DEPLOY_PATH }} | cut -f1)"
+        '
+        echo "✨ Deployment completed successfully!"

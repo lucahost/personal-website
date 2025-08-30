@@ -1,51 +1,69 @@
-name: Continuous Integration
+name: CI
 
 on:
-  push:
-    branches: [ dev, feature/* ]
   pull_request:
     branches: [ master, dev ]
+  push:
+    branches: [ dev, feature/* ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  lint-and-test:
+    name: Lint, Test & Build
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
+    timeout-minutes: 10
     
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
-      
-    - name: Setup Node.js ${{ matrix.node-version }}
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --prefer-offline --no-audit
       
-    - name: Type checking
+    - name: TypeScript type checking
       run: npx tsc --noEmit
       
-    - name: Run linting
+    - name: ESLint code quality
       run: npm run lint
       
     - name: Build application
       run: npm run build
-      
-    - name: Check bundle size
+      env:
+        NODE_ENV: production
+        
+    - name: Bundle size analysis
       run: |
-        echo "Bundle size analysis:"
-        ls -lah dist/assets/*.js | head -10
+        echo "📦 Bundle Analysis:"
+        du -sh dist/
+        echo "\n🗂️ Asset Breakdown:"
+        find dist/assets -name '*.js' -o -name '*.css' | head -10 | xargs ls -lah
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: github.event_name == 'pull_request'
+      with:
+        name: build-${{ github.sha }}
+        path: dist/
+        retention-days: 1
         
   security:
+    name: Security Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
       
     - name: Setup Node.js
@@ -55,10 +73,11 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --prefer-offline --no-audit
       
-    - name: Run security audit
+    - name: Security vulnerability scan
       run: npm audit --audit-level high
       
-    - name: Check for vulnerabilities
-      run: npm audit --audit-level moderate
+    - name: Dependency review
+      uses: actions/dependency-review-action@v4
+      if: github.event_name == 'pull_request'
