@@ -1,47 +1,51 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { Typography } from "@mui/material";
-import HomeRoutes from "./HomeRoutes";
-import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import {
-  AppInsightsContext,
-  ReactPlugin,
-} from "@microsoft/applicationinsights-react-js";
-import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-import theme from "./theme";
+/**
+ * Main application component with providers and routing
+ * @module App
+ */
 
-const reactPlugin = new ReactPlugin();
-const appInsights = new ApplicationInsights({
-  config: {
-    instrumentationKey: "00e2b360-d361-4bf6-90d1-1245dd60fa93",
-    extensions: [reactPlugin],
-    enableAutoRouteTracking: true,
-  },
-});
-appInsights.loadAppInsights();
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { CssBaseline, ThemeProvider, LinearProgress } from '@mui/material';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import theme from './theme';
 
-export const App = () => {
+// Lazy load routes for better performance
+const HomeRoutes = lazy(() => import('./HomeRoutes'));
+
+/**
+ * Root application component
+ * Provides theme, error boundaries, and routing
+ */
+export const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppInsightsContext.Provider value={reactPlugin}>
+    <ErrorBoundary
+      onError={(error, errorInfo) => {
+        // Log errors to console in development
+        if (import.meta.env.DEV) {
+          console.error('Application Error:', error, errorInfo);
+        }
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router>
-          <main style={{
-            marginTop: theme.spacing(8),
-          }}>
+          <Suspense
+            fallback={
+              <LinearProgress
+                sx={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  zIndex: 9999,
+                }}
+              />
+            }
+          >
             <HomeRoutes />
-          </main>
-          <footer style={{ position: "fixed", bottom: theme.spacing(2), width: "100%", textAlign: "center" }}>
-            <Typography>
-              Made with{" "}
-              <span role="img" aria-label="heart">
-                ❤️
-              </span>{" "}
-              in <b>Zurich</b>
-            </Typography>
-          </footer>
+          </Suspense>
         </Router>
-      </AppInsightsContext.Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
-}
+};
