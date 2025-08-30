@@ -1,12 +1,10 @@
 // @ts-check
 
-import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 
 export default tseslint.config(
-    eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
         ignores: ['node_modules/**', 'dist/**', 'build/**', 'vite.config.ts', 'vite-env.d.ts'],
