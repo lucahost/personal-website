@@ -168,7 +168,7 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
               <ListItemIcon>
                 <img
                   src={twitterX}
-                  alt="Twitter"
+                  alt="X"
                   style={{
                     width: '20px',
                     height: '20px',
@@ -177,11 +177,11 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
               </ListItemIcon>
               <ListItemText>
                 <Link
-                  href="https://twitter.com/luca_host"
+                  href="https://x.com/luca_host"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <CodeTypography>Twitter</CodeTypography>
+                  <CodeTypography>X</CodeTypography>
                 </Link>
               </ListItemText>
             </ListItem>
@@ -223,7 +223,7 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
             }}
           >
             <span style={{ opacity: 0.7 }}>~# </span>
-            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '120px', position: 'relative' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: { xs: '250px', sm: '350px', md: '400px' }, position: 'relative' }}>
               <Input
                 type="text"
                 value={state.inputValue}
