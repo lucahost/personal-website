@@ -38,7 +38,7 @@ jobs:
           cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: TypeScript type checking
         run: npx tsc --noEmit
