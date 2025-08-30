@@ -3,20 +3,20 @@
  * @module components/project/ProjectCard
  */
 
-import React, { memo } from 'react';
+import type { ProjectCardProps } from '../../types'
+import { GitHub, Launch, PictureAsPdf } from '@mui/icons-material'
 import {
-  CardContent,
-  CardActions,
-  CardMedia,
-  Typography,
-  Chip,
-  Box,
   alpha,
+  Box,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Typography,
   useTheme,
-} from '@mui/material';
-import { GitHub, Launch, PictureAsPdf } from '@mui/icons-material';
-import { AnimatedCard, IconButton, FadeIn } from '../ui';
-import type { ProjectCardProps } from '../../types';
+} from '@mui/material'
+import React, { memo } from 'react'
+import { AnimatedCard, FadeIn, IconButton } from '../ui'
 
 /**
  * Renders an individual project card with all metadata and actions
@@ -29,8 +29,8 @@ export const ProjectCard = memo<ProjectCardProps>(({
   categoryColor,
   categoryIcon,
 }) => {
-  const theme = useTheme();
-  const isListView = viewMode === 'list';
+  const theme = useTheme()
+  const isListView = viewMode === 'list'
 
   return (
     <FadeIn delay={index * 50} triggerOnScroll threshold={0.1}>
@@ -107,9 +107,9 @@ export const ProjectCard = memo<ProjectCardProps>(({
             </Box>
 
             {/* Title */}
-            <Typography 
-              variant="h6" 
-              component="h3" 
+            <Typography
+              variant="h6"
+              component="h3"
               gutterBottom
               sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
             >
@@ -119,9 +119,9 @@ export const ProjectCard = memo<ProjectCardProps>(({
             {/* Description */}
             <Box
               sx={{
-                mb: 2,
-                maxHeight: isListView ? 'auto' : { xs: 80, sm: 60 },
-                overflow: 'auto',
+                'mb': 2,
+                'maxHeight': isListView ? 'auto' : { xs: 80, sm: 60 },
+                'overflow': 'auto',
                 '&::-webkit-scrollbar': {
                   width: 4,
                 },
@@ -129,8 +129,8 @@ export const ProjectCard = memo<ProjectCardProps>(({
                   backgroundColor: 'transparent',
                 },
                 '&::-webkit-scrollbar-thumb': {
-                  backgroundColor: alpha(theme.palette.primary.main, 0.3),
-                  borderRadius: 2,
+                  'backgroundColor': alpha(theme.palette.primary.main, 0.3),
+                  'borderRadius': 2,
                   '&:hover': {
                     backgroundColor: alpha(theme.palette.primary.main, 0.5),
                   },
@@ -151,7 +151,7 @@ export const ProjectCard = memo<ProjectCardProps>(({
 
             {/* Technologies */}
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {project.technologies.map((tech) => (
+              {project.technologies.map(tech => (
                 <Chip
                   key={tech}
                   label={tech}
@@ -213,7 +213,7 @@ export const ProjectCard = memo<ProjectCardProps>(({
         </Box>
       </AnimatedCard>
     </FadeIn>
-  );
-});
+  )
+})
 
-ProjectCard.displayName = 'ProjectCard';
+ProjectCard.displayName = 'ProjectCard'

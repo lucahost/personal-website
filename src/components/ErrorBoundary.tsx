@@ -3,20 +3,21 @@
  * @module components/ErrorBoundary
  */
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Box, Typography, Button, Container, Paper } from '@mui/material';
-import { ErrorOutline, Refresh } from '@mui/icons-material';
+import type { ErrorInfo, ReactNode } from 'react'
+import { ErrorOutline, Refresh } from '@mui/icons-material'
+import { Box, Button, Container, Paper, Typography } from '@mui/material'
+import React, { Component } from 'react'
 
 interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  children: ReactNode
+  fallback?: ReactNode
+  onError?: (error: Error, errorInfo: ErrorInfo) => void
 }
 
 interface State {
-  hasError: boolean;
-  error: Error | null;
-  errorInfo: ErrorInfo | null;
+  hasError: boolean
+  error: Error | null
+  errorInfo: ErrorInfo | null
 }
 
 /**
@@ -25,24 +26,24 @@ interface State {
  */
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       hasError: false,
       error: null,
       errorInfo: null,
-    };
+    }
   }
 
   static getDerivedStateFromError(error: Error): Partial<State> {
-    return { hasError: true, error };
+    return { hasError: true, error }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('Error caught by boundary:', error, errorInfo);
-    this.setState({ errorInfo });
-    
+    console.error('Error caught by boundary:', error, errorInfo)
+    this.setState({ errorInfo })
+
     // Call optional error handler
-    this.props.onError?.(error, errorInfo);
+    this.props.onError?.(error, errorInfo)
   }
 
   handleReset = (): void => {
@@ -50,19 +51,19 @@ export class ErrorBoundary extends Component<Props, State> {
       hasError: false,
       error: null,
       errorInfo: null,
-    });
-    
+    })
+
     // Optionally reload the page
     if (!this.props.fallback) {
-      window.location.reload();
+      window.location.reload()
     }
-  };
+  }
 
   render(): ReactNode {
     if (this.state.hasError) {
       // Use custom fallback if provided
       if (this.props.fallback) {
-        return this.props.fallback;
+        return this.props.fallback
       }
 
       // Default error UI
@@ -91,11 +92,11 @@ export class ErrorBoundary extends Component<Props, State> {
                   mb: 2,
                 }}
               />
-              
+
               <Typography variant="h4" gutterBottom>
                 Oops! Something went wrong
               </Typography>
-              
+
               <Typography
                 variant="body1"
                 color="text.secondary"
@@ -145,9 +146,9 @@ export class ErrorBoundary extends Component<Props, State> {
             </Paper>
           </Box>
         </Container>
-      );
+      )
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }

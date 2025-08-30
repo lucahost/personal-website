@@ -2,11 +2,11 @@ name: Deploy
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
     inputs:
       skip_cache:
-        description: 'Skip npm cache'
+        description: Skip npm cache
         required: false
         default: false
         type: boolean
@@ -24,37 +24,37 @@ jobs:
     name: Build Application
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Quality checks
-      run: |
-        npm run typecheck
-        npm run lint
-        
-    - name: Build for production
-      run: npm run build
-      
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: production-build-${{ github.sha }}
-        path: dist/
-        retention-days: 30
-        compression-level: 9
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quality checks
+        run: |
+          npm run typecheck
+          npm run lint
+
+      - name: Build for production
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build-${{ github.sha }}
+          path: dist/
+          retention-days: 30
+          compression-level: 9
 
   deploy:
     name: Deploy to Production
@@ -64,45 +64,45 @@ jobs:
     environment:
       name: production
       url: https://hostettler.io
-    
+
     steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: production-build-${{ github.sha }}
-        path: dist/
-        
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        
-    - name: Configure SSH
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -t rsa,ed25519 ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'mkdir -p ${{ env.DEPLOY_PATH }}.tmp'
-        
-    - name: Deploy to server
-      run: |
-        echo "🚀 Deploying to production..."
-        rsync -avz --delete --progress dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ env.DEPLOY_PATH }}.tmp/
-        
-        echo "🔄 Switching to new version..."
-        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
-          if [ -d ${{ env.DEPLOY_PATH }} ]; then
-            mv ${{ env.DEPLOY_PATH }} ${{ env.DEPLOY_PATH }}.backup
-          fi
-          mv ${{ env.DEPLOY_PATH }}.tmp ${{ env.DEPLOY_PATH }}
-          rm -rf ${{ env.DEPLOY_PATH }}.backup
-        '
-        
-    - name: Verify deployment
-      run: |
-        echo "✅ Verifying deployment..."
-        ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
-          ls -la ${{ env.DEPLOY_PATH }}/
-          echo "Files deployed: $(find ${{ env.DEPLOY_PATH }} -type f | wc -l)"
-          echo "Total size: $(du -sh ${{ env.DEPLOY_PATH }} | cut -f1)"
-        '
-        echo "✨ Deployment completed successfully!"
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: production-build-${{ github.sha }}
+          path: dist/
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -t rsa,ed25519 ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'mkdir -p ${{ env.DEPLOY_PATH }}.tmp'
+
+      - name: Deploy to server
+        run: |
+          echo "🚀 Deploying to production..."
+          rsync -avz --delete --progress dist/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ env.DEPLOY_PATH }}.tmp/
+
+          echo "🔄 Switching to new version..."
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
+            if [ -d ${{ env.DEPLOY_PATH }} ]; then
+              mv ${{ env.DEPLOY_PATH }} ${{ env.DEPLOY_PATH }}.backup
+            fi
+            mv ${{ env.DEPLOY_PATH }}.tmp ${{ env.DEPLOY_PATH }}
+            rm -rf ${{ env.DEPLOY_PATH }}.backup
+          '
+
+      - name: Verify deployment
+        run: |
+          echo "✅ Verifying deployment..."
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '
+            ls -la ${{ env.DEPLOY_PATH }}/
+            echo "Files deployed: $(find ${{ env.DEPLOY_PATH }} -type f | wc -l)"
+            echo "Total size: $(du -sh ${{ env.DEPLOY_PATH }} | cut -f1)"
+          '
+          echo "✨ Deployment completed successfully!"

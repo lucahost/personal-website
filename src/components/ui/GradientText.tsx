@@ -3,18 +3,19 @@
  * @module components/ui/GradientText
  */
 
-import React, { memo } from 'react';
-import { Typography, TypographyProps } from '@mui/material';
+import type { TypographyProps } from '@mui/material'
+import { Typography } from '@mui/material'
+import React, { memo } from 'react'
 
 export interface GradientTextProps extends TypographyProps {
   /** Gradient start color */
-  startColor?: string;
+  startColor?: string
   /** Gradient end color */
-  endColor?: string;
+  endColor?: string
   /** Gradient angle in degrees */
-  angle?: number;
+  angle?: number
   /** Whether to animate the gradient */
-  animate?: boolean;
+  animate?: boolean
 }
 
 /**
@@ -34,23 +35,25 @@ export const GradientText = memo<GradientTextProps>(({
     <Typography
       {...props}
       sx={{
-        background: `linear-gradient(${angle}deg, ${startColor} 0%, ${endColor} 100%)`,
-        backgroundClip: 'text',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundSize: animate ? '200% 200%' : undefined,
-        animation: animate ? 'gradientShift 3s ease infinite' : undefined,
-        '@keyframes gradientShift': animate ? {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        } : undefined,
+        'background': `linear-gradient(${angle}deg, ${startColor} 0%, ${endColor} 100%)`,
+        'backgroundClip': 'text',
+        'WebkitBackgroundClip': 'text',
+        'WebkitTextFillColor': 'transparent',
+        'backgroundSize': animate ? '200% 200%' : undefined,
+        'animation': animate ? 'gradientShift 3s ease infinite' : undefined,
+        '@keyframes gradientShift': animate
+          ? {
+              '0%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            }
+          : undefined,
         ...sx,
       }}
     >
       {children}
     </Typography>
-  );
-});
+  )
+})
 
-GradientText.displayName = 'GradientText';
+GradientText.displayName = 'GradientText'
