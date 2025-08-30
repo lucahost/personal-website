@@ -172,7 +172,7 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
             width: "fit-content",
             minWidth: { xs: "200px", sm: "250px" }
           }}
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             const input = e.currentTarget.querySelector('input');
             if (input) input.focus();
           }}

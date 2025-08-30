@@ -16,30 +16,7 @@ import {
 } from '@mui/material';
 import { GitHub, Launch, PictureAsPdf } from '@mui/icons-material';
 import { AnimatedCard, IconButton, FadeIn } from '../ui';
-
-type ViewMode = 'grid' | 'list';
-
-interface Project {
-  id: string;
-  title: string;
-  year: string;
-  description: string;
-  image: string;
-  technologies: readonly string[];
-  category: 'web' | 'mobile' | 'research' | 'game';
-  githubUrl?: string;
-  liveUrl?: string;
-  pdfUrl?: string;
-  featured?: boolean;
-}
-
-interface ProjectCardProps {
-  project: Project;
-  viewMode: ViewMode;
-  index: number;
-  categoryColor: string;
-  categoryIcon: React.ReactElement;
-}
+import type { ProjectCardProps } from '../../types';
 
 /**
  * Renders an individual project card with all metadata and actions

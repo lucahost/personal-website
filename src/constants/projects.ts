@@ -7,8 +7,9 @@ import drugstore from '../common/img/drugstore.png';
 import network from '../common/img/network.png';
 import smartContracts from '../common/img/smartContracts.png';
 import thesis from '../common/img/thesis.png';
+import type { Project, ProjectCategory } from '../types';
 
-export const PROJECTS_DATA = [
+export const PROJECTS_DATA: readonly Project[] = [
   {
     id: 'thesis',
     title: 'Quantitative Analysis of Graph Metrics',
@@ -107,9 +108,9 @@ export const PROJECTS_DATA = [
   },
 ];
 
-export const CATEGORY_COLORS = {
+export const CATEGORY_COLORS: Record<ProjectCategory, string> = {
   web: '#2196F3',
   mobile: '#4CAF50',
   research: '#FF9800',
   game: '#9C27B0',
-};
+} as const;

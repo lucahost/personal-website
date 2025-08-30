@@ -20,16 +20,7 @@ import {
   ViewModule,
   ViewList,
 } from '@mui/icons-material';
-
-type ProjectCategory = 'web' | 'mobile' | 'research' | 'game';
-
-interface ProjectFiltersProps {
-  selectedCategory: string;
-  viewMode: 'grid' | 'list';
-  projectCounts: Record<ProjectCategory | 'all', number>;
-  onCategoryChange: (category: string) => void;
-  onViewModeChange: (mode: 'grid' | 'list') => void;
-}
+import type { ProjectCategory, ProjectFiltersProps } from '../../types';
 
 const categoryIcons: Record<ProjectCategory, React.ReactElement> = {
   web: <Web fontSize="small" />,

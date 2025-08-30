@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
+import type { Project, ProjectCounts } from '../types';
 
-export const useProjects = (initialProjects: any[]) => {
+export const useProjects = (initialProjects: readonly Project[]) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -21,15 +22,15 @@ export const useProjects = (initialProjects: any[]) => {
       filtered = filtered.filter(p =>
         p.title.toLowerCase().includes(query) ||
         p.description.toLowerCase().includes(query) ||
-        p.technologies.some((tech: string) => tech.toLowerCase().includes(query))
+        p.technologies.some((tech) => tech.toLowerCase().includes(query))
       );
     }
 
     return filtered;
   }, [initialProjects, selectedCategory, searchQuery]);
 
-  const projectCounts = useMemo(() => {
-    const counts = {
+  const projectCounts = useMemo((): ProjectCounts => {
+    const counts: ProjectCounts = {
       all: initialProjects.length,
       web: 0,
       mobile: 0,
@@ -37,12 +38,11 @@ export const useProjects = (initialProjects: any[]) => {
       game: 0,
     };
 
-    initialProjects.forEach((project: any) => {
+    initialProjects.forEach((project) => {
       const category = project.category;
-      if (category === 'web') counts.web++;
-      else if (category === 'mobile') counts.mobile++;
-      else if (category === 'research') counts.research++;
-      else if (category === 'game') counts.game++;
+      if (category in counts) {
+        counts[category]++;
+      }
     });
 
     return counts;

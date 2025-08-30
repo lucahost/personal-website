@@ -9,11 +9,10 @@ import { Web, Android, School, Games, Home } from '@mui/icons-material';
 import { Section, GradientText, SkeletonLoader } from '../ui';
 import { useProjects, useLocalStorage } from '../../hooks';
 import { PROJECTS_DATA, CATEGORY_COLORS } from '../../constants/projects';
-
+import type { ProjectCategory } from '../../types';
 import { ProjectFilters } from './ProjectFilters';
 
 type ViewMode = 'grid' | 'list';
-type ProjectCategory = 'web' | 'mobile' | 'research' | 'game';
 
 // Lazy load ProjectCard for better performance
 const ProjectCard = lazy(() => import('./ProjectCard').then(m => ({ default: m.ProjectCard })));
@@ -123,8 +122,8 @@ export const Projects: React.FC = () => {
                   project={project}
                   viewMode={viewMode}
                   index={index}
-                  categoryColor={CATEGORY_COLORS[project.category as ProjectCategory]}
-                  categoryIcon={categoryIcons[project.category as ProjectCategory]}
+                  categoryColor={CATEGORY_COLORS[project.category]}
+                  categoryIcon={categoryIcons[project.category]}
                 />
               </Grid>
             ))
