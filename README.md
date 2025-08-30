@@ -25,23 +25,27 @@ Modern, responsive personal portfolio website. Features a sleek design, interact
 ## 🛠️ Tech Stack
 
 ### **Frontend Framework**
+
 - **React 19.1.1** - Latest React with concurrent features
 - **TypeScript 5.9** - Full type safety and developer experience
 - **Vite 7.1.3** - Lightning-fast build tool and dev server
 
 ### **UI & Styling**
+
 - **Material-UI v7.3.1** - Modern React component library
 - **Styled Components** - CSS-in-JS styling solution
 - **Material Icons** - Comprehensive icon library
 - **Custom Animations** - Smooth transitions and hover effects
 
 ### **Development Tools**
+
 - **ESLint 9** - Advanced code linting and quality checks
 - **TypeScript ESLint** - Type-aware linting rules
 - **React Hooks ESLint** - React-specific linting
 - **Browserslist** - Cross-browser compatibility
 
 ### **Build & Deployment**
+
 - **GitHub Actions** - Continuous Integration/Deployment
 - **Security Auditing** - Automated vulnerability scanning
 - **DigitalOcean Droplet** - Production hosting
@@ -51,6 +55,7 @@ Modern, responsive personal portfolio website. Features a sleek design, interact
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - **Node.js** (v18 or higher)
 - **npm** (v8 or higher)
 
@@ -79,7 +84,7 @@ npm start
 # Build for production
 npm run build
 
-# Run ESLint code quality checks  
+# Run ESLint code quality checks
 npm run lint
 
 # Preview production build locally
@@ -114,4 +119,4 @@ src/
 
 **Built with ❤️ by [Luca Hostettler](https://github.com/lucahost)**
 
-*Showcasing modern web development practices and cutting-edge technologies for potential employers and collaborators.*
+_Showcasing modern web development practices and cutting-edge technologies for potential employers and collaborators._

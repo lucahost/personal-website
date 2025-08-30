@@ -3,18 +3,18 @@
  * @module components/ui/SkeletonLoader
  */
 
-import React, { memo } from 'react';
-import { Skeleton, Box, Grid } from '@mui/material';
+import { Box, Grid, Skeleton } from '@mui/material'
+import React, { memo, useMemo } from 'react'
 
 export interface SkeletonLoaderProps {
   /** Type of skeleton layout */
-  variant: 'card' | 'list' | 'text' | 'custom';
+  variant: 'card' | 'list' | 'text' | 'custom'
   /** Number of skeleton items to show */
-  count?: number;
+  count?: number
   /** Custom height for skeleton */
-  height?: number | string;
+  height?: number | string
   /** Whether to animate */
-  animation?: 'pulse' | 'wave' | false;
+  animation?: 'pulse' | 'wave' | false
 }
 
 /**
@@ -27,6 +27,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
   height,
   animation = 'wave',
 }) => {
+  const items = useMemo(() => Array.from({ length: count }, (_, i) => `${variant}-skeleton-${i}-${Date.now()}`), [count, variant])
   const renderSkeleton = () => {
     switch (variant) {
       case 'card':
@@ -42,7 +43,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
             <Skeleton animation={animation} height={20} sx={{ mb: 1 }} />
             <Skeleton animation={animation} height={20} width="60%" />
           </Box>
-        );
+        )
 
       case 'list':
         return (
@@ -59,7 +60,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
               <Skeleton animation={animation} height={16} width="60%" />
             </Box>
           </Box>
-        );
+        )
 
       case 'text':
         return (
@@ -68,7 +69,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
             <Skeleton animation={animation} height={20} sx={{ mb: 1 }} />
             <Skeleton animation={animation} height={20} width="80%" />
           </Box>
-        );
+        )
 
       case 'custom':
         return (
@@ -77,22 +78,22 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
             height={height || 100}
             animation={animation}
           />
-        );
+        )
 
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <>
-      {Array.from({ length: count }).map((_, index) => (
-        <Grid size={variant === 'card' ? { xs: 12, sm: 6, md: 4 } : 12} key={index}>
+      {items.map(itemKey => (
+        <Grid size={variant === 'card' ? { xs: 12, sm: 6, md: 4 } : 12} key={itemKey}>
           {renderSkeleton()}
         </Grid>
       ))}
     </>
-  );
-});
+  )
+})
 
-SkeletonLoader.displayName = 'SkeletonLoader';
+SkeletonLoader.displayName = 'SkeletonLoader'

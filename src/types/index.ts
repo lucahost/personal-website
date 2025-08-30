@@ -3,10 +3,10 @@
  * @module types
  */
 
-export type { 
-  Project, 
-  ProjectCategory, 
-  ProjectCounts, 
-  ProjectFiltersProps, 
-  ProjectCardProps 
-} from './project';
+export type {
+  Project,
+  ProjectCardProps,
+  ProjectCategory,
+  ProjectCounts,
+  ProjectFiltersProps,
+} from './project'

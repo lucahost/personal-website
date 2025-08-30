@@ -3,31 +3,31 @@
  * @module components/project/ProjectFilters
  */
 
-import React, { memo } from 'react';
+import type { ProjectCategory, ProjectFiltersProps } from '../../types'
 import {
+  Android,
+  Games,
+  School,
+  ViewList,
+  ViewModule,
+  Web,
+} from '@mui/icons-material'
+import {
+  alpha,
+  Box,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
-  Box,
-  alpha,
   useTheme,
-} from '@mui/material';
-import {
-  Web,
-  Android,
-  School,
-  Games,
-  ViewModule,
-  ViewList,
-} from '@mui/icons-material';
-import type { ProjectCategory, ProjectFiltersProps } from '../../types';
+} from '@mui/material'
+import React, { memo } from 'react'
 
 const categoryIcons: Record<ProjectCategory, React.ReactElement> = {
   web: <Web fontSize="small" />,
   mobile: <Android fontSize="small" />,
   research: <School fontSize="small" />,
   game: <Games fontSize="small" />,
-};
+}
 
 /**
  * Filtering and view controls for project display
@@ -40,19 +40,19 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
   onCategoryChange,
   onViewModeChange,
 }) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
   const handleCategoryChange = (_: React.MouseEvent<HTMLElement>, value: string | null) => {
     if (value !== null) {
-      onCategoryChange(value);
+      onCategoryChange(value)
     }
-  };
+  }
 
   const handleViewModeChange = (_: React.MouseEvent<HTMLElement>, value: 'grid' | 'list' | null) => {
     if (value !== null) {
-      onViewModeChange(value);
+      onViewModeChange(value)
     }
-  };
+  }
 
   return (
     <Stack spacing={2}>
@@ -70,17 +70,17 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
           onChange={handleCategoryChange}
           aria-label="project category filter"
           sx={{
-            flexWrap: { xs: 'wrap', sm: 'nowrap' },
+            'flexWrap': { xs: 'wrap', sm: 'nowrap' },
             '& .MuiToggleButton-root': {
-              borderRadius: '20px',
-              mx: { xs: 0.25, sm: 0.5 },
-              px: { xs: 1, sm: 2 },
-              py: { xs: 0.5, sm: 1 },
-              textTransform: 'none',
-              fontSize: { xs: '0.75rem', sm: '0.875rem' },
-              minWidth: { xs: 'auto', sm: 'auto' },
+              'borderRadius': '20px',
+              'mx': { xs: 0.25, sm: 0.5 },
+              'px': { xs: 1, sm: 2 },
+              'py': { xs: 0.5, sm: 1 },
+              'textTransform': 'none',
+              'fontSize': { xs: '0.75rem', sm: '0.875rem' },
+              'minWidth': { xs: 'auto', sm: 'auto' },
               '&.Mui-selected': {
-                backgroundColor: alpha(theme.palette.primary.main, 0.15),
+                'backgroundColor': alpha(theme.palette.primary.main, 0.15),
                 '&:hover': {
                   backgroundColor: alpha(theme.palette.primary.main, 0.25),
                 },
@@ -89,9 +89,11 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
           }}
         >
           <ToggleButton value="all" aria-label="all projects">
-            All ({projectCounts.all})
+            All (
+            {projectCounts.all}
+            )
           </ToggleButton>
-          {(Object.keys(categoryIcons) as ProjectCategory[]).map((category) => (
+          {(Object.keys(categoryIcons) as ProjectCategory[]).map(category => (
             <ToggleButton
               key={category}
               value={category}
@@ -99,7 +101,11 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
             >
               {categoryIcons[category]}
               <Box component="span" sx={{ ml: 0.5, display: { xs: 'none', sm: 'inline' } }}>
-                {category.charAt(0).toUpperCase() + category.slice(1)} ({projectCounts[category]})
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {' '}
+                (
+                {projectCounts[category]}
+                )
               </Box>
             </ToggleButton>
           ))}
@@ -122,7 +128,7 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
         </ToggleButtonGroup>
       </Stack>
     </Stack>
-  );
-});
+  )
+})
 
-ProjectFilters.displayName = 'ProjectFilters';
+ProjectFilters.displayName = 'ProjectFilters'

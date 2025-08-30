@@ -1,13 +1,13 @@
-import biergit from '../common/img/biergit.png';
-import uno from '../common/img/uno.png';
-import go from '../common/img/go.png';
-import muuvy from '../common/img/muuvy.png';
-import portal from '../common/img/portal.png';
-import drugstore from '../common/img/drugstore.png';
-import network from '../common/img/network.png';
-import smartContracts from '../common/img/smartContracts.png';
-import thesis from '../common/img/thesis.png';
-import type { Project, ProjectCategory } from '../types';
+import type { Project, ProjectCategory } from '../types'
+import biergit from '../common/img/biergit.png'
+import drugstore from '../common/img/drugstore.png'
+import go from '../common/img/go.png'
+import muuvy from '../common/img/muuvy.png'
+import network from '../common/img/network.png'
+import portal from '../common/img/portal.png'
+import smartContracts from '../common/img/smartContracts.png'
+import thesis from '../common/img/thesis.png'
+import uno from '../common/img/uno.png'
 
 export const PROJECTS_DATA: readonly Project[] = [
   {
@@ -106,11 +106,11 @@ export const PROJECTS_DATA: readonly Project[] = [
     category: 'web',
     githubUrl: 'https://github.com/muuvy',
   },
-];
+]
 
 export const CATEGORY_COLORS: Record<ProjectCategory, string> = {
   web: '#2196F3',
   mobile: '#4CAF50',
   research: '#FF9800',
   game: '#9C27B0',
-} as const;
+} as const

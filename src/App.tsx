@@ -3,14 +3,14 @@
  * @module App
  */
 
-import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { CssBaseline, ThemeProvider, LinearProgress } from '@mui/material';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import theme from './theme';
+import { CssBaseline, LinearProgress, ThemeProvider } from '@mui/material'
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import theme from './theme'
 
 // Lazy load routes for better performance
-const HomeRoutes = lazy(() => import('./HomeRoutes'));
+const HomeRoutes = lazy(() => import('./HomeRoutes'))
 
 /**
  * Root application component
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
       onError={(error, errorInfo) => {
         // Log errors to console in development
         if (import.meta.env.DEV) {
-          console.error('Application Error:', error, errorInfo);
+          console.error('Application Error:', error, errorInfo)
         }
       }}
     >
@@ -30,7 +30,7 @@ export const App: React.FC = () => {
         <CssBaseline />
         <Router>
           <Suspense
-            fallback={
+            fallback={(
               <LinearProgress
                 sx={{
                   position: 'fixed',
@@ -40,12 +40,12 @@ export const App: React.FC = () => {
                   zIndex: 9999,
                 }}
               />
-            }
+            )}
           >
             <HomeRoutes />
           </Suspense>
         </Router>
       </ThemeProvider>
     </ErrorBoundary>
-  );
-};
+  )
+}

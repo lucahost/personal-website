@@ -1,82 +1,118 @@
-import React, { useState, useEffect } from "react";
-import luca from "./../../common/img/luca.png";
+import { Computer, GitHub, LinkedIn } from '@mui/icons-material'
 import {
-  Container,
-  Input,
+  Box,
   colors,
+  Container,
+  Grid,
+  Input,
   Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Grid,
-  Box,
-} from "@mui/material";
-import { Computer, GitHub, LinkedIn } from "@mui/icons-material";
-import { CodeTypography } from "../../common/CodeTypography";
-import twitterX from "./../../common/img/twitterX.png";
+} from '@mui/material'
+import React, { useCallback, useEffect, useReducer } from 'react'
+import { CodeTypography } from '../../common/CodeTypography'
+import luca from './../../common/img/luca.png'
+import twitterX from './../../common/img/twitterX.png'
+
+interface State {
+  inputValue: string
+  isFocused: boolean
+  showHint: boolean
+}
+
+type Action
+  = | { type: 'SET_INPUT_VALUE', payload: string }
+    | { type: 'SET_FOCUSED', payload: boolean }
+    | { type: 'HIDE_HINT' }
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'SET_INPUT_VALUE':
+      return { ...state, inputValue: action.payload }
+    case 'SET_FOCUSED':
+      return { ...state, isFocused: action.payload }
+    case 'HIDE_HINT':
+      return { ...state, showHint: false }
+    default:
+      return state
+  }
+}
 
 export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [showHint, setShowHint] = useState(true);
+  const [state, dispatch] = useReducer(reducer, {
+    inputValue: '',
+    isFocused: false,
+    showHint: true,
+  })
+
+  const hideHint = useCallback(() => {
+    dispatch({ type: 'HIDE_HINT' })
+  }, [])
 
   useEffect(() => {
-    if (isFocused || inputValue) {
-      setShowHint(false);
+    const shouldHideHint = state.isFocused || state.inputValue
+    if (shouldHideHint) {
+      hideHint()
     }
-  }, [isFocused, inputValue]);
+  }, [state.isFocused, state.inputValue, hideHint])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setInputValue(value);
-  };
+    const value = event.target.value
+    dispatch({ type: 'SET_INPUT_VALUE', payload: value })
+  }
 
   const inputKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    if (event.code === "Enter" || event.code === "NumpadEnter") {
-      event.preventDefault();
-      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
-      setInputValue("");
+    if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+      event.preventDefault()
+      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
+      dispatch({ type: 'SET_INPUT_VALUE', payload: '' })
     }
-  };
+  }
 
   return (
     <Grid
       container
       spacing={2}
       sx={{
-        fontSize: { xs: "1rem", sm: "calc(10px + 2vmin)" },
+        fontSize: { xs: '1rem', sm: 'calc(10px + 2vmin)' },
         color: colors.grey[200],
-        textAlign: "center",
-        fontFamily: "Courier New",
+        textAlign: 'center',
+        fontFamily: 'Courier New',
         px: { xs: 2, sm: 0 },
       }}
     >
       <Grid size={12}>
         <img
           src={luca}
-          style={{ 
-            height: "clamp(60px, 10vmin, 120px)", 
-            pointerEvents: "none",
-            maxWidth: "100%"
+          style={{
+            height: 'clamp(60px, 10vmin, 120px)',
+            pointerEvents: 'none',
+            maxWidth: '100%',
           }}
           alt="logo"
         />
       </Grid>
       <Grid size={12}>
         <CodeTypography>
-          Hi{" "}
+          Hi
+          {' '}
           <span role="img" aria-label="wave">
             👋
-          </span>{" "}
-          I&apos;m <b>Luca Hostettler</b>
+          </span>
+          {' '}
+          I&apos;m
+          {' '}
+          <b>Luca Hostettler</b>
         </CodeTypography>
       </Grid>
       <Grid size={12}>
         <CodeTypography>
-          Coding is my passion{" "}
+          Coding is my passion
+          {' '}
           <span role="img" aria-label="rocket">
             🚀
           </span>
@@ -85,14 +121,14 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
       <Grid
         size={12}
         sx={{
-          textAlign: "left",
+          textAlign: 'left',
         }}
       >
         <Container maxWidth="xs" sx={{ px: { xs: 1, sm: 3 } }}>
           <List dense={true} sx={{ py: { xs: 1, sm: 2 } }}>
             <ListItem>
               <ListItemIcon>
-                <Computer sx={{ color: "#ffffff" }} />
+                <Computer sx={{ color: '#ffffff' }} />
               </ListItemIcon>
               <ListItemText>
                 <Link href="/projects">
@@ -102,7 +138,7 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
             </ListItem>
             <ListItem>
               <ListItemIcon>
-                <GitHub sx={{ color: "#ffffff" }} />
+                <GitHub sx={{ color: '#ffffff' }} />
               </ListItemIcon>
               <ListItemText>
                 <Link
@@ -116,7 +152,7 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
             </ListItem>
             <ListItem>
               <ListItemIcon>
-                <LinkedIn sx={{ color: "#0077B5", minWidth: "0px" }} />
+                <LinkedIn sx={{ color: '#0077B5', minWidth: '0px' }} />
               </ListItemIcon>
               <ListItemText>
                 <Link
@@ -134,8 +170,8 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
                   src={twitterX}
                   alt="Twitter"
                   style={{
-                    width: "20px",
-                    height: "20px",
+                    width: '20px',
+                    height: '20px',
                   }}
                 />
               </ListItemIcon>
@@ -152,87 +188,88 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
           </List>
         </Container>
       </Grid>
-      <Grid size={12} sx={{ position: "relative", minHeight: { xs: "60px", sm: "80px" } }}>
-        <Grid 
-          container 
-          alignItems="center" 
+      <Grid size={12} sx={{ position: 'relative', minHeight: { xs: '60px', sm: '80px' } }}>
+        <Grid
+          container
+          alignItems="center"
           justifyContent="center"
           sx={{
-            position: "absolute",
-            bottom: 0,
-            left: "50%",
-            transform: "translateX(-50%)",
-            cursor: "text",
-            "&:hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.01)"
+            'position': 'absolute',
+            'bottom': 0,
+            'left': '50%',
+            'transform': 'translateX(-50%)',
+            'cursor': 'text',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.01)',
             },
-            borderRadius: 1,
-            p: 0.5,
-            minHeight: { xs: "32px", sm: "40px" },
-            width: "fit-content",
-            minWidth: { xs: "200px", sm: "250px" }
+            'borderRadius': 1,
+            'p': 0.5,
+            'minHeight': { xs: '32px', sm: '40px' },
+            'width': 'fit-content',
+            'minWidth': { xs: '200px', sm: '250px' },
           }}
           onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-            const input = e.currentTarget.querySelector('input');
-            if (input) input.focus();
+            const input = e.currentTarget.querySelector('input')
+            if (input)
+              input.focus()
           }}
         >
           <CodeTypography
             sx={{
-              display: "flex",
-              alignItems: "center",
+              display: 'flex',
+              alignItems: 'center',
               gap: 0.5,
-              fontSize: { xs: "0.8rem", sm: "calc(8px + 1.5vmin)" }
+              fontSize: { xs: '0.8rem', sm: 'calc(8px + 1.5vmin)' },
             }}
           >
             <span style={{ opacity: 0.7 }}>~# </span>
-            <Box sx={{ display: "flex", alignItems: "center", flex: 1, minWidth: "120px", position: "relative" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: '120px', position: 'relative' }}>
               <Input
                 type="text"
-                value={inputValue}
+                value={state.inputValue}
                 onChange={handleInputChange}
-                onKeyDown={(event) => inputKeyDown(event)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
+                onKeyDown={event => inputKeyDown(event)}
+                onFocus={() => dispatch({ type: 'SET_FOCUSED', payload: true })}
+                onBlur={() => dispatch({ type: 'SET_FOCUSED', payload: false })}
                 disableUnderline
-                placeholder={!isFocused && !inputValue ? "type something and press enter" : ""}
+                placeholder={!state.isFocused && !state.inputValue ? 'type something and press enter' : ''}
                 sx={{
-                  fontSize: "inherit",
-                  fontFamily: "Courier New",
-                  color: "inherit",
-                  width: "100%",
-                  "& input": {
-                    padding: 0,
-                    fontSize: "inherit",
-                    fontFamily: "inherit",
-                    color: "inherit",
-                    backgroundColor: "transparent",
-                    "&::placeholder": {
-                      color: "rgba(255, 255, 255, 0.3)",
+                  'fontSize': 'inherit',
+                  'fontFamily': 'Courier New',
+                  'color': 'inherit',
+                  'width': '100%',
+                  '& input': {
+                    'padding': 0,
+                    'fontSize': 'inherit',
+                    'fontFamily': 'inherit',
+                    'color': 'inherit',
+                    'backgroundColor': 'transparent',
+                    '&::placeholder': {
+                      color: 'rgba(255, 255, 255, 0.3)',
                       opacity: 1,
-                      fontStyle: "italic"
-                    }
-                  }
+                      fontStyle: 'italic',
+                    },
+                  },
                 }}
               />
-              {showHint && (
+              {state.showHint && (
                 <Box
                   sx={{
-                    position: "absolute",
-                    right: { xs: -30, sm: -40 },
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    opacity: 0.3,
-                    animation: "fadeInOut 3s infinite",
-                    fontSize: { xs: "0.7em", sm: "0.8em" },
-                    "@keyframes fadeInOut": {
-                      "0%": { opacity: 0 },
-                      "50%": { opacity: 0.4 },
-                      "100%": { opacity: 0 }
-                    }
+                    'position': 'absolute',
+                    'right': { xs: -30, sm: -40 },
+                    'top': '50%',
+                    'transform': 'translateY(-50%)',
+                    'opacity': 0.3,
+                    'animation': 'fadeInOut 3s infinite',
+                    'fontSize': { xs: '0.7em', sm: '0.8em' },
+                    '@keyframes fadeInOut': {
+                      '0%': { opacity: 0 },
+                      '50%': { opacity: 0.4 },
+                      '100%': { opacity: 0 },
+                    },
                   }}
                 >
-                  <span style={{ fontSize: "12px" }}>←</span>
+                  <span style={{ fontSize: '12px' }}>←</span>
                 </Box>
               )}
             </Box>
@@ -240,5 +277,5 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
         </Grid>
       </Grid>
     </Grid>
-  );
-};
+  )
+}

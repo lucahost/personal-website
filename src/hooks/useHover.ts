@@ -3,31 +3,32 @@
  * @module hooks/useHover
  */
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * Hook for managing hover state with proper event handling
  * @returns Hover state and event handlers
  */
-export const useHover = <T extends HTMLElement = HTMLElement>() => {
-  const [isHovered, setIsHovered] = useState(false);
-  const ref = useRef<T>(null);
+export function useHover<T extends HTMLElement = HTMLElement>() {
+  const [isHovered, setIsHovered] = useState(false)
+  const ref = useRef<T>(null)
 
-  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
-  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+  const handleMouseEnter = useCallback(() => setIsHovered(true), [])
+  const handleMouseLeave = useCallback(() => setIsHovered(false), [])
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    const element = ref.current
+    if (!element)
+      return
 
-    element.addEventListener('mouseenter', handleMouseEnter);
-    element.addEventListener('mouseleave', handleMouseLeave);
+    element.addEventListener('mouseenter', handleMouseEnter)
+    element.addEventListener('mouseleave', handleMouseLeave)
 
     return () => {
-      element.removeEventListener('mouseenter', handleMouseEnter);
-      element.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [handleMouseEnter, handleMouseLeave]);
+      element.removeEventListener('mouseenter', handleMouseEnter)
+      element.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [handleMouseEnter, handleMouseLeave])
 
   return {
     ref,
@@ -36,5 +37,5 @@ export const useHover = <T extends HTMLElement = HTMLElement>() => {
       onMouseEnter: handleMouseEnter,
       onMouseLeave: handleMouseLeave,
     },
-  };
-};
+  }
+}

@@ -3,18 +3,19 @@
  * @module components/ui/FadeIn
  */
 
-import React, { memo, useRef, useEffect, useState } from 'react';
-import { Fade, FadeProps } from '@mui/material';
+import type { FadeProps } from '@mui/material'
+import { Fade } from '@mui/material'
+import React, { memo, useEffect, useRef, useState } from 'react'
 
 export interface FadeInProps extends Omit<FadeProps, 'in'> {
   /** Delay before animation starts (ms) */
-  delay?: number;
+  delay?: number
   /** Whether to trigger on scroll */
-  triggerOnScroll?: boolean;
+  triggerOnScroll?: boolean
   /** Threshold for scroll trigger (0-1) */
-  threshold?: number;
+  threshold?: number
   /** Children to animate */
-  children: React.ReactElement;
+  children: React.ReactElement
 }
 
 /**
@@ -29,43 +30,49 @@ export const FadeIn = memo<FadeInProps>(({
   children,
   ...props
 }) => {
-  const [isVisible, setIsVisible] = useState(!triggerOnScroll);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(!triggerOnScroll)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    if (!triggerOnScroll || hasAnimated) return;
+    if (!triggerOnScroll || hasAnimated)
+      return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
-          setTimeout(() => {
-            setIsVisible(true);
-            setHasAnimated(true);
-          }, delay);
+          timeoutRef.current = setTimeout(() => {
+            setIsVisible(true)
+            setHasAnimated(true)
+          }, delay)
         }
       },
-      { threshold }
-    );
+      { threshold },
+    )
 
-    const currentRef = ref.current;
+    const currentRef = ref.current
     if (currentRef) {
-      observer.observe(currentRef);
+      observer.observe(currentRef)
     }
 
     return () => {
       if (currentRef) {
-        observer.unobserve(currentRef);
+        observer.unobserve(currentRef)
       }
-    };
-  }, [delay, hasAnimated, threshold, triggerOnScroll]);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
+      }
+    }
+  }, [delay, hasAnimated, threshold, triggerOnScroll])
 
   useEffect(() => {
     if (!triggerOnScroll && delay > 0) {
-      const timer = setTimeout(() => setIsVisible(true), delay);
-      return () => clearTimeout(timer);
+      const timer = setTimeout(() => setIsVisible(true), delay)
+      return () => clearTimeout(timer)
     }
-  }, [delay, triggerOnScroll]);
+  }, [delay, triggerOnScroll])
 
   return (
     <div ref={ref}>
@@ -73,7 +80,7 @@ export const FadeIn = memo<FadeInProps>(({
         {children}
       </Fade>
     </div>
-  );
-});
+  )
+})
 
-FadeIn.displayName = 'FadeIn';
+FadeIn.displayName = 'FadeIn'

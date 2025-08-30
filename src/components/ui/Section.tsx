@@ -3,18 +3,19 @@
  * @module components/ui/Section
  */
 
-import React, { memo } from 'react';
-import { Box, BoxProps, Container, ContainerProps } from '@mui/material';
+import type { BoxProps, ContainerProps } from '@mui/material'
+import { Box, Container } from '@mui/material'
+import React, { memo } from 'react'
 
 export interface SectionProps extends Omit<BoxProps, 'maxWidth'> {
   /** Container max width */
-  maxWidth?: ContainerProps['maxWidth'];
+  maxWidth?: ContainerProps['maxWidth']
   /** Whether to use Container wrapper */
-  contained?: boolean;
+  contained?: boolean
   /** Vertical padding multiplier */
-  verticalPadding?: number;
+  verticalPadding?: number
   /** Background variant */
-  variant?: 'default' | 'gradient' | 'paper';
+  variant?: 'default' | 'gradient' | 'paper'
 }
 
 /**
@@ -35,15 +36,15 @@ export const Section = memo<SectionProps>(({
       case 'gradient':
         return {
           background: 'linear-gradient(135deg, rgba(2,136,209,0.05) 0%, rgba(0,172,193,0.05) 100%)',
-        };
+        }
       case 'paper':
         return {
           backgroundColor: 'background.paper',
-        };
+        }
       default:
-        return {};
+        return {}
     }
-  };
+  }
 
   const content = (
     <Box
@@ -55,17 +56,19 @@ export const Section = memo<SectionProps>(({
       }}
       {...props}
     >
-      {contained ? (
-        <Container maxWidth={maxWidth}>
-          {children}
-        </Container>
-      ) : (
-        children
-      )}
+      {contained
+        ? (
+            <Container maxWidth={maxWidth}>
+              {children}
+            </Container>
+          )
+        : (
+            children
+          )}
     </Box>
-  );
+  )
 
-  return content;
-});
+  return content
+})
 
-Section.displayName = 'Section';
+Section.displayName = 'Section'

@@ -3,30 +3,32 @@
  * @module components/ui/IconButton
  */
 
-import React, { memo, forwardRef } from 'react';
-import {
-  IconButton as MuiIconButton,
+import type {
   IconButtonProps as MuiIconButtonProps,
-  Tooltip,
+} from '@mui/material'
+import {
   alpha,
+  IconButton as MuiIconButton,
+  Tooltip,
   useTheme,
-} from '@mui/material';
+} from '@mui/material'
+import React, { memo } from 'react'
 
 export interface IconButtonProps extends MuiIconButtonProps {
   /** Tooltip text */
-  tooltip?: string;
+  tooltip?: string
   /** Tooltip placement */
-  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right';
+  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right'
   /** Ripple color */
-  rippleColor?: string;
+  rippleColor?: string
   /** Whether to show background on hover */
-  showHoverBackground?: boolean;
+  showHoverBackground?: boolean
   /** Link href */
-  href?: string;
+  href?: string
   /** Link target */
-  target?: string;
+  target?: string
   /** Link rel */
-  rel?: string;
+  rel?: string
 }
 
 /**
@@ -34,23 +36,15 @@ export interface IconButtonProps extends MuiIconButtonProps {
  * Provides better accessibility and user feedback
  */
 export const IconButton = memo(
-  forwardRef<HTMLButtonElement, IconButtonProps>(({
-    tooltip,
-    tooltipPlacement = 'top',
-    rippleColor,
-    showHoverBackground = true,
-    children,
-    sx,
-    ...props
-  }, ref) => {
-    const theme = useTheme();
-    const defaultRippleColor = rippleColor || theme.palette.primary.main;
+  ({ ref, tooltip, tooltipPlacement = 'top', rippleColor, showHoverBackground = true, children, sx, ...props }: IconButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
+    const theme = useTheme()
+    const defaultRippleColor = rippleColor || theme.palette.primary.main
 
     const button = (
       <MuiIconButton
         ref={ref}
         sx={{
-          transition: 'all 0.2s ease',
+          'transition': 'all 0.2s ease',
           ...(showHoverBackground && {
             '&:hover': {
               backgroundColor: alpha(defaultRippleColor, 0.08),
@@ -66,7 +60,7 @@ export const IconButton = memo(
       >
         {children}
       </MuiIconButton>
-    );
+    )
 
     if (tooltip) {
       return (
@@ -78,11 +72,11 @@ export const IconButton = memo(
         >
           {button}
         </Tooltip>
-      );
+      )
     }
 
-    return button;
-  })
-);
+    return button
+  },
+)
 
-IconButton.displayName = 'IconButton';
+IconButton.displayName = 'IconButton'
