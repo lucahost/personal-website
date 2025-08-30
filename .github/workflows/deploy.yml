@@ -42,7 +42,7 @@ jobs:
       
     - name: Quality checks
       run: |
-        npx tsc --noEmit
+        npm run typecheck
         npm run lint
         
     - name: Build for production

@@ -7,7 +7,7 @@
 [![Material-UI](https://img.shields.io/badge/Material--UI-7.3.1-007FFF?style=flat-square&logo=mui&logoColor=white)](https://mui.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.1.3-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-Modern, responsive personal portfolio website built with cutting-edge web technologies. Features a sleek design, interactive components, and comprehensive project showcase.
+Modern, responsive personal portfolio website. Features a sleek design, interactive components, and comprehensive project showcase.
 
 **🌐 Live Website:** [hostettler.io](https://hostettler.io)
 
@@ -35,13 +35,6 @@ Modern, responsive personal portfolio website built with cutting-edge web techno
 - **Material Icons** - Comprehensive icon library
 - **Custom Animations** - Smooth transitions and hover effects
 
-### **Architecture & Patterns**
-- **Custom React Hooks** - Reusable business logic
-- **Error Boundaries** - Robust error handling
-- **Lazy Loading** - Performance-optimized component loading
-- **TypeScript Interfaces** - Comprehensive type definitions
-- **Component Composition** - Modular and maintainable code
-
 ### **Development Tools**
 - **ESLint 9** - Advanced code linting and quality checks
 - **TypeScript ESLint** - Type-aware linting rules
@@ -50,7 +43,6 @@ Modern, responsive personal portfolio website built with cutting-edge web techno
 
 ### **Build & Deployment**
 - **GitHub Actions** - Continuous Integration/Deployment
-- **Multi-Node Testing** - Node.js 18.x and 20.x compatibility
 - **Security Auditing** - Automated vulnerability scanning
 - **DigitalOcean Droplet** - Production hosting
 - **SSH Deployment** - Secure rsync file transfer
@@ -117,118 +109,6 @@ src/
 ├── theme.ts            # Material-UI theme configuration
 └── App.tsx             # Root application component
 ```
-
-## 🎯 Key Components
-
-### **Project Showcase**
-- **Interactive Cards**: Hover effects and smooth animations
-- **Advanced Filtering**: Category-based and search functionality
-- **Responsive Grid**: Adapts from mobile to desktop layouts
-- **View Modes**: Toggle between grid and list views
-
-### **Easter Egg Terminal**
-- **Hidden Interface**: Subtle command line interface
-- **Interactive Elements**: Type and press Enter for surprises
-- **Rick Roll Integration**: Fun easter egg for curious visitors
-
-### **Performance Features**
-- **Code Splitting**: Lazy-loaded routes and components
-- **Bundle Optimization**: Tree shaking and dead code elimination
-- **Image Optimization**: Efficient asset loading
-- **Caching Strategy**: Optimized for fast repeat visits
-
-## 🚢 Deployment
-
-### GitHub Actions Workflows
-
-The project uses GitHub Actions for continuous integration and deployment:
-
-#### **CI Pipeline** (`ci.yml`)
-- **Triggers**: Push to `dev`, `feature/*` branches and PRs to `master`/`dev`
-- **Multi-Node Testing**: Tests on Node.js 18.x and 20.x
-- **Quality Checks**: 
-  - TypeScript compilation without emit
-  - ESLint code quality checks
-  - Production build verification
-  - Bundle size analysis
-- **Security**: Automated npm audit for vulnerabilities
-
-#### **Deployment Pipeline** (`deploy.yml`)
-- **Trigger**: Push to `master` branch
-- **Build Process**: 
-  - Install dependencies with npm ci
-  - Run linting and quality checks
-  - Build production artifacts with Vite
-  - Upload artifacts for deployment
-- **Deployment**:
-  - SSH-based deployment to DigitalOcean droplet
-  - Secure rsync with file synchronization
-  - Files deployed to `/var/www/personal-website`
-  - Deployment verification checks
-
-### GitHub Secrets Configuration
-
-For deployment to work, configure these secrets in your GitHub repository:
-
-- `SSH_PRIVATE_KEY`: SSH private key for server access
-- `SERVER_HOST`: Server hostname or IP address (e.g., `159.65.126.196`)
-- `SERVER_USER`: SSH username for server access (e.g., `luca`)
-
-### Manual Deployment
-
-```bash
-# Build for production
-npm run build
-
-# Deploy to server (requires SSH setup)
-rsync -avz --delete dist/ user@server:/var/www/personal-website/
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-The application supports environment-specific configuration through Vite's built-in environment handling:
-
-```typescript
-// Access environment variables
-const apiUrl = import.meta.env.VITE_API_URL
-const isDev = import.meta.env.DEV
-```
-
-### Browser Support
-Configured for modern browsers with automatic polyfills:
-- Chrome/Edge: Last 2 versions
-- Firefox: Last 2 versions  
-- Safari: Last 2 versions
-- Mobile browsers: iOS Safari, Chrome Mobile
-
-## 📊 Performance Metrics
-
-- **Bundle Size**: ~358KB (gzipped: ~116KB)
-- **First Contentful Paint**: < 1.5s
-- **Time to Interactive**: < 3s
-- **Lighthouse Score**: 95+ across all metrics
-
-## 🤝 Contributing
-
-This is a personal portfolio project, but suggestions and feedback are welcome:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Material-UI Team** - For the excellent React component library
-- **Vite Team** - For the blazing-fast build tool
-- **React Team** - For the amazing framework
-- **TypeScript Team** - For bringing type safety to JavaScript
 
 ---
 
