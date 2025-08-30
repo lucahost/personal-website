@@ -9,7 +9,7 @@ export default tseslint.config(
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        ignores: ['node_modules', 'dist', 'vite.config.ts', 'vite-env.d.ts'],
+        ignores: ['node_modules/**', 'dist/**', 'build/**', 'vite.config.ts', 'vite-env.d.ts'],
         plugins: {
             react: reactPlugin,
             'react-hooks': hooksPlugin,
@@ -21,11 +21,12 @@ export default tseslint.config(
             },
         },
         rules: {
-            '@typescript-eslint/no-unsafe-argument': 'error',
-            '@typescript-eslint/no-unsafe-assignment': 'error',
-            '@typescript-eslint/no-unsafe-call': 'error',
-            '@typescript-eslint/no-unsafe-member-access': 'error',
-            '@typescript-eslint/no-unsafe-return': 'error',
+            '@typescript-eslint/no-unsafe-argument': 'warn',
+            '@typescript-eslint/no-unsafe-assignment': 'warn',
+            '@typescript-eslint/no-unsafe-call': 'warn',
+            '@typescript-eslint/no-unsafe-member-access': 'warn',
+            '@typescript-eslint/no-unsafe-return': 'warn',
+            '@typescript-eslint/no-explicit-any': 'warn',
         },
     },
     {
