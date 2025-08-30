@@ -118,5 +118,3 @@ src/
 ---
 
 **Built with ❤️ by [Luca Hostettler](https://github.com/lucahost)**
-
-_Showcasing modern web development practices and cutting-edge technologies for potential employers and collaborators._
