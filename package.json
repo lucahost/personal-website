@@ -7,7 +7,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "npx eslint src --ext .ts,.tsx",
+    "lint": "eslint src --ext .ts,.tsx",
     "preview": "vite preview"
   },
   "browserslist": {
