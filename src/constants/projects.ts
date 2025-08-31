@@ -8,8 +8,34 @@ import portal from '../common/img/portal.png'
 import smartContracts from '../common/img/smartContracts.png'
 import thesis from '../common/img/thesis.png'
 import uno from '../common/img/uno.png'
+import blog from '../common/img/blog.png'
+import planningTool from '../common/img/planningTool.png'
 
 export const PROJECTS_DATA: readonly Project[] = [
+  {
+    id: 'personal-blog',
+    title: 'Personal Blog',
+    year: '2019-present',
+    description: 'Technical blog built with React, MDX, and Navi for sharing insights on software development and technology.',
+    image: blog,
+    technologies: ['React', 'MDX', 'Navi', 'TypeScript'],
+    category: 'web',
+    githubUrl: 'https://github.com/lucahost/personal-blog',
+    liveUrl: 'https://blog.hostettler.io',
+    featured: true,
+  },
+  {
+    id: 'planning-tool',
+    title: 'Military WK Planning Tool',
+    year: '2024-present',
+    description: 'Web application for Swiss military service planning with synchomatrix, daily orders, and weekly planning features.',
+    image: planningTool,
+    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Azure AD'],
+    category: 'web',
+    githubUrl: 'https://github.com/ekf-abt-52/planning-tool',
+    liveUrl: 'https://ekf.hostettler.io',
+    featured: true,
+  },
   {
     id: 'thesis',
     title: 'Quantitative Analysis of Graph Metrics',
