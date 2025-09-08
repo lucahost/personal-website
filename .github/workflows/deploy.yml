@@ -79,6 +79,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: "website/dist/"
+          source: website/dist/
           target: ${{ secrets.DEPLOY_PATH }}
           strip_components: 2
