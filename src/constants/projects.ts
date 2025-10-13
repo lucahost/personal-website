@@ -2,7 +2,9 @@ import type { Project, ProjectCategory } from '../types'
 import biergit from '../common/img/biergit.png'
 import blog from '../common/img/blog.png'
 import drugstore from '../common/img/drugstore.png'
+import fantasyBrrr from '../common/img/fantasyBrrr.png'
 import go from '../common/img/go.png'
+import growery from '../common/img/growery.png'
 import muuvy from '../common/img/muuvy.png'
 import network from '../common/img/network.png'
 import planningTool from '../common/img/planningTool.png'
@@ -12,6 +14,30 @@ import thesis from '../common/img/thesis.png'
 import uno from '../common/img/uno.png'
 
 export const PROJECTS_DATA: readonly Project[] = [
+  {
+    id: 'fantasy-brrr',
+    title: 'Fantasy Brrr',
+    year: '2024-present',
+    description: 'Hyper-realistic fantasy trading platform with time travel engine for practicing complex financial instruments using historical market data.',
+    image: fantasyBrrr,
+    technologies: ['ASP.NET Core', 'PostgreSQL', 'Next.js', 'TypeScript', 'Event Sourcing'],
+    category: 'web',
+    githubUrl: 'https://github.com/lucahost/fantasy-brrr',
+    liveUrl: 'https://fantasy-brrr.hostettler.io',
+    featured: true,
+  },
+  {
+    id: 'growery',
+    title: 'Growery',
+    year: '2024-present',
+    description: 'Luxury cannabis cultivation platform where customers own dedicated growing space in Zürich, Switzerland.',
+    image: growery,
+    technologies: ['Astro', 'React', 'TypeScript', 'Tailwind CSS'],
+    category: 'web',
+    githubUrl: 'https://github.com/lucahost/own-supply',
+    liveUrl: 'https://growery.hostettler.io',
+    featured: true,
+  },
   {
     id: 'personal-blog',
     title: 'Personal Blog',
