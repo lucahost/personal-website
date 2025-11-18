@@ -1,10 +1,10 @@
 import type { Project, ProjectCategory } from '../types'
+import astramind from '../common/img/astramind.png'
 import biergit from '../common/img/biergit.png'
 import blog from '../common/img/blog.png'
 import drugstore from '../common/img/drugstore.png'
 import fantasyBrrr from '../common/img/fantasyBrrr.png'
 import go from '../common/img/go.png'
-import growery from '../common/img/growery.png'
 import muuvy from '../common/img/muuvy.png'
 import network from '../common/img/network.png'
 import planningTool from '../common/img/planningTool.png'
@@ -27,15 +27,15 @@ export const PROJECTS_DATA: readonly Project[] = [
     featured: true,
   },
   {
-    id: 'growery',
-    title: 'Growery',
+    id: 'astramind',
+    title: 'Astramind',
     year: '2024-present',
-    description: 'Luxury cannabis cultivation platform where customers own dedicated growing space in Zürich, Switzerland.',
-    image: growery,
-    technologies: ['Astro', 'React', 'TypeScript', 'Tailwind CSS'],
+    description: 'AI-powered voice agent SaaS platform for Swiss businesses to handle phone calls, appointments, and customer inquiries using real-time voice AI.',
+    image: astramind,
+    technologies: ['.NET 9', 'React', 'TypeScript', 'PostgreSQL', 'Twilio', 'OpenAI'],
     category: 'web',
-    githubUrl: 'https://github.com/lucahost/own-supply',
-    liveUrl: 'https://growery.hostettler.io',
+    githubUrl: 'https://github.com/astramind-ch',
+    liveUrl: 'https://astramind.ch',
     featured: true,
   },
   {
