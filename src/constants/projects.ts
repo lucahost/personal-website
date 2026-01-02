@@ -17,7 +17,7 @@ export const PROJECTS_DATA: readonly Project[] = [
   {
     id: 'fantasy-brrr',
     title: 'Fantasy Brrr',
-    year: '2024-present',
+    year: '2025-present',
     description: 'Hyper-realistic fantasy trading platform with time travel engine for practicing complex financial instruments using historical market data.',
     image: fantasyBrrr,
     technologies: ['ASP.NET Core', 'PostgreSQL', 'Next.js', 'TypeScript', 'Event Sourcing'],
@@ -29,14 +29,14 @@ export const PROJECTS_DATA: readonly Project[] = [
   {
     id: 'astramind',
     title: 'Astramind',
-    year: '2024-present',
+    year: '2025-present',
     description: 'AI-powered voice agent SaaS platform for Swiss businesses to handle phone calls, appointments, and customer inquiries using real-time voice AI.',
     image: astramind,
     technologies: ['.NET 9', 'React', 'TypeScript', 'PostgreSQL', 'Twilio', 'OpenAI'],
     category: 'web',
     githubUrl: 'https://github.com/astramind-ch',
     liveUrl: 'https://astramind.ch',
-    featured: true,
+    featured: false,
   },
   {
     id: 'personal-blog',
@@ -48,7 +48,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     category: 'web',
     githubUrl: 'https://github.com/lucahost/personal-blog',
     liveUrl: 'https://blog.hostettler.io',
-    featured: true,
+    featured: false,
   },
   {
     id: 'planning-tool',
@@ -84,7 +84,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     category: 'web',
     githubUrl: 'https://github.com/lucahost/eth-smart-contracts',
     pdfUrl: 'https://hostettler.io/static/media/smart-contracts.pdf',
-    featured: true,
+    featured: false,
   },
   {
     id: 'portal-vr',
@@ -95,7 +95,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     technologies: ['Unity', 'C#', 'VR', 'Game Development'],
     category: 'game',
     githubUrl: 'https://github.com/lucahost/portal-vr',
-    featured: true,
+    featured: false,
   },
   {
     id: 'network-analysis',
@@ -107,6 +107,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     category: 'research',
     githubUrl: 'https://github.com/lucahost/ffhs-na',
     pdfUrl: 'https://hostettler.io/static/media/network-analysis.pdf',
+    featured: false,
   },
   {
     id: 'drugstore',
@@ -117,6 +118,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     technologies: ['Java', 'Android', 'SQLite', 'Material Design'],
     category: 'mobile',
     githubUrl: 'https://github.com/lucahost/drugstore',
+    featured: false,
   },
   {
     id: 'go',
@@ -137,6 +139,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     technologies: ['Spring Boot', 'React', 'PostgreSQL', 'REST API'],
     category: 'web',
     githubUrl: 'https://github.com/biergit-ch',
+    featured: true,
   },
   {
     id: 'uno',
