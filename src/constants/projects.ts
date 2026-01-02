@@ -129,6 +129,8 @@ export const PROJECTS_DATA: readonly Project[] = [
     technologies: ['Next.js', 'TypeScript', 'WebWorkers', 'Game AI'],
     category: 'game',
     liveUrl: 'https://go.hostettler.io',
+    githubUrl: 'https://github.com/lucahost/go-web',
+    featured: true,
   },
   {
     id: 'biergit',
@@ -139,7 +141,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     technologies: ['Spring Boot', 'React', 'PostgreSQL', 'REST API'],
     category: 'web',
     githubUrl: 'https://github.com/biergit-ch',
-    featured: true,
+    featured: false,
   },
   {
     id: 'uno',
