@@ -8,8 +8,6 @@ import {
   Android,
   Games,
   School,
-  ViewList,
-  ViewModule,
   Web,
 } from '@mui/icons-material'
 import {
@@ -35,10 +33,8 @@ const categoryIcons: Record<ProjectCategory, React.ReactElement> = {
  */
 export const ProjectFilters = memo<ProjectFiltersProps>(({
   selectedCategory,
-  viewMode,
   projectCounts,
   onCategoryChange,
-  onViewModeChange,
 }) => {
   const theme = useTheme()
 
@@ -48,19 +44,13 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
     }
   }
 
-  const handleViewModeChange = (_: React.MouseEvent<HTMLElement>, value: 'grid' | 'list' | null) => {
-    if (value !== null) {
-      onViewModeChange(value)
-    }
-  }
-
   return (
     <Stack spacing={2}>
       {/* Filter Controls */}
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={2}
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems={{ xs: 'stretch', sm: 'center' }}
       >
         {/* Category Filters */}
@@ -109,22 +99,6 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
               </Box>
             </ToggleButton>
           ))}
-        </ToggleButtonGroup>
-
-        {/* View Mode Toggle */}
-        <ToggleButtonGroup
-          value={viewMode}
-          exclusive
-          onChange={handleViewModeChange}
-          aria-label="view mode"
-          size="small"
-        >
-          <ToggleButton value="grid" aria-label="grid view">
-            <ViewModule />
-          </ToggleButton>
-          <ToggleButton value="list" aria-label="list view">
-            <ViewList />
-          </ToggleButton>
         </ToggleButtonGroup>
       </Stack>
     </Stack>

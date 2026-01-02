@@ -8,11 +8,9 @@ import { Android, Games, Home, School, Web } from '@mui/icons-material'
 import { Box, Grid, IconButton, Typography } from '@mui/material'
 import React, { lazy, Suspense } from 'react'
 import { CATEGORY_COLORS, PROJECTS_DATA } from '../../constants/projects'
-import { useLocalStorage, useProjects } from '../../hooks'
+import { useProjects } from '../../hooks'
 import { GradientText, Section, SkeletonLoader } from '../ui'
 import { ProjectFilters } from './ProjectFilters'
-
-type ViewMode = 'grid' | 'list'
 
 // Lazy load ProjectCard for better performance
 const ProjectCard = lazy(() => import('./ProjectCard').then(m => ({ default: m.ProjectCard })))
@@ -29,9 +27,6 @@ const categoryIcons: Record<ProjectCategory, React.ReactElement> = {
  * Displays a portfolio of work with modern UI and interactions
  */
 export const Projects: React.FC = () => {
-  // Persist view mode preference
-  const [viewMode, setViewMode] = useLocalStorage<ViewMode>('projectViewMode', 'grid')
-
   // Use custom hook for project management
   const {
     selectedCategory,
@@ -101,10 +96,8 @@ export const Projects: React.FC = () => {
       <Box mb={4}>
         <ProjectFilters
           selectedCategory={selectedCategory}
-          viewMode={viewMode}
           projectCounts={projectCounts}
           onCategoryChange={handleCategoryChange}
-          onViewModeChange={setViewMode}
         />
       </Box>
 
@@ -116,12 +109,11 @@ export const Projects: React.FC = () => {
                 filteredProjects.map((project, index) => (
                   <Grid
                     key={project.id}
-                    size={viewMode === 'grid' ? { xs: 12, sm: 6, md: 4 } : 12}
+                    size={{ xs: 12, sm: 6, md: 4 }}
                     sx={{ display: 'flex' }}
                   >
                     <ProjectCard
                       project={project}
-                      viewMode={viewMode}
                       index={index}
                       categoryColor={CATEGORY_COLORS[project.category]}
                       categoryIcon={categoryIcons[project.category]}

@@ -24,13 +24,11 @@ import { AnimatedCard, FadeIn, IconButton } from '../ui'
  */
 export const ProjectCard = memo<ProjectCardProps>(({
   project,
-  viewMode,
   index,
   categoryColor,
   categoryIcon,
 }) => {
   const theme = useTheme()
-  const isListView = viewMode === 'list'
 
   return (
     <FadeIn delay={index * 50} triggerOnScroll threshold={0.1}>
@@ -38,7 +36,7 @@ export const ProjectCard = memo<ProjectCardProps>(({
         accentColor={categoryColor}
         sx={{
           display: 'flex',
-          flexDirection: isListView ? 'row' : 'column',
+          flexDirection: 'column',
           height: '100%',
         }}
       >
@@ -62,8 +60,8 @@ export const ProjectCard = memo<ProjectCardProps>(({
         {/* Project Image */}
         <Box
           sx={{
-            width: isListView ? { xs: 120, sm: 200 } : '100%',
-            height: isListView ? '100%' : { xs: 100, sm: 140 },
+            width: '100%',
+            height: { xs: 100, sm: 140 },
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -120,7 +118,7 @@ export const ProjectCard = memo<ProjectCardProps>(({
             <Box
               sx={{
                 'mb': 2,
-                'maxHeight': isListView ? 'auto' : { xs: 80, sm: 60 },
+                'maxHeight': { xs: 80, sm: 60 },
                 'overflow': 'auto',
                 '&::-webkit-scrollbar': {
                   width: 4,

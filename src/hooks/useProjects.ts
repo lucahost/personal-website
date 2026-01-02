@@ -7,6 +7,7 @@ export function useProjects(initialProjects: readonly Project[]) {
 
   /**
    * Memoized filtered projects based on category and search
+   * Sorted by featured first, then by year descending
    */
   const filteredProjects = useMemo(() => {
     let filtered = [...initialProjects]
@@ -25,6 +26,15 @@ export function useProjects(initialProjects: readonly Project[]) {
         || p.technologies.some(tech => tech.toLowerCase().includes(query)),
       )
     }
+
+    // Sort by featured first, then by year descending
+    filtered.sort((a, b) => {
+      if (a.featured && !b.featured)
+        return -1
+      if (!a.featured && b.featured)
+        return 1
+      return b.year.localeCompare(a.year)
+    })
 
     return filtered
   }, [initialProjects, selectedCategory, searchQuery])
