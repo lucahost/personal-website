@@ -138,7 +138,7 @@ export const PROJECTS_DATA: readonly Project[] = [
     year: '2019-present',
     description: 'Social platform for groups to track beer rounds and share/manage debts.',
     image: biergit,
-    technologies: ['.NET 9', 'React', 'PostgreSQL', 'Spring Boot (v1)'],
+    technologies: ['.NET 10', 'React', 'PostgreSQL', 'Spring Boot (v1)'],
     category: 'web',
     githubUrl: 'https://github.com/lucahost/biergit-v2',
     liveUrl: 'https://biergit.hostettler.io',
