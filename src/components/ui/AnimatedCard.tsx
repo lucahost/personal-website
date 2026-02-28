@@ -5,7 +5,8 @@
 
 import type { CardProps } from '@mui/material'
 import { alpha, Card, useTheme } from '@mui/material'
-import React, { memo } from 'react'
+import * as React from 'react'
+import { memo } from 'react'
 import { useHover } from '../../hooks'
 
 export interface AnimatedCardProps extends CardProps {

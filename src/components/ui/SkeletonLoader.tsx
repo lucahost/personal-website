@@ -4,7 +4,8 @@
  */
 
 import { Box, Grid, Skeleton } from '@mui/material'
-import React, { memo, useMemo } from 'react'
+import * as React from 'react'
+import { memo, useMemo } from 'react'
 
 export interface SkeletonLoaderProps {
   /** Type of skeleton layout */

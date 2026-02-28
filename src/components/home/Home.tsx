@@ -11,7 +11,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import React, { useCallback, useEffect, useReducer } from 'react'
+import * as React from 'react'
+import { useCallback, useEffect, useReducer } from 'react'
 import { CodeTypography } from '../../common/CodeTypography'
 import luca from './../../common/img/luca.png'
 import twitterX from './../../common/img/twitterX.png'

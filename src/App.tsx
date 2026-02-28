@@ -4,7 +4,8 @@
  */
 
 import { CssBaseline, LinearProgress, ThemeProvider } from '@mui/material'
-import React, { lazy, Suspense } from 'react'
+import * as React from 'react'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import theme from './theme'

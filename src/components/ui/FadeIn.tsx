@@ -5,7 +5,8 @@
 
 import type { FadeProps } from '@mui/material'
 import { Fade } from '@mui/material'
-import React, { memo, useEffect, useRef, useState } from 'react'
+import * as React from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 
 export interface FadeInProps extends Omit<FadeProps, 'in'> {
   /** Delay before animation starts (ms) */

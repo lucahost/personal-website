@@ -93,7 +93,7 @@ npm run preview
 
 ## 🏗️ Project Structure
 
-```
+```text
 src/
 ├── components/           # React components
 │   ├── home/            # Homepage components

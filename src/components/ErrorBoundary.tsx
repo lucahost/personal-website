@@ -6,7 +6,8 @@
 import type { ErrorInfo, ReactNode } from 'react'
 import { ErrorOutline, Refresh } from '@mui/icons-material'
 import { Box, Button, Container, Paper, Typography } from '@mui/material'
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 
 interface Props {
   children: ReactNode

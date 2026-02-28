@@ -12,7 +12,8 @@ import {
   Tooltip,
   useTheme,
 } from '@mui/material'
-import React, { memo } from 'react'
+import * as React from 'react'
+import { memo } from 'react'
 
 export interface IconButtonProps extends MuiIconButtonProps {
   /** Tooltip text */

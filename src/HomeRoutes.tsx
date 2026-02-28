@@ -4,7 +4,8 @@
  */
 
 import { Box } from '@mui/material'
-import React, { lazy, Suspense } from 'react'
+import * as React from 'react'
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { SkeletonLoader } from './components/ui'
 
