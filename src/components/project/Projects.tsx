@@ -39,7 +39,7 @@ export const Projects: React.FC = () => {
   return (
     <Section maxWidth="lg" verticalPadding={4}>
       {/* Header with Home Navigation */}
-      <Box textAlign="center" mb={4} position="relative">
+      <Box sx={{ textAlign: 'center', mb: 4, position: 'relative' }}>
         <IconButton
           href="/"
           sx={{
@@ -94,7 +94,7 @@ export const Projects: React.FC = () => {
       </Box>
 
       {/* Filters */}
-      <Box mb={4}>
+      <Box sx={{ mb: 4 }}>
         <ProjectFilters
           selectedCategory={selectedCategory}
           projectCounts={projectCounts}
@@ -125,9 +125,9 @@ export const Projects: React.FC = () => {
             : (
                 <Grid size={12}>
                   <Box
-                    textAlign="center"
-                    py={8}
                     sx={{
+                      textAlign: 'center',
+                      py: 8,
                       opacity: 0.7,
                     }}
                   >

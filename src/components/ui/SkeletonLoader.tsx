@@ -48,7 +48,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
 
       case 'list':
         return (
-          <Box display="flex" alignItems="center" mb={2}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <Skeleton
               variant="circular"
               width={40}
@@ -56,7 +56,7 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
               animation={animation}
               sx={{ mr: 2 }}
             />
-            <Box flex={1}>
+            <Box sx={{ flex: 1 }}>
               <Skeleton animation={animation} height={24} sx={{ mb: 0.5 }} />
               <Skeleton animation={animation} height={16} width="60%" />
             </Box>

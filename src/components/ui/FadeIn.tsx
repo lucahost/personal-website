@@ -34,7 +34,7 @@ export const FadeIn = memo<FadeInProps>(({
   const [isVisible, setIsVisible] = useState(!triggerOnScroll)
   const [hasAnimated, setHasAnimated] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!triggerOnScroll || hasAnimated)
@@ -70,7 +70,7 @@ export const FadeIn = memo<FadeInProps>(({
 
   useEffect(() => {
     if (!triggerOnScroll && delay > 0) {
-      const timer = setTimeout(() => setIsVisible(true), delay)
+      const timer = setTimeout(setIsVisible, delay, true)
       return () => clearTimeout(timer)
     }
   }, [delay, triggerOnScroll])

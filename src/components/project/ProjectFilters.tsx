@@ -51,8 +51,10 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={2}
-        justifyContent="center"
-        alignItems={{ xs: 'stretch', sm: 'center' }}
+        sx={{
+          justifyContent: 'center',
+          alignItems: { xs: 'stretch', sm: 'center' },
+        }}
       >
         {/* Category Filters */}
         <ToggleButtonGroup

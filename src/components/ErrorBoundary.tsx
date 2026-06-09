@@ -4,7 +4,7 @@
  */
 
 import type { ErrorInfo, ReactNode } from 'react'
-import { ErrorOutline, Refresh } from '@mui/icons-material'
+import { ErrorOutlined, Refresh } from '@mui/icons-material'
 import { Box, Button, Container, Paper, Typography } from '@mui/material'
 import * as React from 'react'
 import { Component } from 'react'
@@ -71,12 +71,14 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <Container maxWidth="sm">
           <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            minHeight="100vh"
-            textAlign="center"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '100vh',
+              textAlign: 'center',
+            }}
           >
             <Paper
               elevation={3}
@@ -86,7 +88,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 borderRadius: 2,
               }}
             >
-              <ErrorOutline
+              <ErrorOutlined
                 sx={{
                   fontSize: 64,
                   color: 'error.main',
@@ -101,7 +103,6 @@ export class ErrorBoundary extends Component<Props, State> {
               <Typography
                 variant="body1"
                 color="text.secondary"
-                paragraph
                 sx={{ mb: 3 }}
               >
                 We encountered an unexpected error. The issue has been logged
