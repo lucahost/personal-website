@@ -26,14 +26,15 @@ interface CommandResult {
 function runCommand(raw: string): CommandResult {
   switch (raw.toLowerCase()) {
     case 'help':
-      return { reply: 'commands: help · whoami · cv · rickroll' }
+      return { reply: 'commands: help · whoami · cv · dare' }
     case 'whoami':
       return { reply: 'a curious visitor with good taste 👋' }
     case 'cv':
     case 'resume':
       return { reply: 'opening cv… 📄', open: CV_URL, event: 'cv_download' }
-    case 'rickroll':
-      return { reply: '🎵 never gonna give you up…', open: RICKROLL_URL }
+    case 'dare':
+    case 'rickroll': // og keyword still works, just not advertised
+      return { reply: 'rolling the dice… 🎲', open: RICKROLL_URL }
     default:
       return { reply: `command not found: ${raw}. try "help".` }
   }
