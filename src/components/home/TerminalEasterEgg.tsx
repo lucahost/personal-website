@@ -1,17 +1,43 @@
 /**
- * Hidden terminal prompt. Every entry is recorded (best-effort, via the
- * rate-limited proxy). Typing `rickroll` opens the classic; anything else gets a
- * cheeky in-terminal reply — so visitors aren't ambushed with a redirect.
+ * Hidden terminal prompt — a tiny fake shell. Every entry is recorded
+ * (best-effort, via the rate-limited proxy). `help` lists the commands so the
+ * rickroll is discoverable but opt-in; unknown input gets a cheeky reply rather
+ * than an ambush redirect.
  * @module components/home/TerminalEasterEgg
  */
 
 import { Box } from '@mui/material'
 import * as React from 'react'
 import { useRef, useState } from 'react'
+import { CV_URL } from '../../constants/cv'
 import { ACCENT, BORDER, MONO, MUTED, SURFACE, TEXT } from '../../constants/design'
-import { trackCommand } from '../../lib/track'
+import { trackCommand, trackEvent } from '../../lib/track'
 
 const RICKROLL_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+
+interface CommandResult {
+  reply: string
+  /** URL to open in a new tab, if any */
+  open?: string
+  /** Interaction event to record, if any */
+  event?: string
+}
+
+function runCommand(raw: string): CommandResult {
+  switch (raw.toLowerCase()) {
+    case 'help':
+      return { reply: 'commands: help · whoami · cv · rickroll' }
+    case 'whoami':
+      return { reply: 'a curious visitor with good taste 👋' }
+    case 'cv':
+    case 'resume':
+      return { reply: 'opening cv… 📄', open: CV_URL, event: 'cv_download' }
+    case 'rickroll':
+      return { reply: '🎵 never gonna give you up…', open: RICKROLL_URL }
+    default:
+      return { reply: `command not found: ${raw}. try "help".` }
+  }
+}
 
 interface Entry {
   cmd: string
@@ -32,16 +58,16 @@ export const TerminalEasterEgg: React.FC = () => {
     if (!cmd)
       return
 
-    // Record everything that's typed — the rickroll is opt-in, the telemetry isn't.
+    // Record everything that's typed — commands are opt-in, the telemetry isn't.
     trackCommand(value)
 
-    if (cmd.toLowerCase() === 'rickroll') {
-      setEntry({ cmd, reply: '🎵 never gonna give you up…' })
-      window.open(RICKROLL_URL, '_blank', 'noopener,noreferrer')
-    }
-    else {
-      setEntry({ cmd, reply: 'nice try. (type "rickroll" if you really must 😏)' })
-    }
+    const result = runCommand(cmd)
+    setEntry({ cmd, reply: result.reply })
+    if (result.event)
+      trackEvent(result.event, 'terminal')
+    if (result.open)
+      window.open(result.open, '_blank', 'noopener,noreferrer')
+
     setValue('')
   }
 
@@ -130,7 +156,7 @@ export const TerminalEasterEgg: React.FC = () => {
               aria-hidden
               sx={{ ml: 1, color: MUTED, opacity: 0.7, fontStyle: 'italic', whiteSpace: 'nowrap', pointerEvents: 'none' }}
             >
-              type something and hit enter ↵
+              type "help" and hit enter ↵
             </Box>
           )}
         </Box>
