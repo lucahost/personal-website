@@ -33,7 +33,7 @@ export const Hero: React.FC = () => {
           to: { opacity: 1, transform: 'translateY(0)' },
         },
         'display': 'grid',
-        'gridTemplateColumns': { xs: '1fr', md: '1.35fr 1fr' },
+        'gridTemplateColumns': { xs: 'minmax(0, 1fr)', md: 'minmax(0, 1.35fr) minmax(0, 1fr)' },
         'gap': { xs: 5, md: 6 },
         'alignItems': 'center',
         'pt': { xs: 2, md: 4 },
@@ -230,9 +230,9 @@ export const Hero: React.FC = () => {
                 ['focus', 'Platforms & frameworks'],
                 ['building', 'APIs other teams build on'],
               ].map(([k, v]) => (
-                <Box key={k} sx={{ display: 'flex', gap: 1.5, whiteSpace: 'nowrap' }}>
-                  <Box component="span" sx={{ color: ACCENT, minWidth: 84 }}>{k}</Box>
-                  <Box component="span" sx={{ color: TEXT }}>{v}</Box>
+                <Box key={k} sx={{ display: 'flex', gap: 1.5 }}>
+                  <Box component="span" sx={{ color: ACCENT, minWidth: 84, flexShrink: 0 }}>{k}</Box>
+                  <Box component="span" sx={{ color: TEXT, minWidth: 0 }}>{v}</Box>
                 </Box>
               ))}
             </Box>

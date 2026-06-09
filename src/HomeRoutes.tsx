@@ -78,10 +78,6 @@ const HomeRoutes: React.FC = () => {
           in
           {' '}
           <strong>Zürich</strong>
-          {' '}
-          ·
-          {' '}
-          <span style={{ opacity: 0.6 }}>React · TypeScript</span>
         </Box>
       </Box>
     </>

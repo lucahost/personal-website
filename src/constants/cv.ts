@@ -88,9 +88,9 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
     current: true,
     roles: [
       {
-        title: 'Team Lead, Software Engineering',
+        title: 'Teamleader Software Engineering',
         period: 'Jun 2025 — Present',
-        description: 'Lead a team building the core frameworks and internal APIs other engineering teams depend on, and drive adoption of AI tooling across the engineering organisation. Own hiring, mentoring and technical direction.',
+        description: 'Built and lead a team building the core frameworks and internal APIs other engineering teams depend on, and drive adoption of AI tooling across the engineering organisation. Own hiring, mentoring and technical direction.',
       },
       {
         title: 'Senior Software Engineer',
@@ -107,14 +107,14 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
   {
     id: 'ise-ag',
     company: 'ISE AG Informatik Solutions',
-    context: 'IT solutions & software house',
+    context: 'IT solutions & service provider',
     location: 'Einsiedeln',
     period: 'Dec 2014 — Dec 2022',
     roles: [
       {
         title: 'Software Engineer (Full-stack)',
         period: '8 years',
-        description: 'Designed, built and maintained customer-facing and internal applications across the full stack. Built ISE IntranetAdmin — a rule-based user & group synchronisation product, originally my HF diploma project — now shipped to 20+ schools and keeping 50,000+ users in sync across Entra ID and on-prem AD. Also led delivery of a multi-tenant ticketing platform for education-sector clients with CRM integration, and mentored apprentices.',
+        description: 'Designed, built and maintained customer-facing and internal applications across the full stack. Built ISE IntranetAdmin — a rule-based user & group synchronisation product, originally my HF diploma project — now shipped to 20+ schools and keeping 50,000+ users in sync across school management software and Entra ID or on-prem AD. Also led delivery of a multi-tenant ticketing platform for education-sector clients with CRM integration, and mentored apprentices.',
         link: { label: 'ise-intranetadmin', url: 'https://www.iseag.ch/loesungen/ise-intranetadmin/' },
       },
     ],
@@ -123,7 +123,7 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
     id: 'visary',
     company: 'Visary',
     context: 'Donation-app startup',
-    location: 'Switzerland',
+    location: 'Zürich - Remote',
     period: 'Apr 2018 — Jul 2019',
     parallel: true,
     roles: [
@@ -165,13 +165,14 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
   },
 ]
 
-/** Skills, grouped under monospace keys */
+/** Skills, grouped under monospace keys (icons assigned per group in the Skills component) */
 export const SKILLS: readonly SkillGroup[] = [
-  { key: 'architecture', items: ['Distributed systems', 'Event-driven design', 'Resilient & scalable services', 'API design'] },
-  { key: 'backend', items: ['.NET / C#', 'ASP.NET Core', 'MSSQL', 'PostgreSQL', 'Node.js', 'Java', 'Go'] },
+  { key: 'architecture', items: ['Distributed systems', 'Microservices', 'Modular monolith', 'Vertical slice architecture', 'Event-driven design', 'Domain-driven design', 'Event storming & modeling', 'Messaging'] },
+  { key: 'backend', items: ['.NET / C#', 'ASP.NET Core', 'Node.js', 'Java', 'Go'] },
+  { key: 'data & infra', items: ['MS SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'Azure Service Bus', 'Kubernetes', 'Datadog'] },
   { key: 'frontend', items: ['React', 'TypeScript', 'Next.js'] },
-  { key: 'leadership', items: ['Team leadership', 'Hiring', 'Mentoring', 'Scrum', 'Stakeholder management'] },
-  { key: 'foundations', items: ['Domain-driven design', 'Data Science', 'Network analysis', 'SQL', 'Testing (ISTQB)'] },
+  { key: 'leadership', items: ['Team leadership', 'Hiring', 'Mentoring', 'Scrum', 'Stakeholder management', 'AI-assisted engineering'] },
+  { key: 'foundations', items: ['Data Science', 'Network analysis', 'Testing (ISTQB)'] },
 ]
 
 /** Education, most recent first */
@@ -181,14 +182,14 @@ export const EDUCATION: readonly EducationEntry[] = [
     school: 'FFHS — Fernfachhochschule Schweiz',
     degree: 'BSc Computer Science',
     period: '2020 — 2023',
-    detail: 'Top 5% of cohort · Thesis: “Quantitative Analysis of Graph Metrics”',
+    detail: 'Top 5% of cohort · Thesis: "Quantitative Analysis of Graph Metrics"',
   },
   {
     id: 'juventus',
     school: 'Juventus Schulen Zürich',
     degree: 'Dipl. Techniker HF, Software Development',
     period: '2017 — 2020',
-    detail: 'Graduated top of class · 5.66 / 6 · Diploma project: “Rule-based User & Group Synchronisation” (ISE IntranetAdmin)',
+    detail: 'Graduated top of class · 5.66 / 6 · Diploma project: "Rule-based User & Group Synchronisation" (ISE IntranetAdmin)',
   },
 ]
 

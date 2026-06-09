@@ -17,6 +17,8 @@ export const TerminalEasterEgg: React.FC = () => {
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
       event.preventDefault()
+      if (!value.trim())
+        return
       trackCommand(value)
       window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank', 'noopener,noreferrer')
       setValue('')

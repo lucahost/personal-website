@@ -81,13 +81,16 @@ export const FeaturedProjects: React.FC = () => {
           component={RouterLink}
           to="/projects"
           sx={{
+            'display': 'inline-flex',
+            'alignItems': 'center',
+            'minHeight': 44,
+            'px': 2,
             'fontFamily': MONO,
             'fontSize': '0.85rem',
             'color': ACCENT,
             'textDecoration': 'none',
-            'borderBottom': '1px solid transparent',
-            'transition': 'border-color 200ms ease',
-            '&:hover': { borderColor: ACCENT },
+            'textUnderlineOffset': '5px',
+            '&:hover': { textDecoration: 'underline' },
           }}
         >
           view all projects →
