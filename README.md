@@ -89,7 +89,57 @@ npm run lint
 
 # Preview production build locally
 npm run preview
+
+# Verify CV PDF / OG image are in sync with their sources (runs in CI)
+npm run cv:check
+
+# Refresh the artifact stamp after re-rendering the CV PDF / OG image
+npm run cv:stamp
 ```
+
+## 📄 CV artifacts (PDF & OG image)
+
+Two committed artifacts are **derived** from the CV content and rendered manually:
+
+| Artifact                                     | Template                | Rendered with                             |
+| -------------------------------------------- | ----------------------- | ----------------------------------------- |
+| `public/static/media/luca-hostettler-cv.pdf` | `scripts/cv-print.html` | headless Chrome `--print-to-pdf`          |
+| `public/og-image.png`                        | `scripts/og-image.html` | headless Chrome `--screenshot` (1200×630) |
+
+The **source of truth** for all CV content is `src/constants/cv.ts` — the live site renders it
+directly. The two templates mirror that content by hand, so whenever `cv.ts` (or a template)
+changes, both artifacts must be re-rendered.
+
+CI enforces this: the **CV artifact freshness** step (`npm run cv:check`,
+`scripts/check-cv-artifacts.mjs`) hashes the three source files and fails if any changed
+since the stamp (`scripts/cv-artifacts.stamp.json`) was last refreshed.
+
+### Re-rendering
+
+From the repo root (PowerShell; the templates load IBM Plex from Google Fonts, so be online —
+`--virtual-time-budget` gives the fonts time to load):
+
+```powershell
+$chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+& $chrome --headless --no-pdf-header-footer --virtual-time-budget=10000 `
+  --print-to-pdf="$PWD\public\static\media\luca-hostettler-cv.pdf" "$PWD\scripts\cv-print.html"
+
+& $chrome --headless --window-size=1200,630 --hide-scrollbars --virtual-time-budget=10000 `
+  --screenshot="$PWD\public\og-image.png" "$PWD\scripts\og-image.html"
+```
+
+Then eyeball both outputs (A4 page breaks in the PDF; layout of the OG card), refresh the
+stamp, and commit everything together:
+
+```bash
+npm run cv:stamp
+git add public/static/media/luca-hostettler-cv.pdf public/og-image.png scripts/cv-artifacts.stamp.json
+```
+
+> **Note:** social networks cache OG images aggressively — after deploying a new
+> `og-image.png`, re-scrape with the platform's debugger (e.g. LinkedIn Post Inspector)
+> if the preview matters right away.
 
 ## 🏗️ Project Structure
 

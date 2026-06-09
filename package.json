@@ -10,7 +10,9 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "typecheck": "npx tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cv:check": "node scripts/check-cv-artifacts.mjs",
+    "cv:stamp": "node scripts/check-cv-artifacts.mjs --update"
   },
   "browserslist": {
     "production": [
