@@ -11,34 +11,83 @@
     />
     <style>
       :root {
-        --accent: #0969da;        /* print-friendly blue */
+        --accent: #0969da; /* print-friendly blue */
         --ink: #1f2328;
         --muted: #57606a;
         --line: #d0d7de;
         --bg-soft: #f6f8fa;
       }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      @page { size: A4; margin: 14mm 14mm; }
-      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @page {
+        size: A4;
+        margin: 14mm 14mm;
+      }
+      html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
       body {
         font-family: 'IBM Plex Sans', sans-serif;
         color: var(--ink);
         font-size: 10.2px;
         line-height: 1.5;
       }
-      .mono { font-family: 'IBM Plex Mono', monospace; }
-      a { color: var(--accent); text-decoration: none; }
+      .mono {
+        font-family: 'IBM Plex Mono', monospace;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
 
       /* Header */
-      header { border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 14px; }
-      .name { font-size: 27px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
-      .role { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--accent); font-size: 12px; margin-top: 3px; }
-      .contact { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 9.6px; color: var(--muted); }
-      .contact .mono { color: var(--ink); }
-      .summary { margin-top: 10px; color: var(--muted); font-size: 10.4px; max-width: 165mm; }
+      header {
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .name {
+        font-size: 27px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+      .role {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        color: var(--accent);
+        font-size: 12px;
+        margin-top: 3px;
+      }
+      .contact {
+        margin-top: 9px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 16px;
+        font-size: 9.6px;
+        color: var(--muted);
+      }
+      .contact .mono {
+        color: var(--ink);
+      }
+      .summary {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 10.4px;
+        max-width: 165mm;
+      }
 
       /* Layout */
-      .grid { display: grid; grid-template-columns: 1fr 62mm; gap: 12mm; margin-top: 14px; }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 62mm;
+        gap: 12mm;
+        margin-top: 14px;
+      }
 
       h2 {
         font-family: 'IBM Plex Mono', monospace;
@@ -51,40 +100,135 @@
         padding-bottom: 4px;
         border-bottom: 1px solid var(--line);
       }
-      section { margin-bottom: 15px; }
-      section:last-child { margin-bottom: 0; }
+      section {
+        margin-bottom: 15px;
+      }
+      section:last-child {
+        margin-bottom: 0;
+      }
 
       /* Experience */
-      .company { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-      .company .org { font-weight: 700; font-size: 12px; }
-      .company .when { font-size: 9px; color: var(--muted); white-space: nowrap; }
-      .context { font-size: 9.4px; color: var(--muted); margin-bottom: 6px; }
-      .role-block { margin: 0 0 7px 0; padding-left: 9px; border-left: 2px solid var(--line); }
-      .role-block.lead { border-left-color: var(--accent); }
-      .role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-      .role-title { font-weight: 600; font-size: 10.6px; }
-      .role-when { font-size: 8.8px; color: var(--muted); white-space: nowrap; }
-      .role-desc { color: var(--muted); font-size: 9.8px; margin-top: 1px; }
-      .exp-entry { margin-bottom: 12px; }
-      .exp-entry:last-child { margin-bottom: 0; }
+      .company {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+      }
+      .company .org {
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .company .when {
+        font-size: 9px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .context {
+        font-size: 9.4px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .role-block {
+        margin: 0 0 7px 0;
+        padding-left: 9px;
+        border-left: 2px solid var(--line);
+      }
+      .role-block.lead {
+        border-left-color: var(--accent);
+      }
+      .role-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+      }
+      .role-title {
+        font-weight: 600;
+        font-size: 10.6px;
+      }
+      .role-when {
+        font-size: 8.8px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .role-desc {
+        color: var(--muted);
+        font-size: 9.8px;
+        margin-top: 1px;
+      }
+      .exp-entry {
+        margin-bottom: 12px;
+      }
+      .exp-entry:last-child {
+        margin-bottom: 0;
+      }
       .tag {
-        display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 7.4px;
-        text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent);
-        border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-left: 6px; vertical-align: middle;
+        display: inline-block;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 7.4px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0 4px;
+        margin-left: 6px;
+        vertical-align: middle;
       }
 
       /* Sidebar */
-      .skill-group { margin-bottom: 9px; }
-      .skill-key { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 9px; margin-bottom: 3px; }
-      .chips { display: flex; flex-wrap: wrap; gap: 4px; }
-      .chip { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1.5px 6px; font-size: 8.8px; }
-      .edu { margin-bottom: 9px; }
-      .edu .deg { font-weight: 600; font-size: 10px; }
-      .edu .school { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 8.8px; }
-      .edu .meta { color: var(--muted); font-size: 8.8px; }
-      ul.list { list-style: none; }
-      ul.list li { position: relative; padding-left: 12px; margin-bottom: 3px; font-size: 9.6px; }
-      ul.list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); }
+      .skill-group {
+        margin-bottom: 9px;
+      }
+      .skill-key {
+        font-family: 'IBM Plex Mono', monospace;
+        color: var(--accent);
+        font-size: 9px;
+        margin-bottom: 3px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .chip {
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: 1.5px 6px;
+        font-size: 8.8px;
+      }
+      .edu {
+        margin-bottom: 9px;
+      }
+      .edu .deg {
+        font-weight: 600;
+        font-size: 10px;
+      }
+      .edu .school {
+        font-family: 'IBM Plex Mono', monospace;
+        color: var(--accent);
+        font-size: 8.8px;
+      }
+      .edu .meta {
+        color: var(--muted);
+        font-size: 8.8px;
+      }
+      ul.list {
+        list-style: none;
+      }
+      ul.list li {
+        position: relative;
+        padding-left: 12px;
+        margin-bottom: 3px;
+        font-size: 9.6px;
+      }
+      ul.list li::before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
     </style>
   </head>
   <body>
@@ -99,9 +243,9 @@
         <span>hostettler.io</span>
       </div>
       <div class="summary">
-        Engineering leader building the internal frameworks and APIs other product teams build on at Digitec
-        Galaxus, Switzerland’s largest online retailer — shaped around what each team needs to ship. I care about
-        scalable architecture, pragmatic delivery, and lifting the people around me.
+        Engineering leader building the internal frameworks and APIs other product teams build on at Digitec Galaxus,
+        Switzerland’s largest online retailer — shaped around what each team needs to ship. I care about scalable
+        architecture, pragmatic delivery, and lifting the people around me.
       </div>
     </header>
 
@@ -124,8 +268,9 @@
                 <span class="role-when mono">Jun 2025 — Present</span>
               </div>
               <div class="role-desc">
-                Lead a team building the core frameworks and internal APIs other engineering teams depend on,
-                and drive adoption of AI tooling across the engineering organisation. Own hiring, mentoring and technical direction.
+                Lead a team building the core frameworks and internal APIs other engineering teams depend on, and drive
+                adoption of AI tooling across the engineering organisation. Own hiring, mentoring and technical
+                direction.
               </div>
             </div>
 
@@ -135,8 +280,9 @@
                 <span class="role-when mono">Aug 2024 — Jun 2025</span>
               </div>
               <div class="role-desc">
-                Product-responsible for the logistics warehouse-transfer domain — enabling in-store pickup and orchestrating
-                truck departures within tight delivery windows. Designed resilient, scalable services integrated with core ERP processes.
+                Product-responsible for the logistics warehouse-transfer domain — enabling in-store pickup and
+                orchestrating truck departures within tight delivery windows. Designed resilient, scalable services
+                integrated with core ERP processes.
               </div>
             </div>
 
@@ -164,9 +310,10 @@
                 <span class="role-when mono">8 years</span>
               </div>
               <div class="role-desc">
-                Designed, built and maintained customer-facing and internal applications across the full stack. Led delivery of a
-                multi-tenant ticketing platform for education-sector clients with CRM integration, and a business application serving
-                40+ daily active users. Built rule-based user/group provisioning into Entra ID and on-prem AD, and mentored apprentices.
+                Designed, built and maintained customer-facing and internal applications across the full stack. Led
+                delivery of a multi-tenant ticketing platform for education-sector clients with CRM integration, and a
+                business application serving 40+ daily active users. Built rule-based user/group provisioning into Entra
+                ID and on-prem AD, and mentored apprentices.
               </div>
             </div>
           </div>
@@ -216,14 +363,15 @@
             <div class="skill-key">architecture</div>
             <div class="chips">
               <span class="chip">Distributed systems</span><span class="chip">Event-driven design</span>
-              <span class="chip">Resilient & scalable services</span><span class="chip">API design</span><span class="chip">ERP integration</span>
+              <span class="chip">Resilient & scalable services</span><span class="chip">API design</span
+              ><span class="chip">ERP integration</span>
             </div>
           </div>
           <div class="skill-group">
             <div class="skill-key">backend</div>
             <div class="chips">
-              <span class="chip">.NET / C#</span><span class="chip">ASP.NET Core</span><span class="chip">PostgreSQL</span>
-              <span class="chip">Node.js</span><span class="chip">Java</span>
+              <span class="chip">.NET / C#</span><span class="chip">ASP.NET Core</span
+              ><span class="chip">PostgreSQL</span> <span class="chip">Node.js</span><span class="chip">Java</span>
             </div>
           </div>
           <div class="skill-group">
@@ -235,14 +383,16 @@
           <div class="skill-group">
             <div class="skill-key">leadership</div>
             <div class="chips">
-              <span class="chip">Team leadership</span><span class="chip">Hiring</span><span class="chip">Mentoring</span>
-              <span class="chip">Scrum</span><span class="chip">Stakeholder mgmt</span>
+              <span class="chip">Team leadership</span><span class="chip">Hiring</span
+              ><span class="chip">Mentoring</span> <span class="chip">Scrum</span
+              ><span class="chip">Stakeholder mgmt</span>
             </div>
           </div>
           <div class="skill-group">
             <div class="skill-key">foundations</div>
             <div class="chips">
-              <span class="chip">Data Science</span><span class="chip">Network analysis</span><span class="chip">SQL</span><span class="chip">Testing (ISTQB)</span>
+              <span class="chip">Data Science</span><span class="chip">Network analysis</span
+              ><span class="chip">SQL</span><span class="chip">Testing (ISTQB)</span>
             </div>
           </div>
         </section>
