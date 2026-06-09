@@ -192,6 +192,9 @@ const server = http.createServer((req, res) => {
   })
 })
 
-server.listen(PORT, () => {
-  console.log(`[track-proxy] listening on :${PORT} → ${OTLP_LOGS_URL} (origin ${ALLOW_ORIGIN})`)
+// Bind loopback-only so the port is unreachable off-box regardless of firewall
+// state. nginx reaches it via proxy_pass http://127.0.0.1:8787 (literal IPv4 — a
+// `localhost` target could resolve to ::1 and miss this IPv4-only bind).
+server.listen(PORT, '127.0.0.1', () => {
+  console.log(`[track-proxy] listening on 127.0.0.1:${PORT} → ${OTLP_LOGS_URL} (origin ${ALLOW_ORIGIN})`)
 })
