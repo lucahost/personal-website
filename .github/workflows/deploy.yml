@@ -26,14 +26,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
           cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
 
       - name: Install dependencies
@@ -72,7 +72,7 @@ jobs:
       # Checkout first (provides scripts/track-proxy/server.mjs for the proxy deploy).
       # Must run before download-artifact so its workspace clean doesn't wipe the artifact.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
