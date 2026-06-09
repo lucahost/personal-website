@@ -114,6 +114,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
           # User-level service (no root): linger keeps /run/user/<uid> alive between deploys.
+          # A non-interactive SSH shell has no session bus, so point systemctl --user at it.
           script: |
             export XDG_RUNTIME_DIR=/run/user/$(id -u)
+            export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
             systemctl --user restart track-proxy
