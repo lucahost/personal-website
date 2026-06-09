@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+      }
+      body {
+        position: relative;
+        overflow: hidden;
+        background-color: #0d1117;
+        background-image:
+          radial-gradient(circle at 78% -10%, rgba(88, 166, 255, 0.22), transparent 50%),
+          radial-gradient(circle at 100% 100%, rgba(86, 212, 221, 0.12), transparent 45%),
+          radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.2px);
+        background-size:
+          auto,
+          auto,
+          28px 28px;
+        color: #e6edf3;
+        font-family: 'IBM Plex Sans', sans-serif;
+      }
+      .frame {
+        position: absolute;
+        inset: 0;
+        padding: 72px 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .prompt {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 24px;
+        color: #8b949e;
+        margin-bottom: 26px;
+      }
+      .prompt .sigil {
+        color: #58a6ff;
+      }
+      .name {
+        font-weight: 700;
+        font-size: 96px;
+        line-height: 1;
+        letter-spacing: -0.025em;
+        margin-bottom: 26px;
+      }
+      .role {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        font-size: 30px;
+        background: linear-gradient(135deg, #58a6ff 0%, #56d4dd 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 34px;
+      }
+      .tagline {
+        font-weight: 500;
+        font-size: 34px;
+        line-height: 1.32;
+        color: #c9d1d9;
+        max-width: 760px;
+      }
+      .avatar-ring {
+        position: absolute;
+        top: 64px;
+        right: 80px;
+        width: 132px;
+        height: 132px;
+        border-radius: 50%;
+        padding: 4px;
+        background: linear-gradient(135deg, #58a6ff 0%, #56d4dd 100%);
+      }
+      .avatar-ring img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        background: #0d1117;
+      }
+      .footer {
+        position: absolute;
+        left: 80px;
+        bottom: 60px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 22px;
+        color: #8b949e;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .footer .dot {
+        color: #30363d;
+      }
+      .footer .site {
+        color: #58a6ff;
+      }
+      .bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 8px;
+        background: linear-gradient(90deg, #58a6ff 0%, #56d4dd 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="avatar-ring">
+      <img src="../src/common/img/luca.png" alt="" />
+    </div>
+    <div class="frame">
+      <div class="prompt"><span class="sigil">~$</span> whoami</div>
+      <div class="name">Luca Hostettler</div>
+      <div class="role">Engineering Leader · Platforms &amp; Frameworks</div>
+      <div class="tagline">Designing resilient systems at scale — and growing the engineers who build them.</div>
+    </div>
+    <div class="footer">
+      <span class="site">hostettler.io</span>
+      <span class="dot">·</span>
+      <span>Zürich, Switzerland</span>
+    </div>
+    <div class="bar"></div>
+  </body>
+</html>

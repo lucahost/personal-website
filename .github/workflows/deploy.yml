@@ -26,15 +26,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
           cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
+
+      # Fails when CV sources changed without re-rendering the derived
+      # PDF/OG image (see "CV artifacts" in README.md). No deps needed.
+      - name: CV artifact freshness
+        run: npm run cv:check
 
       - name: Install dependencies
         run: npm ci --include=dev
@@ -47,9 +52,12 @@ jobs:
 
       - name: Build for production
         run: npm run build
+        env:
+          # Public URL of the telemetry proxy; empty ⇒ terminal telemetry disabled.
+          VITE_TRACK_ENDPOINT: ${{ vars.TRACK_ENDPOINT }}
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: production-build-${{ github.sha }}
           path: dist/
@@ -66,14 +74,19 @@ jobs:
       url: https://hostettler.io
 
     steps:
+      # Checkout first (provides scripts/track-proxy/server.mjs for the proxy deploy).
+      # Must run before download-artifact so its workspace clean doesn't wipe the artifact.
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: production-build-${{ github.sha }}
           path: website/dist/
 
       - name: Deploy to Server
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -82,3 +95,32 @@ jobs:
           source: website/dist/
           target: ${{ secrets.DEPLOY_PATH }}
           strip_components: 2
+
+      # --- Terminal telemetry proxy (opt-in via the DEPLOY_TRACK_PROXY repo variable) ---
+      # One-time VPS setup required first: run scripts/track-proxy/setup-vps.sh on the server.
+      - name: Deploy track-proxy
+        if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          source: scripts/track-proxy/server.mjs
+          target: ~/track-proxy/
+          strip_components: 2
+
+      - name: Restart track-proxy
+        if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          # User-level service (no root): linger keeps /run/user/<uid> alive between deploys.
+          # A non-interactive SSH shell has no session bus, so point systemctl --user at it.
+          script: |
+            export XDG_RUNTIME_DIR=/run/user/$(id -u)
+            export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+            systemctl --user restart track-proxy

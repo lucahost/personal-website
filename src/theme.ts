@@ -1,8 +1,12 @@
-import { grey, lightBlue, red } from '@mui/material/colors'
+import { red } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
+import { ACCENT, ACCENT_2, BORDER, CANVAS, MUTED, SANS, SURFACE, TEXT } from './constants/design'
 
 // A custom theme for this app
 const theme = createTheme({
+  typography: {
+    fontFamily: SANS,
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -69,21 +73,22 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#0288d1',
+      main: ACCENT,
     },
     secondary: {
-      main: lightBlue[200],
+      main: ACCENT_2,
     },
     error: {
       main: red.A400,
     },
+    divider: BORDER,
     background: {
-      default: '#282c34',
-      paper: '#1e1e1e',
+      default: CANVAS,
+      paper: SURFACE,
     },
     text: {
-      primary: grey[100],
-      secondary: grey[300],
+      primary: TEXT,
+      secondary: MUTED,
     },
   },
   spacing: 14,

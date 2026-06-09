@@ -1,12 +1,11 @@
 import type { Project, ProjectCategory } from '../types'
-import astramind from '../common/img/astramind.png'
 import biergit from '../common/img/biergit.png'
 import blog from '../common/img/blog.png'
 import drugstore from '../common/img/drugstore.png'
 import fantasyBrrr from '../common/img/fantasyBrrr.png'
 import go from '../common/img/go.png'
 import muuvy from '../common/img/muuvy.png'
-import network from '../common/img/network.png'
+import network from '../common/img/network.jpg'
 import planningTool from '../common/img/planningTool.png'
 import portal from '../common/img/portal.png'
 import smartContracts from '../common/img/smartContracts.png'
@@ -27,18 +26,6 @@ export const PROJECTS_DATA: readonly Project[] = [
     featured: true,
   },
   {
-    id: 'astramind',
-    title: 'Astramind',
-    year: '2025-present',
-    description: 'AI-powered voice agent SaaS platform for Swiss businesses to handle phone calls, appointments, and customer inquiries using real-time voice AI.',
-    image: astramind,
-    technologies: ['.NET 9', 'React', 'TypeScript', 'PostgreSQL', 'Twilio', 'OpenAI'],
-    category: 'web',
-    githubUrl: 'https://github.com/astramind-ch',
-    liveUrl: 'https://astramind.ch',
-    featured: false,
-  },
-  {
     id: 'personal-blog',
     title: 'Personal Blog',
     year: '2019-present',
@@ -52,7 +39,7 @@ export const PROJECTS_DATA: readonly Project[] = [
   },
   {
     id: 'planning-tool',
-    title: 'Military WK Planning Tool',
+    title: 'Military Planning Tool',
     year: '2024-present',
     description: 'Web application for Swiss military service planning with synchromatrix, daily orders, and weekly planning features.',
     image: planningTool,
