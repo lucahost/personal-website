@@ -7,8 +7,10 @@
  *
  * Both POST to a rate-limited proxy on the VPS (which forwards to SigNoz). The
  * endpoint is configured via `VITE_TRACK_ENDPOINT`; when unset (e.g. local dev)
- * this is a no-op. No PII is sent — just the command/event name + an optional
- * label, the current path, and the referrer.
+ * this is a no-op. No PII is collected intentionally: the payload is the
+ * command/event name + an optional label, the current path, and the referrer
+ * (stripped to origin + pathname). Terminal commands are user-typed free text,
+ * so they could contain anything the visitor chooses to enter.
  *
  * Real abuse protection lives in the proxy (per-IP rate limiting, payload caps);
  * the guards here only stop a single well-behaved client from spamming. The
@@ -30,6 +32,19 @@ const MAX_LEN = 120
 let sessionSent = 0
 let lastSent = 0
 
+/** Referrer reduced to origin + pathname — query/fragment may carry tokens. */
+function safeReferrer(): string | undefined {
+  if (!document.referrer)
+    return undefined
+  try {
+    const url = new URL(document.referrer)
+    return url.origin + url.pathname
+  }
+  catch {
+    return undefined
+  }
+}
+
 function send(payload: Record<string, string>): void {
   if (!ENDPOINT)
     return
@@ -44,7 +59,7 @@ function send(payload: Record<string, string>): void {
   const body = JSON.stringify({
     ...payload,
     path: window.location.pathname,
-    ref: document.referrer || undefined,
+    ref: safeReferrer(),
     ts: new Date().toISOString(),
   })
 

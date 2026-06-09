@@ -81,7 +81,7 @@ jobs:
           path: website/dist/
 
       - name: Deploy to Server
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -95,7 +95,7 @@ jobs:
       # One-time VPS setup required first: run scripts/track-proxy/setup-vps.sh on the server.
       - name: Deploy track-proxy
         if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -107,7 +107,7 @@ jobs:
 
       - name: Restart track-proxy
         if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}

@@ -135,6 +135,14 @@ const server = http.createServer((req, res) => {
     return
   }
 
+  // Require the configured Origin. A low bar (non-browser clients can spoof
+  // it), but it rejects cross-site browser beacons and casual abuse outright
+  // instead of relying on CORS response headers alone.
+  if (origin !== ALLOW_ORIGIN) {
+    res.writeHead(403).end()
+    return
+  }
+
   const ip = clientIp(req)
   if (rateLimited(ip)) {
     res.writeHead(429).end()

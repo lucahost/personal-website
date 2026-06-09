@@ -55,11 +55,16 @@ function Resize-Image {
   '{0}  ->  {1}  ({2:N0} KB)' -f (Split-Path $InPath -Leaf), (Split-Path $OutPath -Leaf), ((Get-Item $OutPath).Length / 1KB)
 }
 
-Resize-Image -InPath "$imgDir\astramind.png" -OutPath "$imgDir\astramind.jpg" -MaxDim 640 -Format jpeg -Quality 82
-Resize-Image -InPath "$imgDir\network.png"   -OutPath "$imgDir\network.jpg"   -MaxDim 800 -Format jpeg -Quality 82
-Resize-Image -InPath "$imgDir\twitterX.png"  -OutPath "$imgDir\twitterX.png"  -MaxDim 128 -Format png
-Resize-Image -InPath "$imgDir\uno.png"       -OutPath "$imgDir\uno.png"       -MaxDim 480 -Format png
-
-# Remove the now-replaced PNG originals (their JPEG versions are referenced instead)
-Remove-Item "$imgDir\astramind.png", "$imgDir\network.png" -Force
+# PNG -> JPEG conversions are one-shot: skip (and don't delete) when the
+# original is already gone so the script stays repeatable.
+if (Test-Path "$imgDir\astramind.png") {
+  Resize-Image -InPath "$imgDir\astramind.png" -OutPath "$imgDir\astramind.jpg" -MaxDim 640 -Format jpeg -Quality 82
+  Remove-Item "$imgDir\astramind.png" -Force
+}
+if (Test-Path "$imgDir\network.png") {
+  Resize-Image -InPath "$imgDir\network.png" -OutPath "$imgDir\network.jpg" -MaxDim 800 -Format jpeg -Quality 82
+  Remove-Item "$imgDir\network.png" -Force
+}
+Resize-Image -InPath "$imgDir\twitterX.png" -OutPath "$imgDir\twitterX.png" -MaxDim 128 -Format png
+Resize-Image -InPath "$imgDir\uno.png"      -OutPath "$imgDir\uno.png"      -MaxDim 480 -Format png
 'done'
