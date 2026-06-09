@@ -35,7 +35,7 @@ const HomeRoutes: React.FC = () => {
       <Box
         component="main"
         sx={{
-          mt: 8,
+          mt: { xs: 2, md: 3 },
           minHeight: 'calc(100vh - 120px)',
         }}
       >
@@ -58,17 +58,18 @@ const HomeRoutes: React.FC = () => {
           py: 2,
           mt: 'auto',
           borderTop: theme => `1px solid ${theme.palette.divider}`,
-          backgroundColor: 'background.paper',
         }}
       >
         <Box
           sx={{
-            fontFamily: '\'Courier New\', monospace',
+            fontFamily: '\'IBM Plex Mono\', \'Courier New\', monospace',
             color: 'text.secondary',
-            fontSize: '0.875rem',
+            fontSize: '0.8rem',
           }}
         >
-          Made with
+          <span style={{ opacity: 0.6 }}>$</span>
+          {' '}
+          built with
           {' '}
           <span role="img" aria-label="heart" style={{ color: '#ff6b6b' }}>
             ❤️
@@ -76,7 +77,11 @@ const HomeRoutes: React.FC = () => {
           {' '}
           in
           {' '}
-          <strong>Zurich</strong>
+          <strong>Zürich</strong>
+          {' '}
+          ·
+          {' '}
+          <span style={{ opacity: 0.6 }}>React · TypeScript</span>
         </Box>
       </Box>
     </>

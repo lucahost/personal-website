@@ -4,23 +4,83 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
-    <meta name="theme-color" content="#000000" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <meta name="theme-color" content="#0d1117" />
 
-    <title>Luca Hostettler</title>
+    <!-- Primary meta -->
+    <title>Luca Hostettler — Engineering Leader, Platforms & Frameworks</title>
+    <meta
+      name="description"
+      content="Luca Hostettler — engineering leader in Zürich building the internal frameworks and APIs other product teams build on at Digitec Galaxus, shaped around what each team needs to ship. Resilient architecture, pragmatic delivery, engineering leadership."
+    />
+    <meta name="author" content="Luca Hostettler" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Luca Hostettler — Engineering Leader, Platforms & Frameworks" />
+    <meta
+      property="og:description"
+      content="Engineering leader in Zürich. Designing resilient systems at scale, and growing the engineers who build them."
+    />
+    <meta property="og:url" content="https://hostettler.io" />
+    <meta property="og:site_name" content="Luca Hostettler" />
+    <meta property="og:image" content="https://hostettler.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Luca Hostettler — Engineering Leader, Platforms & Frameworks" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@luca_host" />
+    <meta name="twitter:image" content="https://hostettler.io/og-image.png" />
+    <meta name="twitter:title" content="Luca Hostettler — Engineering Leader, Platforms & Frameworks" />
+    <meta
+      name="twitter:description"
+      content="Engineering leader in Zürich. Designing resilient systems at scale, and growing the engineers who build them."
+    />
+
+    <!-- Fonts: IBM Plex Mono (UI/headings) + IBM Plex Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Luca Hostettler",
+        "jobTitle": "Engineering Lead, Platforms & Frameworks",
+        "url": "https://hostettler.io",
+        "address": { "@type": "PostalAddress", "addressLocality": "Zürich", "addressCountry": "CH" },
+        "worksFor": { "@type": "Organization", "name": "Digitec Galaxus AG" },
+        "sameAs": [
+          "https://github.com/lucahost",
+          "https://www.linkedin.com/in/lucahostettler/",
+          "https://x.com/luca_host"
+        ]
+      }
+    </script>
 
     <style>
       html,
       body {
         height: 100%;
         margin: 0;
-        background-color: #282c34;
+        background-color: #0d1117;
+        color: #e6edf3;
         /* Prevent horizontal scroll on mobile */
         overflow-x: hidden;
         /* Optimize font rendering */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        font-family:
+          'IBM Plex Sans',
+          system-ui,
+          -apple-system,
+          sans-serif;
       }
 
       /* Disable zoom on input focus for iOS */
@@ -34,6 +94,7 @@
         -webkit-overflow-scrolling: touch;
       }
 
+      /* Terminal cursor blink */
       @keyframes blink {
         0%,
         50% {
@@ -49,6 +110,16 @@
       @media (max-width: 600px) {
         body {
           font-size: 14px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
         }
       }
     </style>
