@@ -57,7 +57,7 @@ jobs:
           find dist/assets -name '*.js' -o -name '*.css' | head -10 | xargs ls -lah
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: github.event_name == 'pull_request'
         with:
           name: build-${{ github.sha }}
@@ -86,5 +86,5 @@ jobs:
         run: npm audit --audit-level high
 
       - name: Dependency review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         if: github.event_name == 'pull_request'
