@@ -4,6 +4,8 @@ import blog from '../common/img/blog.png'
 import drugstore from '../common/img/drugstore.png'
 import fantasyBrrr from '../common/img/fantasyBrrr.png'
 import go from '../common/img/go.png'
+import loore from '../common/img/loore.svg'
+import move from '../common/img/move.png'
 import muuvy from '../common/img/muuvy.png'
 import network from '../common/img/network.jpg'
 import planningTool from '../common/img/planningTool.png'
@@ -11,8 +13,42 @@ import portal from '../common/img/portal.png'
 import smartContracts from '../common/img/smartContracts.png'
 import thesis from '../common/img/thesis.png'
 import uno from '../common/img/uno.png'
+import zueriRadar from '../common/img/zueriRadar.png'
 
 export const PROJECTS_DATA: readonly Project[] = [
+  {
+    id: 'zueri-radar',
+    title: 'ZüriRadar',
+    year: '2026',
+    description: 'Interactive open-data explorer for the canton of Zurich, mapping housing market, vacancy rates, building land, climate data, and federal housing policy.',
+    image: zueriRadar,
+    technologies: ['Next.js', 'TypeScript', 'MapLibre GL', 'Open Data'],
+    category: 'web',
+    liveUrl: 'https://zueri.hostettler.io',
+    featured: true,
+  },
+  {
+    id: 'move',
+    title: 'Move',
+    year: '2026',
+    description: 'Minimalist 25-minute guided bodyweight workout timer with warm-up, circuit, and cool-down phases, five difficulty levels, and English/German support.',
+    image: move,
+    technologies: ['JavaScript', 'CSS', 'i18n'],
+    category: 'web',
+    liveUrl: 'https://move.hostettler.io',
+    featured: true,
+  },
+  {
+    id: 'loore-8053',
+    title: 'LOORE — 8053',
+    year: '2026',
+    description: 'Pitch and business plan site for LOORE, a pop-up neighborhood bar in the former Voi store at Loorenstrasse 35 in Zürich-Witikon.',
+    image: loore,
+    technologies: ['HTML', 'CSS', 'Static Site'],
+    category: 'web',
+    liveUrl: 'https://8053.hostettler.io',
+    featured: true,
+  },
   {
     id: 'fantasy-brrr',
     title: 'Fantasy Brrr',
