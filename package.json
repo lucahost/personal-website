@@ -32,7 +32,7 @@
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@^9.1.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.1",
+    "react-router-dom": "^7.18.2",
     "styled-components": "^6.4.3",
     "vite-tsconfig-paths": "^6.1.1"
   },
