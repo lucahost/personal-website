@@ -55,5 +55,8 @@
   },
   "resolutions": {
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
+  "overrides": {
+    "tinypool": "^2.2.0"
   }
 }
