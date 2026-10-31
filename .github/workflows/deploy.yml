@@ -119,9 +119,16 @@ jobs:
         run: |
           # User-level service (no root): linger keeps /run/user/<uid> alive between deploys.
           # A non-interactive SSH shell has no session bus, so point systemctl --user at it.
+          # Quoted heredoc runs verbatim on the VPS; set -e so a failed restart
+          # fails the job instead of being masked by the status call.
           ssh $SSH_OPTS "${SSH_USERNAME}@${TS_HOSTNAME}" bash -s <<'EOF'
+          set -euo pipefail
           export XDG_RUNTIME_DIR=/run/user/$(id -u)
           export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+          # ExecStart points at /usr/local/bin/node by absolute path; the binary is
+          # upgraded in place, so a restart is enough. daemon-reload is cheap insurance
+          # in case the unit file itself was edited.
+          systemctl --user daemon-reload
           systemctl --user restart track-proxy
-          systemctl --user --no-pager --lines=0 status track-proxy
+          systemctl --user is-active track-proxy
           EOF
