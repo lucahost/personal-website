@@ -10,7 +10,7 @@
  *   - Forward each command/event as a single OTLP log record to the local SigNoz
  *     collector (key/endpoint never leave the VPS).
  *
- * Run behind nginx (terminates HTTPS, sets X-Forwarded-For) — see
+ * Run behind nginx (terminates HTTPS, sets X-Real-IP from CF-Connecting-IP) — see
  * nginx-track.conf. Install as a systemd service via setup-vps.sh.
  *
  * Config (env):
@@ -66,9 +66,13 @@ setInterval(() => {
 }, 600_000).unref()
 
 function clientIp(req) {
-  const xff = req.headers['x-forwarded-for']
-  if (typeof xff === 'string' && xff.length)
-    return xff.split(',')[0].trim()
+  // nginx sets X-Real-IP from Cloudflare's CF-Connecting-IP (see
+  // nginx-track.conf). X-Forwarded-For is deliberately NOT trusted: its first
+  // hop is client-controlled, which would let a caller pick its own rate-limit
+  // bucket and flood SigNoz.
+  const real = req.headers['x-real-ip']
+  if (typeof real === 'string' && real.length)
+    return real.trim()
   return req.socket.remoteAddress ?? 'unknown'
 }
 
