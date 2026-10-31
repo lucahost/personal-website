@@ -69,6 +69,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # The VPS only accepts SSH over Tailscale (public :22 is closed at the
+    # Hetzner firewall). Join the tailnet as an ephemeral tagged node and use
+    # Tailscale SSH (authn/authz via the tailnet ACL); no SSH key secrets needed.
+    env:
+      TS_HOSTNAME: 100.102.93.2
+      SSH_USERNAME: dp-ubuntu-16gb
+      SSH_OPTS: -o StrictHostKeyChecking=no
     environment:
       name: production
       url: https://hostettler.io
@@ -85,42 +92,43 @@ jobs:
           name: production-build-${{ github.sha }}
           path: website/dist/
 
-      - name: Deploy to Server
-        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: website/dist/
-          target: ${{ secrets.DEPLOY_PATH }}
-          strip_components: 2
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:prod-hetzner
+
+      - name: Deploy to Server
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # No --delete: matches the previous scp behaviour (add/overwrite only).
+          rsync -az -e "ssh $SSH_OPTS" website/dist/ "${SSH_USERNAME}@${TS_HOSTNAME}:${DEPLOY_PATH}/"
 
       # --- Terminal telemetry proxy (opt-in via the DEPLOY_TRACK_PROXY repo variable) ---
       # One-time VPS setup required first: run scripts/track-proxy/setup-vps.sh on the server.
       - name: Deploy track-proxy
         if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
-        uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          source: scripts/track-proxy/server.mjs
-          target: ~/track-proxy/
-          strip_components: 2
+        run: |
+          ssh $SSH_OPTS "${SSH_USERNAME}@${TS_HOSTNAME}" "mkdir -p ~/track-proxy"
+          scp $SSH_OPTS scripts/track-proxy/server.mjs "${SSH_USERNAME}@${TS_HOSTNAME}:track-proxy/"
 
       - name: Restart track-proxy
         if: ${{ vars.DEPLOY_TRACK_PROXY == 'true' }}
-        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        run: |
           # User-level service (no root): linger keeps /run/user/<uid> alive between deploys.
           # A non-interactive SSH shell has no session bus, so point systemctl --user at it.
-          script: |
-            export XDG_RUNTIME_DIR=/run/user/$(id -u)
-            export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
-            systemctl --user restart track-proxy
+          # Quoted heredoc runs verbatim on the VPS; set -e so a failed restart
+          # fails the job instead of being masked by the status call.
+          ssh $SSH_OPTS "${SSH_USERNAME}@${TS_HOSTNAME}" bash -s <<'EOF'
+          set -euo pipefail
+          export XDG_RUNTIME_DIR=/run/user/$(id -u)
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+          # ExecStart points at /usr/local/bin/node by absolute path; the binary is
+          # upgraded in place, so a restart is enough. daemon-reload is cheap insurance
+          # in case the unit file itself was edited.
+          systemctl --user daemon-reload
+          systemctl --user restart track-proxy
+          systemctl --user is-active track-proxy
+          EOF
