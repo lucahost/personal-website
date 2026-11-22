@@ -1,0 +1,142 @@
+// Renovate policy for the lucahost repos deployed to the Hetzner VPS.
+//
+// COPY: the source of truth is renovate/default.json5 in the private
+// lucahost/deploy-actions repo. Mend's hosted Renovate won't let a public
+// repo read a preset from a private repo, so the public repos carry this
+// copy. Change the source first, then mirror the change here.
+//
+// Policy: every merge to the default branch deploys to prod, so nothing
+// automerges. Updates arrive as PRs in one weekly batch and you merge them.
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  description: 'lucahost VPS repos: weekly batch, PRs only, no automerge',
+  extends: [
+    'config:recommended',
+    ':timezone(Europe/Zurich)',
+    // Opens a PR when Renovate renames or deprecates an option used here.
+    ':configMigration',
+  ],
+
+  // Monday before 08:00 Zurich time. The window is wide on purpose: the hosted
+  // Mend app only runs each repo every few hours, and a narrow window can be
+  // missed entirely. Security fixes ignore the schedule.
+  schedule: ['* 0-7 * * 1'],
+  // config:recommended caps branch creation at 2 PRs/hour. With a weekly
+  // window that pushes PRs into the next week, so the cap is lifted;
+  // grouping and prConcurrentLimit (10) keep the batch reviewable.
+  prHourlyLimit: 0,
+  automerge: false,
+  labels: ['dependencies'],
+
+  // GitHub (Dependabot) alerts plus the OSV database, so private repos with
+  // Dependabot alerts turned off still get security PRs.
+  osvVulnerabilityAlerts: true,
+  vulnerabilityAlerts: {
+    labels: ['dependencies', 'security'],
+  },
+
+  // Monthly lockfile refresh for transitive deps that no direct bump touches.
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ['* 0-7 1 * *'],
+  },
+
+  packageRules: [
+    {
+      // Supply-chain buffer: wait 3 days before proposing a new registry
+      // release, so a hijacked or yanked version is usually pulled first.
+      // 'strict' means no branch or PR exists until the age has passed.
+      // Docker is excluded because not every registry publishes timestamps,
+      // and a timestamp-less release would be held back forever.
+      description: 'Hold npm/PyPI/NuGet releases for 3 days',
+      matchDatasources: ['npm', 'pypi', 'nuget'],
+      minimumReleaseAge: '3 days',
+      internalChecksFilter: 'strict',
+    },
+    {
+      // Postgres 16 -> 17 needs pg_upgrade or dump/restore, and a Redis
+      // major can change persistence formats. These are never a routine
+      // merge, so majors wait until you tick them on the Dependency Dashboard.
+      description: 'Stateful images: majors need dashboard approval',
+      matchDatasources: ['docker'],
+      matchPackageNames: ['postgres', 'postgis/postgis', 'timescale/timescaledb', 'redis'],
+      matchUpdateTypes: ['major'],
+      dependencyDashboardApproval: true,
+    },
+    {
+      // Compose files reference images this org builds (<app>-api:latest,
+      // ghcr.io/lucahost/...:latest). Floating tags have no version to bump,
+      // and the local names don't exist on Docker Hub.
+      description: 'Skip floating :latest/:dev image tags',
+      matchDatasources: ['docker'],
+      matchCurrentValue: '/^(latest|dev)$/',
+      enabled: false,
+    },
+
+    // ---- Grouping --------------------------------------------------------
+    // Ungrouped, a dry run of one repo planned 48 branches. Non-major updates
+    // are grouped one PR per ecosystem per repo. That matches how the repos
+    // build: API and web images are built and checked separately
+    // (paths-filter, ci-backend vs ci-frontend), so a .NET-only PR rebuilds
+    // only the API, and a broken npm bump doesn't hold back the NuGet patches.
+    // 0.x packages stay out of the groups: by semver a 0.x minor is a breaking
+    // release (signoz-otel-collector v0.129 -> v0.144 is 15 of them).
+    {
+      description: 'Group non-major JS updates (npm/pnpm, .nvmrc)',
+      matchCategories: ['js'],
+      matchUpdateTypes: ['minor', 'patch'],
+      matchCurrentVersion: '!/^v?0\\./',
+      groupName: 'js non-major',
+    },
+    {
+      description: 'Group non-major .NET updates (NuGet, dotnet tools)',
+      matchCategories: ['dotnet'],
+      matchUpdateTypes: ['minor', 'patch'],
+      matchCurrentVersion: '!/^v?0\\./',
+      groupName: 'dotnet non-major',
+    },
+    {
+      // The runtime/SDK images ship in lockstep with the Microsoft.* packages,
+      // so they join the .NET group instead of the Docker one.
+      description: 'Group non-major mcr.microsoft.com/dotnet images with .NET',
+      matchDatasources: ['docker'],
+      matchPackageNames: ['mcr.microsoft.com/dotnet/**'],
+      matchUpdateTypes: ['minor', 'patch'],
+      groupName: 'dotnet non-major',
+    },
+    {
+      description: 'Group non-major Python updates (pyproject/uv, requirements)',
+      matchCategories: ['python'],
+      matchUpdateTypes: ['minor', 'patch'],
+      matchCurrentVersion: '!/^v?0\\./',
+      groupName: 'python non-major',
+    },
+    {
+      description: 'Group non-major Docker image updates',
+      matchCategories: ['docker'],
+      matchPackageNames: ['!mcr.microsoft.com/dotnet/**'],
+      matchUpdateTypes: ['minor', 'patch'],
+      matchCurrentVersion: '!/^v?0\\./',
+      groupName: 'docker non-major',
+    },
+    {
+      // Workflow files have no tests; the deploy run is the test either way.
+      // One PR to merge, watch and (if needed) revert beats one per action.
+      description: 'All GitHub Actions updates, majors included, in one PR',
+      matchManagers: ['github-actions'],
+      groupName: 'github-actions',
+      separateMajorMinor: false,
+    },
+    {
+      // config:recommended already puts the dotnet/* NuGet packages and the
+      // mcr images in "dotnet monorepo". Npgsql and EFCore.NamingConventions
+      // majors track the EF Core major, so they join it: the .NET N+1
+      // migration is one PR (push the TargetFramework bump onto it yourself;
+      // Renovate never edits TFMs).
+      description: '.NET major upgrade as one PR: runtime, EF Core, Npgsql',
+      matchPackageNames: ['Npgsql', 'Npgsql.**', 'EFCore.NamingConventions'],
+      matchUpdateTypes: ['major'],
+      groupName: 'dotnet monorepo',
+    },
+  ],
+}
