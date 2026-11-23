@@ -93,7 +93,13 @@ export const ProjectFilters = memo<ProjectFiltersProps>(({
               aria-label={`${category} projects`}
             >
               {categoryIcons[category]}
-              <Box component="span" sx={{ ml: 0.5, display: { xs: 'none', sm: 'inline' } }}>
+              <Box
+                component="span"
+                sx={{
+                  ml: 0.5,
+                  display: { xs: 'none', sm: 'inline' },
+                }}
+              >
                 {category.charAt(0).toUpperCase() + category.slice(1)}
                 {' '}
                 (

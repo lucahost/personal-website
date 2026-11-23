@@ -89,7 +89,12 @@ export const SkeletonLoader = memo<SkeletonLoaderProps>(({
   return (
     <>
       {items.map(itemKey => (
-        <Grid size={variant === 'card' ? { xs: 12, sm: 6, md: 4 } : 12} key={itemKey}>
+        <Grid
+          size={variant === 'card'
+            ? { xs: 12, sm: 6, md: 4 }
+            : 12}
+          key={itemKey}
+        >
           {renderSkeleton()}
         </Grid>
       ))}

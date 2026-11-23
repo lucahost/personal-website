@@ -47,7 +47,12 @@ const ITEMS: readonly SocialItem[] = [
  */
 export const SocialLinks = memo(() => {
   return (
-    <Box sx={{ display: 'flex', gap: 1.25, justifyContent: { xs: 'center', md: 'flex-start' } }}>
+    <Box sx={{
+      display: 'flex',
+      gap: 1.25,
+      justifyContent: { xs: 'center', md: 'flex-start' },
+    }}
+    >
       {ITEMS.map(item => (
         <Tooltip key={item.label} title={item.label} arrow>
           <Link

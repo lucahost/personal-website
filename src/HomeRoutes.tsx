@@ -18,7 +18,13 @@ const Projects = lazy(() => import('./components/project/Projects').then(m => ({
  */
 function PageLoader() {
   return (
-    <Box sx={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <Box sx={{
+      minHeight: '50vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+    >
       <SkeletonLoader variant="text" count={3} />
     </Box>
   )

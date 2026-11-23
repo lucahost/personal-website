@@ -53,7 +53,9 @@ export const AnimatedCard = memo<AnimatedCardProps>(({
         'position': 'relative',
         'overflow': 'hidden',
         'transition': `all ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-        'transform': isHovered ? `scale(${hoverScale})` : 'scale(1)',
+        'transform': isHovered
+          ? `scale(${hoverScale})`
+          : 'scale(1)',
         'cursor': 'pointer',
 
         // Top accent border

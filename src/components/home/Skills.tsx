@@ -65,7 +65,9 @@ export const Skills: React.FC = () => {
                 'alignItems': 'center',
                 'px': { xs: 2.5, md: 3 },
                 'py': { xs: 2.5, md: 2.75 },
-                'borderBottom': last ? 'none' : `1px solid ${BORDER}`,
+                'borderBottom': last
+                  ? 'none'
+                  : `1px solid ${BORDER}`,
                 'transition': 'background-color 200ms ease',
                 '&:hover': { backgroundColor: 'rgba(88,166,255,0.025)' },
               }}

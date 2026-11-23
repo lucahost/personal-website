@@ -64,7 +64,12 @@ export const FadeIn = memo<FadeInProps>(({
         timeoutRef.current = null
       }
     }
-  }, [delay, hasAnimated, threshold, triggerOnScroll])
+  }, [
+    delay,
+    hasAnimated,
+    threshold,
+    triggerOnScroll,
+  ])
 
   useEffect(() => {
     if (!triggerOnScroll && delay > 0) {
