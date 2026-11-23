@@ -26,14 +26,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version: '26'
           cache: ${{ github.event.inputs.skip_cache == 'true' && '' || 'npm' }}
 
       # Fails when CV sources changed without re-rendering the derived
@@ -84,7 +84,7 @@ jobs:
       # Checkout first (provides scripts/track-proxy/server.mjs for the proxy deploy).
       # Must run before download-artifact so its workspace clean doesn't wipe the artifact.
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Download build artifacts
         uses: actions/download-artifact@v8
