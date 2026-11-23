@@ -17,7 +17,9 @@ import { SectionLabel } from './SectionLabel'
 import { Skills } from './Skills'
 
 /** Standard vertical rhythm between sections */
-const sectionSx = { mt: { xs: 8, md: 11 } } as const
+const sectionSx = {
+  mt: { xs: 8, md: 11 },
+} as const
 
 export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
@@ -42,7 +44,12 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
         }}
       />
 
-      <Container maxWidth="lg" sx={{ px: { xs: 2.5, sm: 3 } }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          px: { xs: 2.5, sm: 3 },
+        }}
+      >
         <Hero />
 
         <Box sx={sectionSx}>
@@ -70,7 +77,11 @@ export const Home: React.FC<React.PropsWithChildren<unknown>> = () => {
           <FeaturedProjects />
         </Box>
 
-        <Box sx={{ ...sectionSx, mb: { xs: 4, md: 6 } }}>
+        <Box sx={{
+          ...sectionSx,
+          mb: { xs: 4, md: 6 },
+        }}
+        >
           <SectionLabel id="contact">contact</SectionLabel>
           <Contact />
         </Box>

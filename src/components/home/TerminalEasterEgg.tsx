@@ -73,10 +73,22 @@ export const TerminalEasterEgg: React.FC = () => {
   }
 
   return (
-    <Box sx={{ maxWidth: 520, mx: { xs: 'auto', md: 0 } }}>
+    <Box sx={{
+      maxWidth: 520,
+      mx: { xs: 'auto', md: 0 },
+    }}
+    >
       {/* Last command + its reply, terminal-style */}
       {entry && (
-        <Box sx={{ fontFamily: MONO, fontSize: { xs: '0.8rem', sm: '0.85rem' }, mb: 1, px: 0.5, textAlign: 'left', lineHeight: 1.6 }}>
+        <Box sx={{
+          fontFamily: MONO,
+          fontSize: { xs: '0.8rem', sm: '0.85rem' },
+          mb: 1,
+          px: 0.5,
+          textAlign: 'left',
+          lineHeight: 1.6,
+        }}
+        >
           <Box sx={{ color: MUTED, wordBreak: 'break-word' }}>
             <Box component="span" sx={{ color: ACCENT }}>~$</Box>
             {' '}
@@ -113,7 +125,13 @@ export const TerminalEasterEgg: React.FC = () => {
 
         {/* Inline group: the input auto-sizes to its text (monospace = exact `ch`
             widths), so the block cursor always sits right after what you typed. */}
-        <Box sx={{ display: 'inline-flex', alignItems: 'center', minWidth: 0, position: 'relative' }}>
+        <Box sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          minWidth: 0,
+          position: 'relative',
+        }}
+        >
           <Box
             component="input"
             ref={inputRef}
@@ -155,7 +173,14 @@ export const TerminalEasterEgg: React.FC = () => {
             <Box
               component="span"
               aria-hidden
-              sx={{ ml: 1, color: MUTED, opacity: 0.7, fontStyle: 'italic', whiteSpace: 'nowrap', pointerEvents: 'none' }}
+              sx={{
+                ml: 1,
+                color: MUTED,
+                opacity: 0.7,
+                fontStyle: 'italic',
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+              }}
             >
               type "help" and hit enter ↵
             </Box>

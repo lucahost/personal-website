@@ -35,7 +35,10 @@ function hashFile(relPath) {
   return createHash('sha256').update(text).digest('hex')
 }
 
-const current = Object.fromEntries(SOURCES.map(f => [f, hashFile(f)]))
+const current = Object.fromEntries(SOURCES.map(f => [
+  f,
+  hashFile(f),
+]))
 
 if (process.argv.includes('--update')) {
   writeFileSync(path.join(root, STAMP), `${JSON.stringify(current, null, 2)}\n`)

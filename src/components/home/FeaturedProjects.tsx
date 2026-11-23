@@ -20,7 +20,12 @@ const FEATURED = FEATURED_IDS
 export const FeaturedProjects: React.FC = () => {
   return (
     <Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' }, gap: { xs: 2, md: 2.5 } }}>
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+        gap: { xs: 2, md: 2.5 },
+      }}
+      >
         {FEATURED.map((project, i) => {
           const href = project.liveUrl ?? project.githubUrl ?? '#'
           return (
@@ -44,26 +49,60 @@ export const FeaturedProjects: React.FC = () => {
                     '&:hover': { transform: 'translateY(-4px)', borderColor: 'rgba(88,166,255,0.5)' },
                   }}
                 >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+                  <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    mb: 1.5,
+                  }}
+                  >
                     <Box
                       component="img"
                       src={project.image}
                       alt=""
-                      sx={{ width: 40, height: 40, objectFit: 'contain', borderRadius: '8px' }}
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        objectFit: 'contain',
+                        borderRadius: '8px',
+                      }}
                     />
                     <Box component="span" sx={{ fontFamily: MONO, fontSize: '0.68rem', color: MUTED }}>{project.year}</Box>
                   </Box>
-                  <Box sx={{ fontFamily: SANS, fontWeight: 600, fontSize: '1rem', color: TEXT, mb: 0.75 }}>
+                  <Box sx={{
+                    fontFamily: SANS,
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    color: TEXT,
+                    mb: 0.75,
+                  }}
+                  >
                     {project.title}
                   </Box>
-                  <Box sx={{ fontFamily: SANS, fontSize: '0.85rem', color: MUTED, lineHeight: 1.5, mb: 2, flex: 1 }}>
+                  <Box sx={{
+                    fontFamily: SANS,
+                    fontSize: '0.85rem',
+                    color: MUTED,
+                    lineHeight: 1.5,
+                    mb: 2,
+                    flex: 1,
+                  }}
+                  >
                     {project.description}
                   </Box>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
                     {project.technologies.slice(0, 3).map(t => (
                       <Box
                         key={t}
-                        sx={{ fontFamily: MONO, fontSize: '0.66rem', color: ACCENT, px: 0.75, py: '2px', borderRadius: '6px', border: `1px solid ${BORDER}` }}
+                        sx={{
+                          fontFamily: MONO,
+                          fontSize: '0.66rem',
+                          color: ACCENT,
+                          px: 0.75,
+                          py: '2px',
+                          borderRadius: '6px',
+                          border: `1px solid ${BORDER}`,
+                        }}
                       >
                         {t}
                       </Box>

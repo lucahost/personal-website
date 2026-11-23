@@ -47,8 +47,25 @@ function EntryCard({ entry }: { entry: ExperienceEntry }) {
       />
 
       {/* company header */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: { xs: 0.5, sm: 1.5 }, mb: 0.5 }}>
-        <Box component="h3" sx={{ m: 0, fontFamily: SANS, fontWeight: 700, fontSize: { xs: '1.15rem', sm: '1.3rem' }, lineHeight: 1.2, color: TEXT }}>
+      <Box sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: { xs: 0.5, sm: 1.5 },
+        mb: 0.5,
+      }}
+      >
+        <Box
+          component="h3"
+          sx={{
+            m: 0,
+            fontFamily: SANS,
+            fontWeight: 700,
+            fontSize: { xs: '1.15rem', sm: '1.3rem' },
+            lineHeight: 1.2,
+            color: TEXT,
+          }}
+        >
           {entry.company}
         </Box>
         {entry.parallel && (
@@ -71,7 +88,13 @@ function EntryCard({ entry }: { entry: ExperienceEntry }) {
         )}
       </Box>
 
-      <Box sx={{ fontFamily: MONO, fontSize: '0.8rem', color: MUTED, mb: 2.5 }}>
+      <Box sx={{
+        fontFamily: MONO,
+        fontSize: '0.8rem',
+        color: MUTED,
+        mb: 2.5,
+      }}
+      >
         {entry.context}
         {'  ·  '}
         {entry.location}
@@ -90,18 +113,46 @@ function EntryCard({ entry }: { entry: ExperienceEntry }) {
               border: `1px solid ${BORDER}`,
               backgroundColor: SURFACE,
               // subtle accent rail for the current/top role of a multi-role entry
-              borderLeft: entry.roles.length > 1 && i === 0 ? `2px solid ${ACCENT}` : `1px solid ${BORDER}`,
+              borderLeft: entry.roles.length > 1 && i === 0
+                ? `2px solid ${ACCENT}`
+                : `1px solid ${BORDER}`,
             }}
           >
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 1, mb: 1 }}>
-              <Box sx={{ fontFamily: SANS, fontWeight: 600, fontSize: '1.02rem', color: TEXT }}>
+            <Box sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              gap: 1,
+              mb: 1,
+            }}
+            >
+              <Box sx={{
+                fontFamily: SANS,
+                fontWeight: 600,
+                fontSize: '1.02rem',
+                color: TEXT,
+              }}
+              >
                 {role.title}
               </Box>
-              <Box sx={{ fontFamily: MONO, fontSize: '0.72rem', color: MUTED, whiteSpace: 'nowrap' }}>
+              <Box sx={{
+                fontFamily: MONO,
+                fontSize: '0.72rem',
+                color: MUTED,
+                whiteSpace: 'nowrap',
+              }}
+              >
                 {role.period}
               </Box>
             </Box>
-            <Box sx={{ fontFamily: SANS, fontSize: '0.92rem', color: MUTED, lineHeight: 1.6 }}>
+            <Box sx={{
+              fontFamily: SANS,
+              fontSize: '0.92rem',
+              color: MUTED,
+              lineHeight: 1.6,
+            }}
+            >
               {role.description}
             </Box>
             {role.link && (

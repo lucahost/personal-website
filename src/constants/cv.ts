@@ -167,12 +167,60 @@ export const EXPERIENCE: readonly ExperienceEntry[] = [
 
 /** Skills, grouped under monospace keys (icons assigned per group in the Skills component) */
 export const SKILLS: readonly SkillGroup[] = [
-  { key: 'architecture', items: ['Distributed systems', 'Microservices', 'Modular monolith', 'Vertical slice architecture', 'Event-driven design', 'Domain-driven design', 'Event storming & modeling', 'Messaging'] },
-  { key: 'backend', items: ['.NET / C#', 'ASP.NET Core', 'Node.js', 'Java', 'Go'] },
-  { key: 'data & infra', items: ['MS SQL Server', 'PostgreSQL', 'Redis', 'Kafka', 'Azure Service Bus', 'Kubernetes', 'Datadog'] },
-  { key: 'frontend', items: ['React', 'TypeScript', 'Next.js'] },
-  { key: 'leadership', items: ['Team leadership', 'Hiring', 'Mentoring', 'Scrum', 'Stakeholder management', 'AI-assisted engineering'] },
-  { key: 'foundations', items: ['Data Science', 'Network analysis', 'Testing (ISTQB)'] },
+  {
+    key: 'architecture',
+    items: [
+      'Distributed systems',
+      'Microservices',
+      'Modular monolith',
+      'Vertical slice architecture',
+      'Event-driven design',
+      'Domain-driven design',
+      'Event storming & modeling',
+      'Messaging',
+    ],
+  },
+  {
+    key: 'backend',
+    items: [
+      '.NET / C#',
+      'ASP.NET Core',
+      'Node.js',
+      'Java',
+      'Go',
+    ],
+  },
+  {
+    key: 'data & infra',
+    items: [
+      'MS SQL Server',
+      'PostgreSQL',
+      'Redis',
+      'Kafka',
+      'Azure Service Bus',
+      'Kubernetes',
+      'Datadog',
+    ],
+  },
+  {
+    key: 'frontend',
+    items: ['React', 'TypeScript', 'Next.js'],
+  },
+  {
+    key: 'leadership',
+    items: [
+      'Team leadership',
+      'Hiring',
+      'Mentoring',
+      'Scrum',
+      'Stakeholder management',
+      'AI-assisted engineering',
+    ],
+  },
+  {
+    key: 'foundations',
+    items: ['Data Science', 'Network analysis', 'Testing (ISTQB)'],
+  },
 ]
 
 /** Education, most recent first */

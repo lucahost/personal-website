@@ -36,7 +36,15 @@ export const Contact: React.FC = () => {
           backgroundColor: SURFACE,
         }}
       >
-        <Box sx={{ fontFamily: MONO, color: ACCENT, fontSize: '0.85rem', mb: 1.5 }}>~$ ./say-hello</Box>
+        <Box sx={{
+          fontFamily: MONO,
+          color: ACCENT,
+          fontSize: '0.85rem',
+          mb: 1.5,
+        }}
+        >
+          ~$ ./say-hello
+        </Box>
         <Box
           component="p"
           sx={{
@@ -50,11 +58,27 @@ export const Contact: React.FC = () => {
         >
           Let’s build something great together.
         </Box>
-        <Box sx={{ fontFamily: SANS, color: MUTED, fontSize: '1rem', maxWidth: 480, mx: 'auto', mb: 3.5, lineHeight: 1.6 }}>
+        <Box sx={{
+          fontFamily: SANS,
+          color: MUTED,
+          fontSize: '1rem',
+          maxWidth: 480,
+          mx: 'auto',
+          mb: 3.5,
+          lineHeight: 1.6,
+        }}
+        >
           Open to conversations about engineering leadership, platform architecture, and clearing the way for teams to ship — pragmatically, without the bureaucracy.
         </Box>
 
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
           <Box
             component="button"
             type="button"

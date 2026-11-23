@@ -77,34 +77,69 @@ function clientIp(req) {
 }
 
 function toOtlpLogs({ command, event, label, path, ref, ip }) {
-  const str = v => ({ stringValue: String(v) })
+  const str = v => ({
+    stringValue: String(v),
+  })
   // Terminal command → event.name "terminal_command", body = the command.
   // Interaction event → event.name = the event, body = "event[:label]".
   const isCommand = Boolean(command)
   const eventName = isCommand ? 'terminal_command' : event
-  const body = isCommand ? command : (label ? `${event}:${label}` : event)
+  const body = isCommand
+    ? command
+    : (label
+        ? `${event}:${label}`
+        : event)
   const attributes = [
-    { key: 'event.name', value: str(eventName) },
-    { key: 'url.path', value: str(path ?? '/') },
-    { key: 'http.referer', value: str(ref ?? '') },
-    { key: 'client.address', value: str(ip) },
+    {
+      key: 'event.name',
+      value: str(eventName),
+    },
+    {
+      key: 'url.path',
+      value: str(path ?? '/'),
+    },
+    {
+      key: 'http.referer',
+      value: str(ref ?? ''),
+    },
+    {
+      key: 'client.address',
+      value: str(ip),
+    },
   ]
-  if (label)
-    attributes.splice(1, 0, { key: 'event.label', value: str(label) })
+  if (label) {
+    attributes.splice(1, 0, {
+      key: 'event.label',
+      value: str(label),
+    })
+  }
 
   return JSON.stringify({
-    resourceLogs: [{
-      resource: { attributes: [{ key: 'service.name', value: str(SERVICE_NAME) }] },
-      scopeLogs: [{
-        scope: { name: 'website-telemetry' },
-        logRecords: [{
-          timeUnixNano: String(Date.now() * 1_000_000),
-          severityText: 'INFO',
-          body: str(body),
-          attributes,
-        }],
-      }],
-    }],
+    resourceLogs: [
+      {
+        resource: {
+          attributes: [
+            {
+              key: 'service.name',
+              value: str(SERVICE_NAME),
+            },
+          ],
+        },
+        scopeLogs: [
+          {
+            scope: { name: 'website-telemetry' },
+            logRecords: [
+              {
+                timeUnixNano: String(Date.now() * 1_000_000),
+                severityText: 'INFO',
+                body: str(body),
+                attributes,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   })
 }
 
@@ -123,7 +158,9 @@ async function forward(record) {
 
 const server = http.createServer((req, res) => {
   const origin = req.headers.origin
-  const corsOrigin = origin === ALLOW_ORIGIN ? origin : ALLOW_ORIGIN
+  const corsOrigin = origin === ALLOW_ORIGIN
+    ? origin
+    : ALLOW_ORIGIN
   res.setHeader('Access-Control-Allow-Origin', corsOrigin)
   res.setHeader('Vary', 'Origin')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
@@ -175,7 +212,9 @@ const server = http.createServer((req, res) => {
       res.writeHead(400).end()
       return
     }
-    const str = (v, max) => (typeof v === 'string' ? v.slice(0, max) : '')
+    const str = (v, max) => (typeof v === 'string'
+      ? v.slice(0, max)
+      : '')
     const command = str(parsed?.command, MAX_COMMAND_LEN)
     const event = str(parsed?.event, MAX_COMMAND_LEN)
     const label = str(parsed?.label, MAX_COMMAND_LEN)

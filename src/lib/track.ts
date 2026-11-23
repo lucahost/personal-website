@@ -100,5 +100,10 @@ export function trackEvent(name: string, label?: string): void {
   const event = name.trim().slice(0, MAX_LEN)
   if (!event)
     return
-  send(label ? { event, label: label.slice(0, MAX_LEN) } : { event })
+  send(label
+    ? {
+        event,
+        label: label.slice(0, MAX_LEN),
+      }
+    : { event })
 }

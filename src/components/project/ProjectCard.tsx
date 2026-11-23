@@ -85,9 +85,19 @@ export const ProjectCard = memo<ProjectCardProps>(({
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <CardContent sx={{ flex: 1, p: { xs: 1.5, sm: 2 } }}>
+          <CardContent sx={{
+            flex: 1,
+            p: { xs: 1.5, sm: 2 },
+          }}
+          >
             {/* Category and Year */}
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, gap: 1 }}>
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              mb: 1,
+              gap: 1,
+            }}
+            >
               <Box
                 sx={{
                   display: 'inline-flex',
@@ -110,7 +120,9 @@ export const ProjectCard = memo<ProjectCardProps>(({
               variant="h6"
               component="h3"
               gutterBottom
-              sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+              sx={{
+                fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              }}
             >
               {project.title}
             </Typography>
@@ -167,7 +179,12 @@ export const ProjectCard = memo<ProjectCardProps>(({
           </CardContent>
 
           {/* Actions */}
-          <CardActions sx={{ px: { xs: 1.5, sm: 2 }, pb: { xs: 1.5, sm: 2 }, justifyContent: 'space-between' }}>
+          <CardActions sx={{
+            px: { xs: 1.5, sm: 2 },
+            pb: { xs: 1.5, sm: 2 },
+            justifyContent: 'space-between',
+          }}
+          >
             <Box sx={{ display: 'flex', gap: 0.5 }}>
               {project.githubUrl && (
                 <IconButton

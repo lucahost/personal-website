@@ -41,8 +41,18 @@ export const Hero: React.FC = () => {
       }}
     >
       {/* Left: positioning */}
-      <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-        <Box sx={{ ...stagger(0), fontFamily: MONO, color: MUTED, fontSize: '0.9rem', mb: 2 }}>
+      <Box sx={{
+        textAlign: { xs: 'center', md: 'left' },
+      }}
+      >
+        <Box sx={{
+          ...stagger(0),
+          fontFamily: MONO,
+          color: MUTED,
+          fontSize: '0.9rem',
+          mb: 2,
+        }}
+        >
           <Box component="span" sx={{ color: ACCENT }}>~$</Box>
           {' '}
           whoami
@@ -124,7 +134,16 @@ export const Hero: React.FC = () => {
           {PROFILE.flavor}
         </Box>
 
-        <Box sx={{ ...stagger(6), mt: 3.5, display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center', justifyContent: { xs: 'center', md: 'flex-start' } }}>
+        <Box sx={{
+          ...stagger(6),
+          mt: 3.5,
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+          alignItems: 'center',
+          justifyContent: { xs: 'center', md: 'flex-start' },
+        }}
+        >
           <SocialLinks />
           <Link
             href="#contact"
@@ -167,7 +186,11 @@ export const Hero: React.FC = () => {
           </Link>
         </Box>
 
-        <Box sx={{ ...stagger(7), mt: 3.5 }}>
+        <Box sx={{
+          ...stagger(7),
+          mt: 3.5,
+        }}
+        >
           <TerminalEasterEgg />
         </Box>
       </Box>
@@ -191,11 +214,35 @@ export const Hero: React.FC = () => {
           }}
         >
           {/* window chrome */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, px: 2, py: 1.5, borderBottom: `1px solid ${BORDER}` }}>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.75,
+            px: 2,
+            py: 1.5,
+            borderBottom: `1px solid ${BORDER}`,
+          }}
+          >
             {trafficDots.map(c => (
-              <Box key={c} sx={{ width: 11, height: 11, borderRadius: '50%', backgroundColor: c }} />
+              <Box
+                key={c}
+                sx={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: '50%',
+                  backgroundColor: c,
+                }}
+              />
             ))}
-            <Box sx={{ ml: 1, fontFamily: MONO, fontSize: '0.72rem', color: MUTED }}>~/profile.json</Box>
+            <Box sx={{
+              ml: 1,
+              fontFamily: MONO,
+              fontSize: '0.72rem',
+              color: MUTED,
+            }}
+            >
+              ~/profile.json
+            </Box>
           </Box>
 
           <Box sx={{ p: 3, textAlign: 'center' }}>
@@ -224,7 +271,15 @@ export const Hero: React.FC = () => {
               />
             </Box>
 
-            <Box sx={{ mt: 2.5, textAlign: 'left', fontFamily: MONO, fontSize: '0.8rem', display: 'grid', gap: 1 }}>
+            <Box sx={{
+              mt: 2.5,
+              textAlign: 'left',
+              fontFamily: MONO,
+              fontSize: '0.8rem',
+              display: 'grid',
+              gap: 1,
+            }}
+            >
               {[
                 ['location', PROFILE.location],
                 ['focus', 'Platforms & frameworks'],
