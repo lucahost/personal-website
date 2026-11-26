@@ -1,0 +1,24 @@
+# hostettler.io on the VPS cluster (Onboarding v2): lucahost/vps-gitops tenants/personal-website.yaml
+# says what the platform allows (the host site, the fixed IPs, egress); this file says what runs.
+# Rendered by lucahost/deploy-actions' vps-deploy.yml (.github/workflows/vps.yml).
+app: personal-website
+components:
+  web: # was /var/www/hostettler.io, served by host nginx
+    build: {context: ., dockerfile: deploy/web/Dockerfile}
+    port: 8080
+    uid: 101 # nginx-unprivileged
+    memory: 64Mi
+    health: /
+  track: # was track-proxy.service, a systemd user unit of dp-ubuntu-16gb
+    build: {context: scripts/track-proxy}
+    port: 8787
+    uid: 65532 # distroless nonroot
+    memory: 128Mi # ~60 MB resident on the host today
+    env:
+      HOST: 0.0.0.0
+      PORT: '8787'
+      ALLOW_ORIGIN: https://hostettler.io
+      SERVICE_NAME: hostettler-io
+      # SigNoz's ingester as pods reach it (tenant egress otlp: 172.16.0.0/12 TCP 4317, OTLP/gRPC).
+      # On the host it posted OTLP/HTTP JSON to localhost:4318, which pods can't reach.
+      OTLP_GRPC_ENDPOINT: http://172.17.0.1:4317

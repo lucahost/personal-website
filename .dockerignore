@@ -1,0 +1,10 @@
+# Build context of deploy/web/Dockerfile (the repository root): only what the build reads.
+.git
+.github
+node_modules
+dist
+coverage
+*.log*
+.env
+.env.*
+!.env.example

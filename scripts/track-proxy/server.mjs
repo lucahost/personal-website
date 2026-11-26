@@ -11,25 +11,33 @@
  *     collector (key/endpoint never leave the VPS).
  *
  * Run behind nginx (terminates HTTPS, sets X-Real-IP from CF-Connecting-IP) — see
- * nginx-track.conf. Install as a systemd service via setup-vps.sh.
+ * nginx-track.conf. Install as a systemd service via setup-vps.sh, or run it as the
+ * `track` component on the VPS cluster (vps.yaml, Dockerfile next to this file).
  *
  * Config (env):
- *   PORT             default 8787
- *   ALLOW_ORIGIN     default https://hostettler.io
- *   OTLP_LOGS_URL    default http://localhost:4318/v1/logs
- *   SERVICE_NAME     default hostettler-io
- *   RATE_BURST       default 8     (max requests per RATE_WINDOW_MS per IP)
- *   RATE_WINDOW_MS   default 10000
- *   RATE_HOURLY      default 60    (max requests per hour per IP)
+ *   PORT                default 8787
+ *   HOST                default 127.0.0.1 (the address to bind; the cluster's pod uses 0.0.0.0)
+ *   ALLOW_ORIGIN        default https://hostettler.io
+ *   OTLP_LOGS_URL       default http://localhost:4318/v1/logs (OTLP/HTTP JSON)
+ *   OTLP_GRPC_ENDPOINT  default unset. When set (e.g. http://172.17.0.1:4317), records go there
+ *                       over OTLP/gRPC instead, and OTLP_LOGS_URL is unused. Pods reach
+ *                       SigNoz's ingester only on its gRPC port.
+ *   SERVICE_NAME        default hostettler-io
+ *   RATE_BURST          default 8     (max requests per RATE_WINDOW_MS per IP)
+ *   RATE_WINDOW_MS      default 10000
+ *   RATE_HOURLY         default 60    (max requests per hour per IP)
  */
 
 import { Buffer } from 'node:buffer'
 import http from 'node:http'
+import http2 from 'node:http2'
 import process from 'node:process'
 
 const PORT = Number(process.env.PORT ?? 8787)
+const HOST = process.env.HOST ?? '127.0.0.1'
 const ALLOW_ORIGIN = process.env.ALLOW_ORIGIN ?? 'https://hostettler.io'
 const OTLP_LOGS_URL = process.env.OTLP_LOGS_URL ?? 'http://localhost:4318/v1/logs'
+const OTLP_GRPC_ENDPOINT = process.env.OTLP_GRPC_ENDPOINT ?? ''
 const SERVICE_NAME = process.env.SERVICE_NAME ?? 'hostettler-io'
 const RATE_BURST = Number(process.env.RATE_BURST ?? 8)
 const RATE_WINDOW_MS = Number(process.env.RATE_WINDOW_MS ?? 10_000)
@@ -114,7 +122,8 @@ function toOtlpLogs({ command, event, label, path, ref, ip }) {
     })
   }
 
-  return JSON.stringify({
+  // An ExportLogsServiceRequest in OTLP's JSON mapping; forward() sends it as JSON or protobuf.
+  return {
     resourceLogs: [
       {
         resource: {
@@ -140,15 +149,136 @@ function toOtlpLogs({ command, event, label, path, ref, ip }) {
         ],
       },
     ],
+  }
+}
+
+// ---- OTLP/gRPC without dependencies -------------------------------------------------
+// The protobuf wire format of exactly what toOtlpLogs() builds (opentelemetry-proto v1:
+// collector/logs/v1, logs/v1, common/v1, resource/v1). Field numbers are in the comments.
+const WIRE_I64 = 1
+const WIRE_LEN = 2
+
+function varint(n) {
+  const out = []
+  while (n > 0x7F) {
+    out.push((n & 0x7F) | 0x80)
+    n >>>= 7
+  }
+  out.push(n)
+  return Buffer.from(out)
+}
+function lenField(no, payload) {
+  return Buffer.concat([
+    varint((no << 3) | WIRE_LEN),
+    varint(payload.length),
+    payload,
+  ])
+}
+const strField = (no, s) => lenField(no, Buffer.from(String(s), 'utf8'))
+const msgField = (no, parts) => lenField(no, Buffer.concat(parts))
+function fixed64Field(no, decimal) {
+  const b = Buffer.alloc(8)
+  b.writeBigUInt64LE(BigInt(decimal))
+  return Buffer.concat([
+    varint((no << 3) | WIRE_I64),
+    b,
+  ])
+}
+// AnyValue.string_value = 1 (a oneof: written even when empty, as the JSON form sets it)
+function anyValue(no, v) {
+  return msgField(no, [
+    strField(1, v.stringValue),
+  ])
+}
+// KeyValue.key = 1, KeyValue.value = 2
+function keyValue(no, kv) {
+  return msgField(no, [
+    strField(1, kv.key),
+    anyValue(2, kv.value),
+  ])
+}
+
+function encodeLogsRequest(request) {
+  return Buffer.concat(request.resourceLogs.map(rl => msgField(1, [ // ExportLogsServiceRequest.resource_logs = 1
+    msgField(1, rl.resource.attributes.map(a => keyValue(1, a))), // ResourceLogs.resource = 1, Resource.attributes = 1
+    ...rl.scopeLogs.map(sl => msgField(2, [ // ResourceLogs.scope_logs = 2
+      msgField(1, [
+        strField(1, sl.scope.name),
+      ]), // ScopeLogs.scope = 1, InstrumentationScope.name = 1
+      ...sl.logRecords.map(lr => msgField(2, [ // ScopeLogs.log_records = 2
+        fixed64Field(1, lr.timeUnixNano), // LogRecord.time_unix_nano = 1
+        strField(3, lr.severityText), // LogRecord.severity_text = 3
+        anyValue(5, lr.body), // LogRecord.body = 5
+        ...lr.attributes.map(a => keyValue(6, a)), // LogRecord.attributes = 6
+      ])),
+    ])),
+  ])))
+}
+
+// One HTTP/2 connection, opened on the first record and again after it closes (idle 60 s).
+let grpcSession = null
+function grpcConnection() {
+  if (grpcSession && !grpcSession.closed && !grpcSession.destroyed)
+    return grpcSession
+  const s = http2.connect(OTLP_GRPC_ENDPOINT)
+  s.on('error', err => console.error('[track-proxy] gRPC connection:', err?.message ?? err))
+  s.on('close', () => {
+    if (grpcSession === s)
+      grpcSession = null
+  })
+  s.setTimeout(60_000, () => s.close())
+  grpcSession = s
+  return s
+}
+
+// LogsService/Export: one length-prefixed message (flag 0 = uncompressed), and grpc-status 0 back.
+function exportGrpc(message) {
+  return new Promise((resolve, reject) => {
+    const framed = Buffer.alloc(5 + message.length)
+    framed.writeUInt32BE(message.length, 1)
+    message.copy(framed, 5)
+    const req = grpcConnection().request({
+      ':method': 'POST',
+      ':path': '/opentelemetry.proto.collector.logs.v1.LogsService/Export',
+      'content-type': 'application/grpc',
+      'te': 'trailers',
+    })
+    let httpStatus = 0
+    let grpcStatus
+    let grpcMessage = ''
+    const status = (h) => {
+      if (h['grpc-status'] !== undefined) {
+        grpcStatus = String(h['grpc-status'])
+        grpcMessage = String(h['grpc-message'] ?? '')
+      }
+    }
+    req.setTimeout(10_000, () => req.close(http2.constants.NGHTTP2_CANCEL))
+    req.on('response', (h) => {
+      httpStatus = h[':status']
+      status(h) // a trailers-only answer carries the status in its headers
+    })
+    req.on('trailers', status)
+    req.on('data', () => {}) // ExportLogsServiceResponse: nothing in it is needed
+    req.on('error', reject)
+    req.on('close', () => {
+      if (httpStatus === 200 && grpcStatus === '0')
+        resolve()
+      else reject(new Error(`OTLP/gRPC export: HTTP ${httpStatus || '-'}, grpc-status ${grpcStatus ?? '-'} ${grpcMessage}`.trim()))
+    })
+    req.end(framed)
   })
 }
 
-async function forward(record) {
+async function forward(request) {
   try {
+    if (OTLP_GRPC_ENDPOINT) {
+      await exportGrpc(encodeLogsRequest(request))
+      return
+    }
     await fetch(OTLP_LOGS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: record,
+      body: JSON.stringify(request),
     })
   }
   catch (err) {
@@ -235,9 +365,25 @@ const server = http.createServer((req, res) => {
   })
 })
 
-// Bind loopback-only so the port is unreachable off-box regardless of firewall
-// state. nginx reaches it via proxy_pass http://127.0.0.1:8787 (literal IPv4 — a
-// `localhost` target could resolve to ::1 and miss this IPv4-only bind).
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`[track-proxy] listening on 127.0.0.1:${PORT} → ${OTLP_LOGS_URL} (origin ${ALLOW_ORIGIN})`)
+// Bind loopback-only by default so the port is unreachable off-box regardless of
+// firewall state. nginx reaches it via proxy_pass http://127.0.0.1:8787 (literal IPv4 —
+// a `localhost` target could resolve to ::1 and miss this IPv4-only bind). In the
+// cluster's pod HOST=0.0.0.0: its NetworkPolicy admits only host nginx.
+server.listen(PORT, HOST, () => {
+  const sink = OTLP_GRPC_ENDPOINT
+    ? `${OTLP_GRPC_ENDPOINT} (OTLP/gRPC)`
+    : OTLP_LOGS_URL
+  console.log(`[track-proxy] listening on ${HOST}:${PORT} → ${sink} (origin ${ALLOW_ORIGIN})`)
 })
+
+// As a container's PID 1, node gets no default SIGTERM action, so the pod would only
+// stop at the SIGKILL. Under systemd (not PID 1) nothing changes.
+if (process.pid === 1) {
+  for (const sig of ['SIGTERM', 'SIGINT']) {
+    process.once(sig, () => {
+      server.close(() => process.exit(0))
+      grpcSession?.close()
+      setTimeout(() => process.exit(0), 3000).unref()
+    })
+  }
+}

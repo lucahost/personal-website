@@ -48,9 +48,28 @@ Modern, responsive personal portfolio website. Features a sleek design, interact
 
 - **GitHub Actions** - Continuous Integration/Deployment
 - **Security Auditing** - Automated vulnerability scanning
-- **DigitalOcean Droplet** - Production hosting
-- **SSH Deployment** - Secure rsync file transfer
-- **Artifact Management** - Build artifact storage and caching
+- **VPS cluster** - k3s + Flux on the Hetzner VPS (see [Deployment](#-deployment))
+
+## 🚢 Deployment
+
+The site runs on the VPS cluster (k3s + Flux, lucahost/vps-gitops "Onboarding v2"). Every push to
+`main` runs `.github/workflows/vps.yml`, which calls deploy-actions' `vps-deploy.yml`: it builds the
+two components of [`vps.yaml`](vps.yaml), pushes them to the box's registry and publishes the
+rendered manifests, which Flux applies.
+
+| Component | Image                                                                                               | What it does                                                                                                                                                            |
+| --------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `web`     | [`deploy/web/Dockerfile`](deploy/web/Dockerfile): the Vite build on nginx-unprivileged              | Serves the files as host nginx served `/var/www/hostettler.io`: `try_files $uri $uri/ /index.html`, the host's own `mime.types`, no headers, caching or gzip of its own |
+| `track`   | [`scripts/track-proxy/Dockerfile`](scripts/track-proxy/Dockerfile): `server.mjs` on distroless Node | The terminal easter egg's telemetry proxy, OTLP/gRPC to SigNoz                                                                                                          |
+
+Host nginx keeps the site itself (`tenants/personal-website.yaml` in lucahost/vps-gitops renders
+it): TLS, the Cloudflare gate, the security headers, gzip, the logs, `/` → `web` and
+`= /track` → `track`. The telemetry endpoint baked into the build is
+`https://hostettler.io/track` (`VITE_TRACK_ENDPOINT`, a build argument of `deploy/web/Dockerfile`).
+
+Until the switch-over (`sudo vps cutover personal-website`), `vps.yml` only publishes, and
+`deploy.yml` still deploys: rsync to `/var/www/hostettler.io` and `server.mjs` to the
+`track-proxy` user service, over Tailscale SSH. It goes after the switch-over.
 
 ## 🚀 Getting Started
 
