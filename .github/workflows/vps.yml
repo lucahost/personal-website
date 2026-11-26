@@ -1,0 +1,25 @@
+name: VPS cluster
+
+# Onboarding v2 (lucahost/vps-gitops): builds vps.yaml's components (web, track), pushes them to the
+# box's registry and publishes the rendered artifact personal-website/manifests:<sha>. Until
+# `sudo vps cutover personal-website` creates the tag live, a run only publishes, and deploy.yml
+# keeps deploying to /var/www/hostettler.io and the track-proxy user service. The cutover makes
+# the artifact of the commit deploy.yml deployed live (tenants/personal-website.yaml,
+# cutover.revision). After it, this moves live and deploys; deploy.yml is removed then.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # vps-deploy.yml joins the tailnet with this run's OIDC token
+
+jobs:
+  deploy:
+    uses: lucahost/deploy-actions/.github/workflows/vps-deploy.yml@366a7d0c452f1b0d323cdb32ed7ab1e1df4142d6 # vps-deploy, 2026-11-26
+    with:
+      file: vps.yaml
+    # The Environment vps's two secrets reach the called job only this way. It also passes this
+    # repo's TS_OAUTH_* (deploy.yml's), which vps-deploy.yml never reads; they go with deploy.yml.
+    secrets: inherit
