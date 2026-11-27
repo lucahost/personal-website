@@ -1,9 +1,9 @@
 # The `web` component of vps.yaml: the Vite build, served by nginx-unprivileged (uid 101) on 8080.
 # Built from the repository root (vps.yaml: build.context ".") by deploy-actions' vps-deploy.yml.
 #
-# The build stage does what deploy.yml's build job does: Node 26.13.1, NODE_ENV=production,
-# npm ci with the dev dependencies, `npm run build` (tsc, vite build), with the public telemetry
-# endpoint of the repo variable TRACK_ENDPOINT. The same commit so builds the same files.
+# The build stage: Node 26.13.1, NODE_ENV=production, npm ci with the dev dependencies,
+# `npm run build` (tsc, vite build), with the public telemetry endpoint baked in. It builds the
+# same files the old SSH deploy built (the same chunk names), so the switch-over changed no URL.
 FROM docker.io/library/node:26.13.1-trixie-slim@sha256:73c2e404ecdc6a8a8d7febe36ac62fab221fb61627659334a8855a2c198da7a0 AS build
 ENV NODE_ENV=production
 WORKDIR /src

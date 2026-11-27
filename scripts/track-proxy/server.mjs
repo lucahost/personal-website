@@ -10,9 +10,10 @@
  *   - Forward each command/event as a single OTLP log record to the local SigNoz
  *     collector (key/endpoint never leave the VPS).
  *
- * Run behind nginx (terminates HTTPS, sets X-Real-IP from CF-Connecting-IP) — see
- * nginx-track.conf. Install as a systemd service via setup-vps.sh, or run it as the
- * `track` component on the VPS cluster (vps.yaml, Dockerfile next to this file).
+ * Runs as the `track` component on the VPS cluster (vps.yaml, Dockerfile next to this
+ * file), behind host nginx: it terminates HTTPS and sends X-Real-IP from CF-Connecting-IP
+ * (`location = /track` in lucahost/vps-gitops tenants/personal-website.yaml).
+ * `node server.mjs` with the defaults runs it locally.
  *
  * Config (env):
  *   PORT                default 8787
@@ -74,8 +75,8 @@ setInterval(() => {
 }, 600_000).unref()
 
 function clientIp(req) {
-  // nginx sets X-Real-IP from Cloudflare's CF-Connecting-IP (see
-  // nginx-track.conf). X-Forwarded-For is deliberately NOT trusted: its first
+  // nginx sets X-Real-IP from Cloudflare's CF-Connecting-IP (`location = /track`
+  // of the host site). X-Forwarded-For is deliberately NOT trusted: its first
   // hop is client-controlled, which would let a caller pick its own rate-limit
   // bucket and flood SigNoz.
   const real = req.headers['x-real-ip']
@@ -365,10 +366,8 @@ const server = http.createServer((req, res) => {
   })
 })
 
-// Bind loopback-only by default so the port is unreachable off-box regardless of
-// firewall state. nginx reaches it via proxy_pass http://127.0.0.1:8787 (literal IPv4 —
-// a `localhost` target could resolve to ::1 and miss this IPv4-only bind). In the
-// cluster's pod HOST=0.0.0.0: its NetworkPolicy admits only host nginx.
+// Loopback-only by default (a local run). The cluster's pod sets HOST=0.0.0.0: its
+// NetworkPolicy admits only host nginx, which proxies to the Service track-public.
 server.listen(PORT, HOST, () => {
   const sink = OTLP_GRPC_ENDPOINT
     ? `${OTLP_GRPC_ENDPOINT} (OTLP/gRPC)`
@@ -377,7 +376,7 @@ server.listen(PORT, HOST, () => {
 })
 
 // As a container's PID 1, node gets no default SIGTERM action, so the pod would only
-// stop at the SIGKILL. Under systemd (not PID 1) nothing changes.
+// stop at the SIGKILL. A local run (not PID 1) keeps node's own handling.
 if (process.pid === 1) {
   for (const sig of ['SIGTERM', 'SIGINT']) {
     process.once(sig, () => {

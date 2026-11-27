@@ -1,6 +1,6 @@
 # 🚀 Personal Website - Luca Hostettler
 
-[![Build and Deploy](https://github.com/lucahost/personal-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/lucahost/personal-website/actions/workflows/deploy.yml)
+[![VPS cluster](https://github.com/lucahost/personal-website/actions/workflows/vps.yml/badge.svg)](https://github.com/lucahost/personal-website/actions/workflows/vps.yml)
 [![CI](https://github.com/lucahost/personal-website/actions/workflows/ci.yml/badge.svg)](https://github.com/lucahost/personal-website/actions/workflows/ci.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=flat-square&logo=react&logoColor=white)](https://reactjs.org/)
@@ -54,8 +54,9 @@ Modern, responsive personal portfolio website. Features a sleek design, interact
 
 The site runs on the VPS cluster (k3s + Flux, lucahost/vps-gitops "Onboarding v2"). Every push to
 `main` runs `.github/workflows/vps.yml`, which calls deploy-actions' `vps-deploy.yml`: it builds the
-two components of [`vps.yaml`](vps.yaml), pushes them to the box's registry and publishes the
-rendered manifests, which Flux applies.
+two components of [`vps.yaml`](vps.yaml), pushes them to the box's registry, publishes the
+rendered manifests and moves the tag `live` to them; Flux applies them, and the run waits until
+the pods are Ready. Rollback: revert the commit (its merge deploys the previous state).
 
 | Component | Image                                                                                               | What it does                                                                                                                                                            |
 | --------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,10 +67,6 @@ Host nginx keeps the site itself (`tenants/personal-website.yaml` in lucahost/vp
 it): TLS, the Cloudflare gate, the security headers, gzip, the logs, `/` → `web` and
 `= /track` → `track`. The telemetry endpoint baked into the build is
 `https://hostettler.io/track` (`VITE_TRACK_ENDPOINT`, a build argument of `deploy/web/Dockerfile`).
-
-Until the switch-over (`sudo vps cutover personal-website`), `vps.yml` only publishes, and
-`deploy.yml` still deploys: rsync to `/var/www/hostettler.io` and `server.mjs` to the
-`track-proxy` user service, over Tailscale SSH. It goes after the switch-over.
 
 ## 🚀 Getting Started
 
