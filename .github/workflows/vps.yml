@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   deploy:
-    uses: lucahost/deploy-actions/.github/workflows/vps-deploy.yml@366a7d0c452f1b0d323cdb32ed7ab1e1df4142d6 # vps-deploy, 2026-11-26
+    uses: lucahost/deploy-actions/.github/workflows/vps-deploy.yml@750f1298bd56c21f8e62dd1d95991e46a12b0caf # vps-deploy, 2026-11-28 (ubuntu-26.04 runners, deploy-actions#21)
     with:
       file: vps.yaml
     # The Environment vps's two secrets reach the called job only this way.
